@@ -4,8 +4,7 @@ module.exports = {
     info: {
       title: 'express-groomer-be',
       version: '0.1.0',
-      description:
-        'express-groomer-be',
+      description: 'express-groomer-be',
       license: {
         name: 'MIT',
         url: 'https://en.wikipedia.org/wiki/MIT_License',
