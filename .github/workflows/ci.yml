@@ -33,5 +33,3 @@ jobs:
       - run: npm install
 
       - run: npm run lint
-
-      - run: cp .env.sample .env
