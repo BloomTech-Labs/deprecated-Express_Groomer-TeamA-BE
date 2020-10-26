@@ -1,3 +1,4 @@
+// Profile Schema Update
 exports.up = async (knex) => {
     await knex.schema.table('profiles', function (table) {
         table.enu('user_type', ['Customer', 'Groomer']).notNullable();
