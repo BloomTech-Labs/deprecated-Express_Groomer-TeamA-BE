@@ -3,12 +3,12 @@ exports.up = async (knex) => {
       .createTable('business_profiles', function (table) {
         table.increments("id")
         table.string('profile_id')
-        // forces integer to be positive
-        .unsigned()
-        .notNullable()
-        .references('id')
-        .inTable('profiles')
-        .onDelete("CASCADE")
+          // forces integer to be positive
+          .unsigned()
+          .notNullable()
+          .references('id')
+          .inTable('profiles')
+          .onDelete("CASCADE")
 		.onUpdate('CASCADE')
         table.string('business_name').notNullable()
         table.timestamps(true, true)

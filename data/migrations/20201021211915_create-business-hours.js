@@ -3,13 +3,13 @@ exports.up = async (knex) => {
       .createTable('business_hours', function (table) {
         table.increments("id")
         table.integer('location_id')
-        // forces integer to be positive
-        .unsigned()
-        .notNullable()
-        .references('id')
-        .inTable('locations')
-        .onDelete("CASCADE")
-		.onUpdate('CASCADE')
+          // forces integer to be positive
+          .unsigned()
+          .notNullable()
+          .references('id')
+          .inTable('locations')
+          .onDelete("CASCADE")
+		      .onUpdate('CASCADE')
         table.string('day_of_week').notNullable()
         table.string('hours_duration').notNullable()
         table.timestamps(true, true)

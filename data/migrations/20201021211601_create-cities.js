@@ -4,13 +4,13 @@ exports.up = async (knex) => {
         table.increments("id")
         table.string('name')
         table.integer('state_id')
-        // forces integer to be positive
-        .unsigned()
-        .notNullable()
-        .references('id')
-        .inTable('states')
-        .onDelete("CASCADE")
-		.onUpdate('CASCADE')
+          // forces integer to be positive
+          .unsigned()
+          .notNullable()
+          .references('id')
+          .inTable('states')
+          .onDelete("CASCADE")
+		      .onUpdate('CASCADE')
       });
   };
   
