@@ -20,12 +20,12 @@ exports.up = async (knex) => {
       .onDelete('CASCADE')
       .onUpdate('CASCADE');
     table
-      .integer('service_location_id')
+      .integer('location_service_id')
       // forces integer to be positive
       .unsigned()
       .notNullable()
       .references('id')
-      .inTable('service_locations')
+      .inTable('location_services')
       .onDelete('CASCADE')
       .onUpdate('CASCADE');
     table.string('service_provider_name').notNullable();
@@ -38,7 +38,7 @@ exports.up = async (knex) => {
 
 exports.down = async (knex) => {
   await knex.schema.dropTableIfExists('appointments');
-  await knex.schema.dropTableIfExists('service_locations');
+  await knex.schema.dropTableIfExists('location_services');
   await knex.schema.dropTableIfExists('customer_pets');
   await knex.schema.dropTableIfExists('profiles');
 };
