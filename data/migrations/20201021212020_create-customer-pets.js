@@ -19,8 +19,9 @@ exports.up = async (knex) => {
       .inTable('animals')
       .onDelete('CASCADE')
       .onUpdate('CASCADE');
+    table.string('pet_name').notNullable();
     table.string('color').default(null);
-    table.string('date_of_birth').default(null);
+    table.date('date_of_birth').default(null);
     table.string('image_url').default(null);
     table.timestamps(true, true);
   });
