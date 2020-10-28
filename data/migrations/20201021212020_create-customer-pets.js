@@ -29,6 +29,4 @@ exports.up = async (knex) => {
 
 exports.down = async (knex) => {
   await knex.schema.dropTableIfExists('customer_pets');
-  await knex.schema.dropTableIfExists('animals');
-  await knex.schema.dropTableIfExists('profiles');
 };

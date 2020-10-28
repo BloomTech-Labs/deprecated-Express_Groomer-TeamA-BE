@@ -36,6 +36,4 @@ exports.up = async (knex) => {
 
 exports.down = async (knex) => {
   await knex.schema.dropTableIfExists('user_ratings');
-  await knex.schema.dropTableIfExists('profiles');
-  await knex.schema.dropTableIfExists('location_services');
 };
