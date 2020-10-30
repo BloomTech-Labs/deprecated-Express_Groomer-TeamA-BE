@@ -52,7 +52,7 @@ You can find the deployed projects at:
 
 🚫 List the rest of the back end end features and libraries in the same format as the framework above
 
-# APIs
+# External APIs
 
 ## Authentication API here
 
