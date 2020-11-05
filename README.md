@@ -7,13 +7,12 @@ For steps on how to work with this repository [please see here](https://docs.lab
 # Project
 
 You can find the deployed projects at:
-- Backend: [🚫URL NAME GOES HERE](🚫copy and paste URL here).
+- Backend: [Heroku](https://labspt12-express-groomer-g-api.herokuapp.com/).
 - Frontend: [🚫URL NAME GOES HERE](🚫copy and paste URL here).
 
 
 ## Contributors
 
-🚫Add contributor info below, make sure add images and edit the social links for each member. Add to or delete these place-holders as needed
 
 |                                                      [Tanveer Saleem](https://github.com/tanveersaleem786)                                                       |                                                       [Michael Luck](https://github.com/MLucky518)                                                        |                                                      [Virginia Wilcox](http://github.com/wilcoxva)                                                       |                                                       [Thomas Lewandowski](https://github.com/tlewandowski18)                                                        |                                                      [Tyler Alsop](https://github.com/TylerAlsop)                                                       |
 | :-----------------------------------------------------------------------------------------------------------------------------------------: | :-------------------------------------------------------------------------------------------------------------------------------------------: | :-----------------------------------------------------------------------------------------------------------------------------------------: | :-------------------------------------------------------------------------------------------------------------------------------------------: | :-----------------------------------------------------------------------------------------------------------------------------------------: |
