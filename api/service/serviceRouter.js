@@ -266,12 +266,10 @@ router.delete(
     try {
       const id = req.params.id;
       await serviceModel.remove(id);
-      return res
-        .status(200)
-        .json({
-          message: `Service '${id}' was deleted.`,
-          service: req.service,
-        });
+      return res.status(200).json({
+        message: `Service '${id}' was deleted.`,
+        service: req.service,
+      });
     } catch (err) {
       next(err);
     }
