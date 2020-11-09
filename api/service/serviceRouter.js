@@ -2,7 +2,11 @@ const express = require('express');
 const authRequired = require('../middleware/authRequired');
 const serviceModel = require('./serviceModel');
 const router = express.Router();
-const {validateServiceID, validateServiceData, isServiceUnique} = require("../middleware/service")
+const {
+  validateServiceID,
+  validateServiceData,
+  isServiceUnique,
+} = require('../middleware/service');
 
 /**
  * @swagger
@@ -16,14 +20,14 @@ const {validateServiceID, validateServiceData, isServiceUnique} = require("../mi
  *      properties:
  *        id:
  *          type: integer
- *          description: This is a primary key 
+ *          description: This is a primary key
  *        name:
  *          type: string
  *      example:
  *        id: '0'
  *        name: 'Haircut'
  *
-* /services:
+ * /services:
  *  get:
  *    description: Returns a list of services
  *    summary: Get a list of all service
@@ -50,15 +54,14 @@ const {validateServiceID, validateServiceData, isServiceUnique} = require("../mi
  *      403:
  *        $ref: '#/components/responses/UnauthorizedError'
  */
-router.get("/", authRequired, async (req, res, next) => {  
-  try { 
-        const services = await serviceModel.findAll()
-        res.json(services)
-
-  } catch(err) {
-        next(err)
+router.get('/', authRequired, async (req, res, next) => {
+  try {
+    const services = await serviceModel.findAll();
+    res.json(services);
+  } catch (err) {
+    next(err);
   }
-})
+});
 
 /**
  * @swagger
@@ -95,18 +98,21 @@ router.get("/", authRequired, async (req, res, next) => {
  *      404:
  *        description: 'Service not found'
  */
-router.get("/:id", authRequired, validateServiceID(), async (req, res, next) => {
-  //return res.status(200).json(req.category);
-  try { 
-    const id = req.params.id
-    const service = await serviceModel.findById(id)
-    return res.status(200).json(service)
-
-  } catch(err) {
-    next(err)
+router.get(
+  '/:id',
+  authRequired,
+  validateServiceID(),
+  async (req, res, next) => {
+    //return res.status(200).json(req.category);
+    try {
+      const id = req.params.id;
+      const service = await serviceModel.findById(id);
+      return res.status(200).json(service);
+    } catch (err) {
+      next(err);
+    }
   }
-})
-
+);
 
 /**
  * @swagger
@@ -144,19 +150,25 @@ router.get("/:id", authRequired, validateServiceID(), async (req, res, next) => 
  *                service:
  *                  $ref: '#/components/schemas/Service'
  */
-router.post("/", authRequired, validateServiceData(), isServiceUnique(), async (req, res, next) => {    
-  try {
+router.post(
+  '/',
+  authRequired,
+  validateServiceData(),
+  isServiceUnique(),
+  async (req, res, next) => {
+    try {
       const payload = {
-          name:req.body.name,          
-      }          
+        name: req.body.name,
+      };
       const service = await serviceModel.create(payload);
-      return res.status(200).json({ message: 'Service created', service: service[0]});
-     
-    } catch(err) {
+      return res
+        .status(200)
+        .json({ message: 'Service created', service: service[0] });
+    } catch (err) {
       next(err);
+    }
   }
-})
-
+);
 
 /**
  * @swagger
@@ -194,19 +206,27 @@ router.post("/", authRequired, validateServiceData(), isServiceUnique(), async (
  *                service:
  *                  $ref: '#/components/schemas/Service'
  */
-router.put("/", authRequired, validateServiceData(), validateServiceID(), isServiceUnique(), async (req, res, next) => {       
-  try {
-    const payload = {
-      id:req.body.id,
-      name:req.body.name         
+router.put(
+  '/',
+  authRequired,
+  validateServiceData(),
+  validateServiceID(),
+  isServiceUnique(),
+  async (req, res, next) => {
+    try {
+      const payload = {
+        id: req.body.id,
+        name: req.body.name,
+      };
+      const service = await serviceModel.update(req.body.id, payload);
+      return res
+        .status(200)
+        .json({ message: 'Service updated', service: service[0] });
+    } catch (err) {
+      next(err);
     }
-    const service = await serviceModel.update(req.body.id, payload);
-    return res.status(200).json({ message: 'Service updated', service: service[0]});
-
-  } catch(err) {
-    next(err);
   }
-})
+);
 
 /**
  * @swagger
@@ -238,14 +258,24 @@ router.put("/", authRequired, validateServiceData(), validateServiceID(), isServ
  *                service:
  *                  $ref: '#/components/schemas/Service'
  */
-router.delete("/:id",  authRequired, validateServiceID(), async (req, res, next) => {
-  try {
-    const id = req.params.id
-    await serviceModel.remove(id);
-    return res.status(200).json({ message: `Service '${id}' was deleted.`, service: req.service });
-  } catch(err) {
-    next(err);
+router.delete(
+  '/:id',
+  authRequired,
+  validateServiceID(),
+  async (req, res, next) => {
+    try {
+      const id = req.params.id;
+      await serviceModel.remove(id);
+      return res
+        .status(200)
+        .json({
+          message: `Service '${id}' was deleted.`,
+          service: req.service,
+        });
+    } catch (err) {
+      next(err);
+    }
   }
-})
+);
 
 module.exports = router;

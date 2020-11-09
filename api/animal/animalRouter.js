@@ -2,7 +2,11 @@ const express = require('express');
 const authRequired = require('../middleware/authRequired');
 const animalModel = require('./animalModel');
 const router = express.Router();
-const {validateAnimalID, validateAnimalData, isAnimalUnique} = require("../middleware/animal")
+const {
+  validateAnimalID,
+  validateAnimalData,
+  isAnimalUnique,
+} = require('../middleware/animal');
 
 /**
  * @swagger
@@ -16,14 +20,14 @@ const {validateAnimalID, validateAnimalData, isAnimalUnique} = require("../middl
  *      properties:
  *        id:
  *          type: integer
- *          description: This is a primary key 
+ *          description: This is a primary key
  *        animal_type:
  *          type: string
  *      example:
  *        id: '0'
  *        animal_type: 'Cat'
  *
-* /animals:
+ * /animals:
  *  get:
  *    description: Returns a list of animals
  *    summary: Get a list of all animals
@@ -50,15 +54,14 @@ const {validateAnimalID, validateAnimalData, isAnimalUnique} = require("../middl
  *      403:
  *        $ref: '#/components/responses/UnauthorizedError'
  */
-router.get("/", authRequired, async (req, res, next) => {  
-  try { 
-        const animals = await animalModel.findAll()
-        res.json(animals)
-
-  } catch(err) {
-        next(err)
+router.get('/', authRequired, async (req, res, next) => {
+  try {
+    const animals = await animalModel.findAll();
+    res.json(animals);
+  } catch (err) {
+    next(err);
   }
-})
+});
 
 /**
  * @swagger
@@ -95,18 +98,16 @@ router.get("/", authRequired, async (req, res, next) => {
  *      404:
  *        description: 'Animal not found'
  */
-router.get("/:id", authRequired, validateAnimalID(), async (req, res, next) => {
+router.get('/:id', authRequired, validateAnimalID(), async (req, res, next) => {
   //return res.status(200).json(req.category);
-  try { 
-    const id = req.params.id
-    const animal = await animalModel.findById(id)
-    return res.status(200).json(animal)
-
-  } catch(err) {
-    next(err)
-  } 
-})
-
+  try {
+    const id = req.params.id;
+    const animal = await animalModel.findById(id);
+    return res.status(200).json(animal);
+  } catch (err) {
+    next(err);
+  }
+});
 
 /**
  * @swagger
@@ -144,19 +145,25 @@ router.get("/:id", authRequired, validateAnimalID(), async (req, res, next) => {
  *                animal:
  *                  $ref: '#/components/schemas/Animal'
  */
-router.post("/", authRequired, validateAnimalData(), isAnimalUnique(), async (req, res, next) => {    
-  try {
+router.post(
+  '/',
+  authRequired,
+  validateAnimalData(),
+  isAnimalUnique(),
+  async (req, res, next) => {
+    try {
       const payload = {
-          animal_type:req.body.animal_type,          
-      }          
+        animal_type: req.body.animal_type,
+      };
       const animal = await animalModel.create(payload);
-      return res.status(200).json({ message: 'Animal created', animal: animal[0]});
-     
-    } catch(err) {
+      return res
+        .status(200)
+        .json({ message: 'Animal created', animal: animal[0] });
+    } catch (err) {
       next(err);
+    }
   }
-})
-
+);
 
 /**
  * @swagger
@@ -194,19 +201,27 @@ router.post("/", authRequired, validateAnimalData(), isAnimalUnique(), async (re
  *                animal:
  *                  $ref: '#/components/schemas/Animal'
  */
-router.put("/", authRequired, validateAnimalData(), validateAnimalID(), isAnimalUnique(), async (req, res, next) => {       
-  try {
-    const payload = {
-      id:req.body.id,
-      animal_type:req.body.animal_type         
+router.put(
+  '/',
+  authRequired,
+  validateAnimalData(),
+  validateAnimalID(),
+  isAnimalUnique(),
+  async (req, res, next) => {
+    try {
+      const payload = {
+        id: req.body.id,
+        animal_type: req.body.animal_type,
+      };
+      const animal = await animalModel.update(req.body.id, payload);
+      return res
+        .status(200)
+        .json({ message: 'Animal updated', animal: animal[0] });
+    } catch (err) {
+      next(err);
     }
-    const animal = await animalModel.update(req.body.id, payload);
-    return res.status(200).json({ message: 'Animal updated', animal: animal[0]});
-
-  } catch(err) {
-    next(err);
   }
-})
+);
 
 /**
  * @swagger
@@ -238,14 +253,21 @@ router.put("/", authRequired, validateAnimalData(), validateAnimalID(), isAnimal
  *                animal:
  *                  $ref: '#/components/schemas/Animal'
  */
-router.delete("/:id",  authRequired, validateAnimalID(), async (req, res, next) => {
-  try {
-    const id = req.params.id
-    await animalModel.remove(id);
-    return res.status(200).json({ message: `Animal '${id}' was deleted.`, animal: req.animal });
-  } catch(err) {
-    next(err);
+router.delete(
+  '/:id',
+  authRequired,
+  validateAnimalID(),
+  async (req, res, next) => {
+    try {
+      const id = req.params.id;
+      await animalModel.remove(id);
+      return res
+        .status(200)
+        .json({ message: `Animal '${id}' was deleted.`, animal: req.animal });
+    } catch (err) {
+      next(err);
+    }
   }
-})
+);
 
 module.exports = router;

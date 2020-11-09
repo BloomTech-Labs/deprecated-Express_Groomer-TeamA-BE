@@ -16,18 +16,13 @@ const create = async (animal) => {
   return db('services').insert(animal).returning('*');
 };
 
-const update = (id, animal) => {  
-  return db('services')
-    .where({ id: id })
-    .first()
-    .update(animal)
-    .returning('*');
+const update = (id, animal) => {
+  return db('services').where({ id: id }).first().update(animal).returning('*');
 };
 
 const remove = async (id) => {
   return await db('services').where({ id }).del();
 };
-
 
 module.exports = {
   findAll,
@@ -35,5 +30,5 @@ module.exports = {
   findById,
   create,
   update,
-  remove
+  remove,
 };
