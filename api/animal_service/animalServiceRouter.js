@@ -23,14 +23,14 @@ const {
  *      properties:
  *        id:
  *          type: integer
- *          description: This is a primary key 
+ *          description: This is a primary key
  *        animal_type:
  *          type: string
  *        services:
  *          type: array
  *          items:
- *            $ref: '#/components/schemas/Service' 
- * 
+ *            $ref: '#/components/schemas/Service'
+ *
  *    AnimalServiceIDS:
  *      type: object
  *      required:
@@ -41,8 +41,8 @@ const {
  *          type: integer
  *        service_id:
  *          type: integer
- *          
-* /animalService:
+ *
+ * /animalService:
  *  get:
  *    description: Returns a list of animals with services
  *    summary: Get a list of all animals with services
@@ -59,7 +59,7 @@ const {
  *              type: array
  *              items:
  *                $ref: '#/components/schemas/AnimalService'
- *              example:   
+ *              example:
  *                - id: '1'
  *                  animal_type: 'Cat'
  *                  services:
@@ -79,15 +79,17 @@ const {
  *      403:
  *        $ref: '#/components/responses/UnauthorizedError'
  */
-router.get("/", authRequired, async (req, res, next) => {  
-  try { 
-    const animal_services = await animalServiceModel.findAll()
-    const services_by_animal = animalServiceModel.animalServicesObject(animal_services)
-    res.json(services_by_animal)
-  } catch(err) {
-    next(err)
+router.get('/', authRequired, async (req, res, next) => {
+  try {
+    const animal_services = await animalServiceModel.findAll();
+    const services_by_animal = animalServiceModel.animalServicesObject(
+      animal_services
+    );
+    res.json(services_by_animal);
+  } catch (err) {
+    next(err);
   }
-})
+});
 
 /**
  * @swagger
@@ -116,15 +118,21 @@ router.get("/", authRequired, async (req, res, next) => {
  *      404:
  *        description: 'Animal services not found'
  */
-router.get("/:animal_id", authRequired, validateAnimalID(), async (req, res, next) => {  
-  try {     
-    const animal_services = animalServiceModel.animalServicesObject(req.animal_services) 
-    return res.status(200).json(animal_services[0])
-  } catch(err) {
-    next(err)
+router.get(
+  '/:animal_id',
+  authRequired,
+  validateAnimalID(),
+  async (req, res, next) => {
+    try {
+      const animal_services = animalServiceModel.animalServicesObject(
+        req.animal_services
+      );
+      return res.status(200).json(animal_services[0]);
+    } catch (err) {
+      next(err);
+    }
   }
-})
-
+);
 
 /**
  * @swagger
@@ -162,29 +170,34 @@ router.get("/:animal_id", authRequired, validateAnimalID(), async (req, res, nex
  *                animal:
  *                  $ref: '#/components/schemas/AnimalService'
  */
-router.post("/", 
-  authRequired, 
-  validateAnimalServiceData(), 
-  validateAnimal(), 
-  validateService(), 
-  isAnimalServiceUnique(), 
-  async (req, res, next) => {    
-  try {
-        const {service_id,animal_id} = req.body
-        const payload = {
-            service_id:service_id,
-            animal_id:animal_id         
-        }          
-        let animal_service = await animalServiceModel.create(payload);
-        animal_service = await animalServiceModel.animalServiceByIDs(animal_service[0].animal_id, animal_service[0].service_id)
-        animal_service = animalServiceModel.animalServicesObject(animal_service)
-        return res.status(200).json({ message: 'Animal service created', animal: animal_service[0]});
-     
-    } catch(err) {
+router.post(
+  '/',
+  authRequired,
+  validateAnimalServiceData(),
+  validateAnimal(),
+  validateService(),
+  isAnimalServiceUnique(),
+  async (req, res, next) => {
+    try {
+      const { service_id, animal_id } = req.body;
+      const payload = {
+        service_id: service_id,
+        animal_id: animal_id,
+      };
+      let animal_service = await animalServiceModel.create(payload);
+      animal_service = await animalServiceModel.animalServiceByIDs(
+        animal_service[0].animal_id,
+        animal_service[0].service_id
+      );
+      animal_service = animalServiceModel.animalServicesObject(animal_service);
+      return res
+        .status(200)
+        .json({ message: 'Animal service created', animal: animal_service[0] });
+    } catch (err) {
       next(err);
+    }
   }
-})
-
+);
 
 /**
  * @swagger
@@ -233,33 +246,42 @@ router.post("/",
  *                animal:
  *                  $ref: '#/components/schemas/AnimalService'
  */
-router.put("/:animal_id/:service_id", 
-  authRequired, 
-  validateAnimalServiceData(), 
-  validateAnimal(), 
-  validateService(), 
-  validateRecord('update'), 
-  isAnimalServiceUnique(), 
-  async (req, res, next) => {      
-  try {
-        const old_service_id = req.params.service_id
-        const old_animal_id = req.params.animal_id
-        const {service_id,animal_id} = req.body
-        const payload = {
-            service_id:service_id,
-            animal_id:animal_id         
-        }  
+router.put(
+  '/:animal_id/:service_id',
+  authRequired,
+  validateAnimalServiceData(),
+  validateAnimal(),
+  validateService(),
+  validateRecord('update'),
+  isAnimalServiceUnique(),
+  async (req, res, next) => {
+    try {
+      const old_service_id = req.params.service_id;
+      const old_animal_id = req.params.animal_id;
+      const { service_id, animal_id } = req.body;
+      const payload = {
+        service_id: service_id,
+        animal_id: animal_id,
+      };
 
-        let animal_service = await animalServiceModel.update(old_animal_id, old_service_id, payload);      
-        animal_service = await animalServiceModel.animalServiceByIDs(animal_service[0].animal_id, animal_service[0].service_id)
-        animal_service = animalServiceModel.animalServicesObject(animal_service)
-        return res.status(200).json({ message: 'Animal service updated', animal: animal_service[0]});
-
-  } catch(err) {
-        next(err);
+      let animal_service = await animalServiceModel.update(
+        old_animal_id,
+        old_service_id,
+        payload
+      );
+      animal_service = await animalServiceModel.animalServiceByIDs(
+        animal_service[0].animal_id,
+        animal_service[0].service_id
+      );
+      animal_service = animalServiceModel.animalServicesObject(animal_service);
+      return res
+        .status(200)
+        .json({ message: 'Animal service updated', animal: animal_service[0] });
+    } catch (err) {
+      next(err);
+    }
   }
-})
-
+);
 
 /**
  * @swagger
@@ -300,18 +322,28 @@ router.put("/:animal_id/:service_id",
  *                animal:
  *                  $ref: '#/components/schemas/AnimalService'
  */
-router.delete("/:animal_id/:service_id",  authRequired, validateRecord('delete'), async (req, res, next) => {
-  try {
-        const service_id = req.params.service_id
-        const animal_id = req.params.animal_id         
-        await animalServiceModel.remove(animal_id, service_id);        
-        const animal_service = animalServiceModel.animalServicesObject(req.animal_service)
-        return res.status(200).json({ message: `Animal service was deleted.`, animal:animal_service[0] })
-        
-  } catch(err) {
-       next(err);
+router.delete(
+  '/:animal_id/:service_id',
+  authRequired,
+  validateRecord('delete'),
+  async (req, res, next) => {
+    try {
+      const service_id = req.params.service_id;
+      const animal_id = req.params.animal_id;
+      await animalServiceModel.remove(animal_id, service_id);
+      const animal_service = animalServiceModel.animalServicesObject(
+        req.animal_service
+      );
+      return res
+        .status(200)
+        .json({
+          message: `Animal service was deleted.`,
+          animal: animal_service[0],
+        });
+    } catch (err) {
+      next(err);
+    }
   }
-
-})
+);
 
 module.exports = router;

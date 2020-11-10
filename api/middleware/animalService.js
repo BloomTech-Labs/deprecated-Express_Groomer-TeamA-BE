@@ -7,9 +7,9 @@ const animal = require('./animal');
 module.exports = {
   validateAnimalID: () => {
     return async (req, res, next) => {
-      try {        
-        const animal_id = req.params.animal_id
-        const animal_services = await AnimalServices.findById(animal_id);       
+      try {
+        const animal_id = req.params.animal_id;
+        const animal_services = await AnimalServices.findById(animal_id);
         if (!animal_services.length) {
           res.status(404).json({ message: 'Animal not found.' });
         } else {
@@ -24,12 +24,12 @@ module.exports = {
 
   validateAnimal: () => {
     return async (req, res, next) => {
-      try {        
-        const animal_id = req.body.animal_id
-        const animal = await Animals.findById(animal_id);     
+      try {
+        const animal_id = req.body.animal_id;
+        const animal = await Animals.findById(animal_id);
         if (!animal) {
           res.status(404).json({ message: 'Animal not found.' });
-        } else {          
+        } else {
           next();
         }
       } catch (err) {
@@ -40,12 +40,12 @@ module.exports = {
 
   validateService: () => {
     return async (req, res, next) => {
-      try {        
-        const service_id = req.body.service_id
-        const service = await Services.findById(service_id);       
+      try {
+        const service_id = req.body.service_id;
+        const service = await Services.findById(service_id);
         if (!service) {
           res.status(404).json({ message: 'Service not found.' });
-        } else {         
+        } else {
           next();
         }
       } catch (err) {
@@ -56,22 +56,23 @@ module.exports = {
 
   validateRecord: (action) => {
     return async (req, res, next) => {
-      try {        
-        
-          const {animal_id, service_id} = req.params;   
-          const animal_service = await AnimalServices.animalServiceByIDs(animal_id, service_id)   
-            
-          if(animal_service.length === 0) {         
-            res.status(404).json({ message: 'Record not found.'});
-          } else {
-              if(action == 'delete') {
-                req.animal_service = animal_service
-                next();
-              } else if(action == 'update') {             
-                next();
-              }           
+      try {
+        const { animal_id, service_id } = req.params;
+        const animal_service = await AnimalServices.animalServiceByIDs(
+          animal_id,
+          service_id
+        );
+
+        if (animal_service.length === 0) {
+          res.status(404).json({ message: 'Record not found.' });
+        } else {
+          if (action == 'delete') {
+            req.animal_service = animal_service;
+            next();
+          } else if (action == 'update') {
+            next();
           }
-      
+        }
       } catch (err) {
         next(err);
       }
@@ -96,10 +97,10 @@ module.exports = {
   isAnimalServiceUnique: () => {
     return async (req, res, next) => {
       try {
-        const {animal_id, service_id} = req.body;
+        const { animal_id, service_id } = req.body;
         const service_qry = db('animal_services')
-                            .where('animal_id', animal_id)
-                            .where('service_id', service_id);
+          .where('animal_id', animal_id)
+          .where('service_id', service_id);
 
         if (await service_qry.first()) {
           res.status(404).json({ message: 'Animal Service alreday exist' });
