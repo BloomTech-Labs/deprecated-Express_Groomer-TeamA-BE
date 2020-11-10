@@ -66,14 +66,13 @@ const animalServiceByIDs = async (animal_id, service_id) => {
 function animalServicesObject(animal_services) {
   const total_services = animal_services.length;
 
-  result = {};
-  animals = {};
+  const animals = {};
 
   for (let i = 0; i < total_services; i++) {
-    animal_id = animal_services[i]['animal_id'];
-    animal_type = animal_services[i]['animal_type'];
-    service_id = animal_services[i]['service_id'];
-    service_name = animal_services[i]['service_name'];
+    const animal_id = animal_services[i]['animal_id'];
+    const animal_type = animal_services[i]['animal_type'];
+    const service_id = animal_services[i]['service_id'];
+    const service_name = animal_services[i]['service_name'];
 
     const animalObj = {
       id: animal_id,
@@ -89,12 +88,6 @@ function animalServicesObject(animal_services) {
 
     animals[animal_id]['services'].push(service_obj);
   }
-
-  // result["animals"] = []
-
-  // Object.keys(animals).forEach(key => {
-  //   result["animals"].push(animals[key])
-  // })
 
   result = [];
 
