@@ -84,12 +84,12 @@ function animalServicesObject(animal_services) {
       animals[animal_id] = animalObj;
     }
 
-    service_obj = { id: service_id, name: service_name };
+    const service_obj = { id: service_id, name: service_name };
 
     animals[animal_id]['services'].push(service_obj);
   }
 
-  result = [];
+  const result = [];
 
   Object.keys(animals).forEach((key) => {
     result.push(animals[key]);

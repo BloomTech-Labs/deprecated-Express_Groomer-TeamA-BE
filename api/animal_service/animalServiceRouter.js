@@ -334,12 +334,10 @@ router.delete(
       const animal_service = animalServiceModel.animalServicesObject(
         req.animal_service
       );
-      return res
-        .status(200)
-        .json({
-          message: `Animal service was deleted.`,
-          animal: animal_service[0],
-        });
+      return res.status(200).json({
+        message: `Animal service was deleted.`,
+        animal: animal_service[0],
+      });
     } catch (err) {
       next(err);
     }
