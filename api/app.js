@@ -24,6 +24,10 @@ const profileRouter = require('./profile/profileRouter');
 
 const app = express();
 
+app.use(
+  cors()
+);
+
 process.on('unhandledRejection', (reason, p) => {
   console.error('Unhandled Rejection at: Promise', p, 'reason:', reason);
   // application specific logging, throwing an error, or other logic here
@@ -37,11 +41,12 @@ app.use(
 
 app.use(helmet());
 app.use(express.json());
-app.use(
-  cors({
-    origin: '*',
-  })
-);
+
+app.use((req, res, next) => {
+  res.header('Access-Control-Allow-Origin', '*');
+  next();
+});
+
 app.use(logger('dev'));
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
