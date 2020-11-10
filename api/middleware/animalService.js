@@ -2,7 +2,6 @@ const AnimalServices = require('../animal_service/animalServiceModel');
 const Services = require('../service/serviceModel');
 const Animals = require('../animal/animalModel');
 const db = require('../../data/db-config');
-const animal = require('./animal');
 
 module.exports = {
   validateAnimalID: () => {
