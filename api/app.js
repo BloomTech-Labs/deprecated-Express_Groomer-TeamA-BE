@@ -26,7 +26,7 @@ const serviceRouter = require('./service/serviceRouter');
 const animalServiceRouter = require('./animal_service/animalServiceRouter');
 
 const app = express();
-app.use(cors())
+app.use(cors());
 process.on('unhandledRejection', (reason, p) => {
   console.error('Unhandled Rejection at: Promise', p, 'reason:', reason);
   // application specific logging, throwing an error, or other logic here
