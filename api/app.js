@@ -23,12 +23,11 @@ const indexRouter = require('./index/indexRouter');
 const profileRouter = require('./profile/profileRouter');
 const animalRouter = require('./animal/animalRouter');
 const serviceRouter = require('./service/serviceRouter');
+const animalServiceRouter = require('./animal_service/animalServiceRouter');
 
 const app = express();
 
-app.use(
-  cors()
-);
+app.use(cors());
 
 process.on('unhandledRejection', (reason, p) => {
   console.error('Unhandled Rejection at: Promise', p, 'reason:', reason);
@@ -58,6 +57,7 @@ app.use('/', indexRouter);
 app.use(['/profile', '/profiles'], profileRouter);
 app.use(['/animal', '/animals'], animalRouter);
 app.use(['/service', '/services'], serviceRouter);
+app.use(['/animalservice', '/animalservices'], animalServiceRouter);
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {
