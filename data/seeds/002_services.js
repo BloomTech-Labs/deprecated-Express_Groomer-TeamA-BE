@@ -4,5 +4,7 @@ exports.seed = async (knex) => {
     { name: 'Haircut' },
     { name: 'Nail Cutting' },
     { name: 'Ear Cleaning' },
+    { name: 'Blow-dry' },
+    { name: 'Deep-cleaning shampoo' },    
   ]);
 };
