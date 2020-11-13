@@ -197,12 +197,10 @@ router.post(
         animal_id,
         service_id
       );
-      return res
-        .status(200)
-        .json({
-          message: 'Location service created',
-          location: location_service,
-        });
+      return res.status(200).json({
+        message: 'Location service created',
+        location: location_service,
+      });
     } catch (err) {
       next(err);
     }
@@ -272,12 +270,10 @@ router.put(
         animal_id,
         service_id
       );
-      return res
-        .status(200)
-        .json({
-          message: 'Location service updated',
-          location: location_service,
-        });
+      return res.status(200).json({
+        message: 'Location service updated',
+        location: location_service,
+      });
     } catch (err) {
       next(err);
     }

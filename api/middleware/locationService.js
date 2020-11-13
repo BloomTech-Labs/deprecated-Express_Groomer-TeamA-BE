@@ -54,12 +54,10 @@ module.exports = {
         !req.body.service_id ||
         !req.body.service_cost
       ) {
-        res
-          .status(404)
-          .json({
-            message:
-              'Missing  location ID, animail ID, service ID or Service Cost',
-          });
+        res.status(404).json({
+          message:
+            'Missing  location ID, animail ID, service ID or Service Cost',
+        });
       } else {
         next();
       }
