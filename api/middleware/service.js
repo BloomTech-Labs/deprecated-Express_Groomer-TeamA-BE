@@ -44,7 +44,7 @@ module.exports = {
         }
 
         if (await service_qry.first()) {
-          res.status(404).json({ message: 'Service alreday exist' });
+          res.status(404).json({ message: 'Service already exists.' });
         } else {
           next();
         }

@@ -47,7 +47,7 @@ module.exports = {
         }
 
         if (await animal_qry.first()) {
-          res.status(404).json({ message: 'Animal alreday exist' });
+          res.status(404).json({ message: 'Animal already exists.' });
         } else {
           next();
         }
