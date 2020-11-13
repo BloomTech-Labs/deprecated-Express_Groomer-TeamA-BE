@@ -174,14 +174,19 @@ router.get('/', authRequired, async (req, res, next) => {
  *      404:
  *        description: 'location not found'
  */
-router.get('/:id', authRequired, validateLocationID(), async (req, res) => {
-  try {
-    const user_location = LocationModel.getUserLocationsObject(req.location);
-    return res.status(200).json(user_location);
-  } catch (err) {
-    next(err);
+router.get(
+  '/:id',
+  authRequired,
+  validateLocationID(),
+  async (req, res, next) => {
+    try {
+      const user_location = LocationModel.getUserLocationsObject(req.location);
+      return res.status(200).json(user_location);
+    } catch (err) {
+      next(err);
+    }
   }
-});
+);
 
 /**
  * @swagger
