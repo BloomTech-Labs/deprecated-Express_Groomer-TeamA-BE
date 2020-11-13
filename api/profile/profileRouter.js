@@ -111,7 +111,7 @@ router.get('/', authRequired, function (req, res) {
  */
 router.get('/:id', authRequired, function (req, res) {
   res.set('Access-Control-Allow-Origin', '*');
-  const id = String(req.params.id)
+  const id = String(req.params.id);
   Profiles.findById(id)
     .then((profile) => {
       if (profile) {
