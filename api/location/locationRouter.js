@@ -443,12 +443,10 @@ router.delete(
       const id = req.params.id;
       await LocationModel.remove(id);
       const user_location = LocationModel.getUserLocationsObject(req.location);
-      res
-        .status(200)
-        .json({
-          message: `Location '${id}' was deleted.`,
-          user: user_location,
-        });
+      res.status(200).json({
+        message: `Location '${id}' was deleted.`,
+        user: user_location,
+      });
     } catch (err) {
       next(err);
     }

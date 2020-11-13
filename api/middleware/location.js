@@ -37,12 +37,10 @@ module.exports = {
         req.body.latitude == '' ||
         !req.body.longitude
       ) {
-        res
-          .status(404)
-          .json({
-            message:
-              'missing address, state_id, city_id, zip, phone_number, latitude or longitude field',
-          });
+        res.status(404).json({
+          message:
+            'missing address, state_id, city_id, zip, phone_number, latitude or longitude field',
+        });
       } else {
         next();
       }
