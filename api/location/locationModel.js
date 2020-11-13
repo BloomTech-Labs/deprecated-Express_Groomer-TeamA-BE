@@ -76,7 +76,7 @@ const remove = async (id) => {
 };
 
 function getUserLocationsObject(user_locations) {
-  location_by_user = {};
+  let location_by_user = {};
 
   user_locations.forEach((user_location) => {
     const id = user_location.profile_id;
