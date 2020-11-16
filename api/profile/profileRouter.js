@@ -63,6 +63,7 @@ const router = express.Router();
  *        $ref: '#/components/responses/UnauthorizedError'
  */
 router.get('/', authRequired, function (req, res) {
+  res.set('Access-Control-Allow-Origin', '*');
   Profiles.findAll()
     .then((profiles) => {
       res.status(200).json(profiles);
@@ -109,6 +110,7 @@ router.get('/', authRequired, function (req, res) {
  *        description: 'Profile not found'
  */
 router.get('/:id', authRequired, function (req, res) {
+  res.set('Access-Control-Allow-Origin', '*');
   const id = String(req.params.id);
   Profiles.findById(id)
     .then((profile) => {
