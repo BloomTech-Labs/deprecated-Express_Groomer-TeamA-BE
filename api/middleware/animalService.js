@@ -102,7 +102,7 @@ module.exports = {
           .where('service_id', service_id);
 
         if (await service_qry.first()) {
-          res.status(404).json({ message: 'Animal Service alreday exist' });
+          res.status(404).json({ message: 'Animal Service already exists.' });
         } else {
           next();
         }
