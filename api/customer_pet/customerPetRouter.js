@@ -148,14 +148,21 @@ router.get('/', authRequired, async (req, res, next) => {
  *      404:
  *        description: 'pet not found'
  */
-router.get('/:id', authRequired, validateCustomerPetID(), async (req, res) => {
-  try {
-    const customer_pet = CustomerPetModel.customerPetsObject(req.customer_pet);
-    return res.status(200).json(customer_pet);
-  } catch (err) {
-    next(err);
+router.get(
+  '/:id',
+  authRequired,
+  validateCustomerPetID(),
+  async (req, res, next) => {
+    try {
+      const customer_pet = CustomerPetModel.customerPetsObject(
+        req.customer_pet
+      );
+      return res.status(200).json(customer_pet);
+    } catch (err) {
+      next(err);
+    }
   }
-});
+);
 
 /**
  * @swagger
@@ -396,12 +403,10 @@ router.delete(
       const customer_pet = CustomerPetModel.customerPetsObject(
         req.customer_pet
       );
-      res
-        .status(200)
-        .json({
-          message: `Customer pet '${id}' was deleted.`,
-          customer: customer_pet,
-        });
+      res.status(200).json({
+        message: `Customer pet '${id}' was deleted.`,
+        customer: customer_pet,
+      });
     } catch (err) {
       next(err);
     }
