@@ -26,6 +26,7 @@ const serviceRouter = require('./service/serviceRouter');
 const animalServiceRouter = require('./animal_service/animalServiceRouter');
 const locationRouter = require('./location/locationRouter');
 const locationServiceRouter = require('./location_service/locationServiceRouter');
+const customerPetRouter = require('./customer_pet/customerPetRouter');
 
 const app = express();
 
@@ -62,6 +63,7 @@ app.use(['/service', '/services'], serviceRouter);
 app.use(['/animalservice', '/animalservices'], animalServiceRouter);
 app.use(['/location', '/locations'], locationRouter);
 app.use(['/locationservice', '/locationservices'], locationServiceRouter);
+app.use(['/customerPet', '/customerPets'], customerPetRouter);
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {
