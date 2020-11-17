@@ -31,17 +31,6 @@ const {
  *          items:
  *            $ref: '#/components/schemas/Service'
  *
- *    AnimalServiceIDS:
- *      type: object
- *      required:
- *        - animal_id
- *        - service_id
- *      properties:
- *        animal_id:
- *          type: integer
- *        service_id:
- *          type: integer
- *
  * /animalService:
  *  get:
  *    description: Returns a list of animals with services
@@ -148,7 +137,15 @@ router.get(
  *      content:
  *        application/json:
  *          schema:
- *            $ref: '#/components/schemas/AnimalServiceIDS'
+ *            type: object
+ *            required:
+ *              - animal_id
+ *              - service_id
+ *            properties:
+ *              animal_id:
+ *                type: integer
+ *              service_id:
+ *                type: integer
  *    responses:
  *      400:
  *        description: 'Animal Service already exists'
@@ -224,7 +221,15 @@ router.post(
  *      content:
  *        application/json:
  *          schema:
- *            $ref: '#/components/schemas/AnimalServiceIDS'
+ *            type: object
+ *            required:
+ *              - animal_id
+ *              - service_id
+ *            properties:
+ *              animal_id:
+ *                type: integer
+ *              service_id:
+ *                type: integer
  *    responses:
  *      400:
  *        description: 'Animal service already exists'
