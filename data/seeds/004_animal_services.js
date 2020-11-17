@@ -4,8 +4,10 @@ exports.seed = async (knex) => {
     { service_id: 1, animal_id: 1 },
     { service_id: 2, animal_id: 1 },
     { service_id: 3, animal_id: 1 },
+    { service_id: 4, animal_id: 1 },
     { service_id: 1, animal_id: 2 },
     { service_id: 2, animal_id: 2 },
     { service_id: 3, animal_id: 2 },
+    { service_id: 4, animal_id: 2 },
   ]);
 };
