@@ -45,7 +45,6 @@ app.use(
 app.use(helmet());
 app.use(express.json());
 
-
 app.use(logger('dev'));
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
