@@ -43,10 +43,6 @@ app.use(
 app.use(helmet());
 app.use(express.json());
 
-app.use((req, res, next) => {
-  res.header('Access-Control-Allow-Origin', '*');
-  next();
-});
 
 app.use(logger('dev'));
 app.use(express.urlencoded({ extended: false }));
