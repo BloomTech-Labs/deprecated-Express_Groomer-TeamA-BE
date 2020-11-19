@@ -8,7 +8,7 @@ For steps on how to work with this repository [please see here](https://docs.lab
 
 You can find the deployed projects at:
 - Backend: [Heroku](https://labspt12-express-groomer-g-api.herokuapp.com/).
-- Frontend: [🚫URL NAME GOES HERE](🚫copy and paste URL here).
+- Frontend: [Amplify](https://g.expressgroomer.dev/).
 
 
 ## Contributors
@@ -45,9 +45,9 @@ You can find the deployed projects at:
 
 #### 🚫 back end framework and key libraries go here
 
-- point one
-- point two
-- point three
+- Node 
+- Express API 
+- Swagger
 
 🚫 List the rest of the back end end features and libraries in the same format as the framework above
 
@@ -152,4 +152,4 @@ Remember that this project is licensed under the MIT license, and by submitting 
 
 ## Documentation
 
-See [Backend Documentation](🚫*link to your backend API SWAGGER DOCS here*) for details on the backend of our project.
+See [Backend Documentation](https://labspt12-express-groomer-g-api.herokuapp.com/api-docs/) for details on the backend of our project.
