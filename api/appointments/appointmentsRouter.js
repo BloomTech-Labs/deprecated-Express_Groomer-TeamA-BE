@@ -3,7 +3,7 @@ const authRequired = require('../middleware/authRequired');
 const AppointmentsModel = require('./appointmentsModel');
 const router = express.Router();
 
-router.post('/', async (req, res) => {
+router.post('/', authRequired, async (req, res) => {
   try {
     const appointment = req.body;
 
