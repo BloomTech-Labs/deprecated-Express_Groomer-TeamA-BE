@@ -11,6 +11,15 @@ exports.up = async (knex) => {
       .onDelete('CASCADE')
       .onUpdate('CASCADE');
     table
+      .string('customer_id')
+      // forces integer to be positive
+      .unsigned()
+      .notNullable()
+      .references('id')
+      .inTable('profiles')
+      .onDelete('CASCADE')
+      .onUpdate('CASCADE');
+    table
       .integer('pet_id')
       // forces integer to be positive
       .unsigned()
