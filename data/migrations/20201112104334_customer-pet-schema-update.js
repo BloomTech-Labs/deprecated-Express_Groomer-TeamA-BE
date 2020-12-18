@@ -6,6 +6,6 @@ exports.up = async (knex) => {
 
 exports.down = async (knex) => {
   await knex.schema.table('customer_pets', function (table) {
-    table.dropColumn('health_issue').default(null);
+    table.dropColumn('health_issue');
   });
 };
