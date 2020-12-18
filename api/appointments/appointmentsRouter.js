@@ -3,6 +3,7 @@ const authRequired = require('../middleware/authRequired');
 const AppointmentsModel = require('./appointmentsModel');
 const router = express.Router();
 
+//CREATE
 router.post('/', authRequired, async (req, res) => {
   const customer_id = req.profile.id;
   try {
@@ -18,6 +19,7 @@ router.post('/', authRequired, async (req, res) => {
   }
 });
 
+//READ
 router.get('/', authRequired, async (req, res) => {
   const profileId = req.profile.id;
 
@@ -27,6 +29,19 @@ router.get('/', authRequired, async (req, res) => {
   } catch (e) {
     console.error(e.stack);
     res.status(500).json({ error: 'Error getting appointments' });
+  }
+});
+
+//UPDATE
+
+//DELETE
+router.delete('/:appointmentId', async (req, res) => {
+  try {
+    const deleted = await AppointmentsModel.remove(req.params.appointmentId);
+    res.status(200).json(deleted);
+  } catch (e) {
+    console.log(e.stack);
+    res.status(500).json({ error: 'Error deleting appointment' });
   }
 });
 
