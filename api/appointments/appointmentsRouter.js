@@ -33,6 +33,20 @@ router.get('/', authRequired, async (req, res) => {
 });
 
 //UPDATE
+router.put('/', authRequired, async (req, res) => {
+  try {
+    const { appointment_id } = req.body;
+    const appointmentChanges = req.body;
+    const updatedAppointment = await AppointmentsModel.update(
+      appointment_id,
+      appointmentChanges
+    );
+    res.status(200).json(updatedAppointment);
+  } catch (e) {
+    console.log(e.stack);
+    res.status(500).json({ error: 'Error updating appointment' });
+  }
+});
 
 //DELETE
 router.delete('/:appointmentId', async (req, res) => {
