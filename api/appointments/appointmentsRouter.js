@@ -21,9 +21,8 @@ router.post('/', authRequired, async (req, res) => {
 
 //READ
 router.get('/', authRequired, async (req, res) => {
-  const profileId = req.profile.id;
-
   try {
+    const profileId = req.profile.id; //moved this variable inside try/catch
     const appointments = await AppointmentsModel.getAll(profileId);
     res.status(200).json(appointments);
   } catch (e) {
