@@ -48,7 +48,7 @@ router.delete('/:appointmentId', async (req, res) => {
     const deleted = await AppointmentsModel.remove(req.params.appointmentId);
     res.status(200).json(deleted);
   } catch (e) {
-    console.log(e.stack);
+    console.error(e.stack);
     res.status(500).json({ error: 'Error deleting appointment' });
   }
 });
