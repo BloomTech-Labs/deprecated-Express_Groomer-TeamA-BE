@@ -23,7 +23,18 @@ const getAll = async (profileID) => {
   }
 };
 
+const remove = async (appointmentId) => {
+  const deletedApp = await db('appointments')
+    .select('*')
+    .where({ id: appointmentId });
+  const changes = await db('appointments')
+    .delete()
+    .where({ id: appointmentId });
+  return changes ? deletedApp : null;
+};
+
 module.exports = {
   create,
   getAll,
+  remove,
 };
