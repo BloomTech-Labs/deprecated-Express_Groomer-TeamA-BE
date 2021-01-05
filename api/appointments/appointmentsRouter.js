@@ -3,7 +3,62 @@ const authRequired = require('../middleware/authRequired');
 const AppointmentsModel = require('./appointmentsModel');
 const router = express.Router();
 
-//CREATE
+/**
+ * @swagger
+ * components:
+ *  schemas:
+ *    Appointment:
+ *      type: object
+ *      required:
+ *        - groomer_id
+ *        - customer_id
+ *        - pet_id
+ *        - location_service_id
+ *        - service_provider_name
+ *        - appointment_date
+ *        - appointment_time
+ *        - status
+ *      properties:
+ *        id:
+ *          type: integer
+ *        groomer_id:
+ *          type: integer
+ *        customer_id:
+ *          type: integer
+ *        pet_id:
+ *          type: integer
+ *        location_service_id:
+ *          type: integer
+ *        service_provider_name:
+ *          type: string
+ *        appointment_date:
+ *          type: string
+ *          format: date
+ *        appointment_time:
+ *          type: string
+ *          format: time
+ *        status:
+ *          type: string
+ *          enum: ['Pending', 'Cancel', 'Done']
+ *        created_at:
+ *          type: string
+ *          format: date-time
+ *        updated_at:
+ *          type: string
+ *          format: date-time
+ *      example:
+ *            id: 11,
+              groomer_id: "6jknxiznooy5lzesvzlk",
+              customer_id: "00ultx74kMUmEW8054x6",
+              pet_id: 6,
+              location_service_id: 7,
+              service_provider_name: "Roger's Rabid Rabbits Grooming",
+              appointment_date: "2020-10-19",
+              appointment_time: "07:37:16",
+              status: "Pending",
+              created_at: "2020-10-05T19:30:32.123Z",
+              updated_at: "2020-10-05T19:30:32.123Z"
+ */
 router.post('/', authRequired, async (req, res) => {
   const customer_id = req.profile.id;
   try {
