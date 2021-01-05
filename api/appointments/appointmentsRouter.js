@@ -22,8 +22,7 @@ router.post('/', authRequired, async (req, res) => {
 //READ
 router.get('/', authRequired, async (req, res) => {
   try {
-    const profileId = req.profile.id; //moved this variable inside try/catch
-    const appointments = await AppointmentsModel.getAll(profileId);
+    const appointments = await AppointmentsModel.getAll(req.profile.id);
     res.status(200).json(appointments);
   } catch (e) {
     console.error(e.stack);
@@ -31,7 +30,31 @@ router.get('/', authRequired, async (req, res) => {
   }
 });
 
+router.get('/:appointmentId', authRequired, async (req, res) => {
+  try {
+    const appointment = await AppointmentsModel.get(req.params.appointmentId);
+    res.status(200).json(appointment);
+  } catch (e) {
+    console.error(e.stack);
+    res.status(500).json({ error: 'Error getting appointment' });
+  }
+});
+
 //UPDATE
+router.put('/', authRequired, async (req, res) => {
+  try {
+    const { appointment_id } = req.body;
+    const appointmentChanges = req.body;
+    const updatedAppointment = await AppointmentsModel.update(
+      appointment_id,
+      appointmentChanges
+    );
+    res.status(200).json(updatedAppointment);
+  } catch (e) {
+    console.log(e.stack);
+    res.status(500).json({ error: 'Error updating appointment' });
+  }
+});
 
 //DELETE
 router.delete('/:appointmentId', async (req, res) => {
@@ -39,7 +62,7 @@ router.delete('/:appointmentId', async (req, res) => {
     const deleted = await AppointmentsModel.remove(req.params.appointmentId);
     res.status(200).json(deleted);
   } catch (e) {
-    console.log(e.stack);
+    console.error(e.stack);
     res.status(500).json({ error: 'Error deleting appointment' });
   }
 });
