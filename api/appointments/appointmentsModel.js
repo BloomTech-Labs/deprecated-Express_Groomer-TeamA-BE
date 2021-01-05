@@ -10,6 +10,8 @@ const getAll = async (profileID) => {
     .where({ id: profileID })
     .select('user_type');
 
+  console.log(('type', type));
+
   switch (type.user_type) {
     case 'Groomer':
       return db('appointments').where({ groomer_id: profileID }).returning('*');
@@ -23,6 +25,10 @@ const getAll = async (profileID) => {
   }
 };
 
+const get = async (appointmentId) => {
+  return db('appointments').where({ id: appointmentId }).returning('*');
+};
+
 const remove = async (appointmentId) => {
   const deletedApp = await db('appointments')
     .select('*')
@@ -33,8 +39,23 @@ const remove = async (appointmentId) => {
   return changes ? deletedApp : null;
 };
 
+const update = async (appointmentId, appointmentChanges) => {
+  appointmentChanges = {
+    ...appointmentChanges,
+    id: appointmentChanges.appointment_id,
+  };
+  delete appointmentChanges.appointment_id;
+  await db('appointments')
+    .update(appointmentChanges)
+    .where({ id: appointmentId });
+
+  return db('appointments').select('*').where({ id: appointmentId });
+};
+
 module.exports = {
   create,
   getAll,
+  get,
   remove,
+  update,
 };
