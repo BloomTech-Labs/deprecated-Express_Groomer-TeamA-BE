@@ -10,6 +10,8 @@ const getAll = async (profileID) => {
     .where({ id: profileID })
     .select('user_type');
 
+  console.log(('type', type));
+
   switch (type.user_type) {
     case 'Groomer':
       return db('appointments').where({ groomer_id: profileID }).returning('*');
@@ -21,6 +23,10 @@ const getAll = async (profileID) => {
       console.error({ message: 'type is not Customer or Groomer' });
       throw new Error({ message: 'type is not Customer or Groomer' });
   }
+};
+
+const get = async (appointmentId) => {
+  return db('appointments').where({ id: appointmentId }).returning('*');
 };
 
 const remove = async (appointmentId) => {
@@ -49,6 +55,7 @@ const update = async (appointmentId, appointmentChanges) => {
 module.exports = {
   create,
   getAll,
+  get,
   remove,
   update,
 };
