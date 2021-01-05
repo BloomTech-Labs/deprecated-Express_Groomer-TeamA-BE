@@ -6,6 +6,7 @@ exports.up = (knex) => {
       table.string('email');
       table.string('name');
       table.string('avatarUrl');
+      table.string('certifications');
       table.timestamps(true, true);
     });
 };
