@@ -17,7 +17,8 @@ const getCustomerAllPets = async (profile_id) => {
       'cp.pet_name',
       'cp.color',
       'cp.date_of_birth',
-      'cp.image_url'
+      'cp.image_url',
+      'cp.health_issue'
     );
 };
 
@@ -39,7 +40,8 @@ const findCustomerPet = async (pet_id, profile_id) => {
       'cp.pet_name',
       'cp.color',
       'cp.date_of_birth',
-      'cp.image_url'
+      'cp.image_url',
+      'cp.health_issue'
     );
 };
 
