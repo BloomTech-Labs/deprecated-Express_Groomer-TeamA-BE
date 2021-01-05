@@ -7,7 +7,7 @@ exports.up = async (knex) => {
 
 exports.down = async (knex) => {
   await knex.schema.table('locations', function (table) {
-    table.dropColumn('latitude').notNullable();
-    table.dropColumn('longitude').notNullable();
+    table.dropColumn('latitude');
+    table.dropColumn('longitude');
   });
 };
