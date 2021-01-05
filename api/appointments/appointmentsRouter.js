@@ -48,16 +48,17 @@ const router = express.Router();
  *          format: date-time
  *      example:
  *            id: 11,
-              groomer_id: "6jknxiznooy5lzesvzlk",
-              customer_id: "00ultx74kMUmEW8054x6",
-              pet_id: 6,
-              location_service_id: 7,
-              service_provider_name: "Roger's Rabid Rabbits Grooming",
-              appointment_date: "2020-10-19",
-              appointment_time: "07:37:16",
-              status: "Pending",
-              created_at: "2020-10-05T19:30:32.123Z",
-              updated_at: "2020-10-05T19:30:32.123Z"
+ *            groomer_id: "6jknxiznooy5lzesvzlk"
+ *            customer_id: "00ultx74kMUmEW8054x6"
+ *            pet_id: 6
+ *            location_service_id: 7
+ *            service_provider_name: "Rabid Rabbits Grooming"
+ *            appointment_date: "2020-10-19"
+ *            appointment_time: "07:37:16"
+ *            status: "Pending"
+ *            created_at: "2020-10-05T19:30:32.123Z"
+ *            updated_at: "2020-10-05T19:30:32.123Z"
+ *
  */
 router.post('/', authRequired, async (req, res) => {
   const customer_id = req.profile.id;
