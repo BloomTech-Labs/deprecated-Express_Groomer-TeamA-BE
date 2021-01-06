@@ -47,18 +47,111 @@ const router = express.Router();
  *          type: string
  *          format: date-time
  *      example:
- *            id: 11,
- *            groomer_id: "6jknxiznooy5lzesvzlk"
- *            customer_id: "00ultx74kMUmEW8054x6"
- *            pet_id: 6
- *            location_service_id: 7
- *            service_provider_name: "Rabid Rabbits Grooming"
- *            appointment_date: "2020-10-19"
- *            appointment_time: "07:37:16"
- *            status: "Pending"
- *            created_at: "2020-10-05T19:30:32.123Z"
- *            updated_at: "2020-10-05T19:30:32.123Z"
+ *        id: 11,
+ *        groomer_id: "6jknxiznooy5lzesvzlk"
+ *        customer_id: "00ultx74kMUmEW8054x6"
+ *        pet_id: 6
+ *        location_service_id: 7
+ *        service_provider_name: "Rabid Rabbits Grooming"
+ *        appointment_time: "07:37:16"
+ *        status: "Pending"
+ *        created_at: "2020-10-05T19:30:32.123Z"
+ *        updated_at: "2020-10-05T19:30:32.123Z"
  *
+ * /appointments:
+ *  post:
+ *    summary: Create an appointmnet with a groomer
+ *    security:
+ *      - okta: []
+ *    tags:
+ *      - appointment
+ *    requestBody:
+ *      description: Appointment information to create Appointment
+ *      content:
+ *        application/json:
+ *          schema:
+ *            type: Object
+ *            required:
+ *              - groomer_id
+ *              - customer_id
+ *              - pet_id
+ *              - location_service_id
+ *              - service_provider_name
+ *              - appointment_date
+ *              - appointment_time
+ *              - status
+ *            properties:
+ *              groomer_id:
+ *                type: integer
+ *              customer_id:
+ *                type: integer
+ *              pet_id:
+ *                type: integer
+ *              location_service_id:
+ *                type: integer
+ *              service_provider_name:
+ *                type: string
+ *              appointment_date:
+ *                type: string
+ *                format: date
+ *              appointment_time:
+ *                type: string
+ *                format: time
+ *              status:
+ *                type: string
+ *                enum: ['Pending', 'Cancel', 'Done']
+ *            example:
+ *              id: 11,
+ *              groomer_id: "6jknxiznooy5lzesvzlk"
+ *              customer_id: "00ultx74kMUmEW8054x6"
+ *              pet_id: 6
+ *              location_service_id: 7
+ *              service_provider_name: "Rabid Rabbits Grooming"
+ *              appointment_time: "07:37:16"
+ *              status: "Pending"
+ *              created_at: "2020-10-05T19:30:32.123Z"
+ *              updated_at: "2020-10-05T19:30:32.123Z"
+ *    response:
+ *      400:
+ *        description: 'Missing required propery: _property_'
+ *      401:
+ *        $ref: '#/components/responses/UnauthorizedError'
+ *      409:
+ *        description: 'The groomer already has an appointment schedule at the requested time'
+ *      200:
+ *        description: An appointment object
+ *        content:
+ *          application/json:
+ *            schema:
+ *              type: object
+ *              properties:
+ *                id:
+ *                  type: integer
+ *                groomer_id:
+ *                  type: integer
+ *                customer_id:
+ *                  type: integer
+ *                pet_id:
+ *                  type: integer
+ *                location_service_id:
+ *                  type: integer
+ *                service_provider_name:
+ *                  type: string
+ *                appointment_date:
+ *                  type: string
+ *                  format: date
+ *                appointment_time:
+ *                  type: string
+ *                  format: time
+ *                status:
+ *                  type: string
+ *                  enum: ['Pending', 'Cancel', 'Done']
+ *                created_at:
+ *                  type: string
+ *                  format: date-time
+ *                updated_at:
+ *                  type: string
+ *                  format: date-time
  */
 router.post('/', authRequired, async (req, res) => {
   const customer_id = req.profile.id;
@@ -75,7 +168,49 @@ router.post('/', authRequired, async (req, res) => {
   }
 });
 
-//READ
+/**
+ * /appointments:
+ *  get:
+ *    description: Returns a list of all appointments for a customer or groomer
+ *    summary: Get a list of all appointments for a customer or groomer
+ *    security:
+ *      - okta: []
+ *    tags:
+ *      - appointment
+ *    responses:
+ *      401:
+ *        $ref: '#/components/responses/UnauthorizedError'
+ *      200:
+ *        description: appointment data
+ *        content:
+ *          application/json:
+ *            schema:
+ *              type: array
+ *              items:
+ *                $ref: '#/components/schemas/Appointment'
+ *              example:
+ *                appointments:
+ *                  - id: 1
+ *                    groomer_id: "0x4v96mhmswefsoy4qwm"
+ *                    customer_id: "00ultx74kMUmEW8054x6"
+ *                    pet_id: 1
+ *                    location_service_id: 1
+ *                    service_provider_name: "Randy"
+ *                    appointment_date_time: 1610995967
+ *                    status: "Pending"
+ *                    created_at: "2021-01-06T18:45:39.979Z"
+ *                    updated_at: "2021-01-06T18:45:39.979Z"
+ *                  - id: 2
+ *                    groomer_id: "0x4v96mhmswefsoy4qwm"
+ *                    customer_id: "00ultx74kMUmEW8054x6"
+ *                    pet_id: 2
+ *                    location_service_id: 1
+ *                    service_provider_name: "Randy"
+ *                    appointment_date_time: 1610736767
+ *                    status: "Pending"
+ *                    created_at: "2021-01-06T18:45:39.979Z"
+ *                    updated_at: "2021-01-06T18:45:39.979Z"
+ */
 router.get('/', authRequired, async (req, res) => {
   try {
     const appointments = await AppointmentsModel.getAll(req.profile.id);
