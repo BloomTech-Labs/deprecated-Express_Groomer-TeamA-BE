@@ -58,7 +58,7 @@ const router = express.Router();
  *        created_at: "2020-10-05T19:30:32.123Z"
  *        updated_at: "2020-10-05T19:30:32.123Z"
  *
- * /customerPets:
+ * /appointments:
  *  post:
  *    summary: Create an appointmnet with a groomer
  *    security:
