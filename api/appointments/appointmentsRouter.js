@@ -321,7 +321,31 @@ router.put('/', authRequired, async (req, res) => {
   }
 });
 
-// DELETE
+/**
+ * @swagger
+ * /appointment/{id}:
+ *  delete:
+ *    summary: Remove an appointment
+ *    security:
+ *      - okta: []
+ *    tags:
+ *      - appointment
+ *    parameters:
+ *      - name: id
+ *        in: path
+ *        description: ID of the appointment
+ *        required: true
+ *        type: integer
+ *    responses:
+ *      401:
+ *        $ref: '#/components/responses/UnauthorizedError'
+ *      200:
+ *        description: An appointment object
+ *        content:
+ *          application/json:
+ *            schema:
+ *              $ref: '#/components/schemas/Appointment'
+ */
 router.delete('/:appointmentId', async (req, res) => {
   try {
     const deleted = await AppointmentsModel.remove(req.params.appointmentId);
