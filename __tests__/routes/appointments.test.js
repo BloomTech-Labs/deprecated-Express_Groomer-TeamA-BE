@@ -28,4 +28,15 @@ describe('Appointments router endpoints', () => {
       expect(Appointments.get.mock.calls.length).toBe(1);
     });
   });
+
+  describe('GET /:appointmentId', () => {
+    it('should return 404', async () => {
+      Appointments.get.mockResolvedValue();
+      const res = await request(server).get('/appointments/666');
+
+      expect(res.status).toBe(404);
+      expect(res.body.length).toBe(0);
+      expect(Appointments.get.mock.calls.length).toBe(1);
+    });
+  });
 });
