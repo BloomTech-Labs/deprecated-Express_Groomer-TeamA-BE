@@ -169,6 +169,7 @@ router.post('/', authRequired, async (req, res) => {
 });
 
 /**
+ * @swagger
  * /appointments:
  *  get:
  *    description: Returns a list of all appointments for a customer or groomer
@@ -221,6 +222,41 @@ router.get('/', authRequired, async (req, res) => {
   }
 });
 
+/**
+ * @swagger
+ * components:
+ *  parameters:
+ *    appointmentId:
+ *      name: id
+ *      in: path
+ *      description: ID of the appointment to return
+ *      required: true
+ *      example: 1
+ *      schema:
+ *        type: string
+ *
+ * /appointment/{id}:
+ *  get:
+ *    description: Find appointment by ID
+ *    summary: Returns a single appointment
+ *    security:
+ *      - okta: []
+ *    tags:
+ *      - appointment
+ *    parameters:
+ *      - $ref: '#/components/parameters/appointmentId'
+ *    responses:
+ *      200:
+ *        description: An appointment object
+ *        content:
+ *          application/json:
+ *            schema:
+ *              $ref: '#/components/schemas/Appointment'
+ *      401:
+ *        $ref: '#/components/responses/UnauthorizedError'
+ *      404:
+ *        description: 'appointment not found'
+ */
 router.get('/:appointmentId', authRequired, async (req, res) => {
   try {
     const appointment = await AppointmentsModel.get(req.params.appointmentId);
