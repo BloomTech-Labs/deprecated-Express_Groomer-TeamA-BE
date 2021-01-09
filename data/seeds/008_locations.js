@@ -7,7 +7,7 @@ exports.seed = (knex) => {
       return knex('locations').insert([
         {
           id: 1,
-          profile_id: 'yonp6i2k2xll5qq8mvgq',
+          profile_id: '00ultwew80Onb2vOT4x6',
           address: '917 Armstrong Blvd',
           is_mobo: false,
           zip: 4042,
