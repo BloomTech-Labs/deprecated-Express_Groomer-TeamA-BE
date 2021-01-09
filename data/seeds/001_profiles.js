@@ -5,7 +5,7 @@ const profiles = [...new Array(5)].map((i, idx) => ({
     idx === 0
       ? '00ulthapbErVUwVJy4x6'
       : idx === 2
-      ? 'yonp6i2k2xll5qq8mvgq'
+      ? '00ultwew80Onb2vOT4x6'
       : faker.random.alphaNumeric(20),
   user_type: parseInt(idx) <= 1 ? 'Customer' : 'Groomer',
   avatarUrl: faker.image.avatar(),
