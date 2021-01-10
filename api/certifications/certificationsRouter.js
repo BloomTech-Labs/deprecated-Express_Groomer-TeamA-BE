@@ -1,4 +1,6 @@
-const router = require('express').Router;
+const router = require('express').Router();
+const authRequired = require('../middleware/authRequired');
+const Certifications = require('./certificationsModel');
 
 /**
  * @swagger
@@ -14,7 +16,7 @@ const router = require('express').Router;
  *        - date_issued
  *        - date_expired
  *      properties:
- *        id: 
+ *        id:
  *          type: integer
  *        groomer_id:
  *          type: string
@@ -89,5 +91,17 @@ const router = require('express').Router;
  *      404:
  *        description: 'no certifications found'
  */
+router.get('/Groomer/:groomerId', authRequired, async (req, res, next) => {
+  try {
+    const certifications = await Certifications.getBy({
+      groomer_id: req.params.groomerId,
+    });
+    return certifications.length
+      ? res.send(certifications)
+      : res.status(404).json({ message: 'no certifications found' });
+  } catch (error) {
+    next(error);
+  }
+});
 
 module.exports = router;
