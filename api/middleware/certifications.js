@@ -19,4 +19,4 @@ const verifyProfileIsGroomer = async (req, res, next) => {
   }
 };
 
-module.exports = verifyProfileIsGroomer;
+module.exports = { verifyProfileIsGroomer };

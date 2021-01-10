@@ -3,7 +3,7 @@ const db = require('../../data/db-config');
 const get = () => {};
 
 const createCertificate = (certificate) => {
-  return db('certificates').insert(certificate).returning('*');
+  return db('certifications').insert(certificate).returning('*');
 };
 
 const remove = () => {};
