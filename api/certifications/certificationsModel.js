@@ -1,6 +1,7 @@
 const db = require('../../data/db-config');
 
-const get = () => {};
+
+const getBy = (filter) => db('certifications').where(filter);
 
 const createCertificate = (certificate) => {
   return db('certifications').insert(certificate).returning('*');
@@ -11,8 +12,8 @@ const remove = () => {};
 const update = () => {};
 
 module.exports = {
-  get,
   createCertificate,
+  getBy,
   remove,
   update,
 };
