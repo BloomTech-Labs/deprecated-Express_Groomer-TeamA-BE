@@ -104,4 +104,40 @@ router.get('/Groomer/:groomerId', authRequired, async (req, res, next) => {
   }
 });
 
+/**
+ * @swagger
+ *  components:
+ *    paramters:
+ *      certificationId:
+ *        name: id
+ *        in: path
+ *        description: ID of the certification
+ *        required: true
+ *        example: 1
+ *        schema:
+ *          type: string
+ *
+ * /certifications/{certificationId}
+ *  get:
+ *    description: Find certification by ID
+ *    summary: Returns a single certification
+ *    security:
+ *      - okta: []
+ *    tags:
+ *      - certification
+ *    paramters:
+ *      - $ref: '#/components/parameters/certificationId'
+ *    responses:
+ *      200:
+ *        description: A certification object
+ *        content:
+ *          application/json:
+ *            schema:
+ *              $ref: '#/components/schemas/Certification'
+ *      401:
+ *        $ref: '#/components/responses/UnauthorizedError'
+ *      404:
+ *        descripption: 'certification not found'
+ */
+
 module.exports = router;
