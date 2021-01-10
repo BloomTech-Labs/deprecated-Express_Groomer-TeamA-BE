@@ -9,7 +9,7 @@ const createError = require('http-errors');
  */
 const verifyProfileIsGroomer = async (req, res, next) => {
   try {
-    const profile = await Profiles.findById(req.body.groomer_id);
+    const profile = await Profiles.findById(req.profile.id);
     if (!profile.user_type.match(/groomer/gi))
       throw new Error(
         'profile id either does not exist, or is not associated with a groomer'
