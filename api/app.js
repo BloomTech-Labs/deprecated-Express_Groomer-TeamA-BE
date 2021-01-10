@@ -29,7 +29,7 @@ const locationServiceRouter = require('./location_service/locationServiceRouter'
 const customerPetRouter = require('./customer_pet/customerPetRouter');
 const groomerSearchRouter = require('./groomer_search/groomerSearchRouter');
 const appointmentsRouter = require('./appointments/appointmentsRouter');
-const certifcationsRouter = require('./certifications/certificationsRouter');
+const certificationsRouter = require('./certifications/certificationsRouter');
 
 const app = express();
 
@@ -64,7 +64,8 @@ app.use(['/locationservice', '/locationservices'], locationServiceRouter);
 app.use(['/customerPet', '/customerPets'], customerPetRouter);
 app.use('/groomerSearch', groomerSearchRouter);
 app.use('/appointments', appointmentsRouter);
-app.use('/certifications', certifcationsRouter);
+app.use('/certifications', certificationsRouter);
+
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {
