@@ -171,5 +171,17 @@ router.get('/Groomer/:groomerId', authRequired, async (req, res, next) => {
  *      404:
  *        description: 'certification not found'
  */
+router.get('/:certificationId', async (req, res, next) => {
+  try {
+    const certification = await Certifications.getById(
+      req.params.certificationId
+    );
+    return certification
+      ? res.send(certification)
+      : res.status(404).json({ message: 'certification not found' });
+  } catch (error) {
+    next(error);
+  }
+});
 
 module.exports = router;
