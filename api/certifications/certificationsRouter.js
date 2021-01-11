@@ -60,7 +60,7 @@ const Certifications = require('./certificationsModel');
  *                - id: 0
  *                  groomer_id: '00ultwew80Onb2vOT4x6'
  *                  title: 'Long-Legged Terriers'
- *                  institute: 'Devry Institute of Dog Grooming'
+ *                  institute: 'Institute of Dog Grooming'
  *                  image:
  *                    'https://headtotailpetgrooming.weebly.com/uploads/6/0/2/9/60294035/attendence_1_orig.jpg'
  *                  date_issued: 1610224700
@@ -68,7 +68,7 @@ const Certifications = require('./certificationsModel');
  *                - id: 1
  *                  groomer_id: '00ultwew80Onb2vOT4x6'
  *                  title: 'Short-Legged Terriers'
- *                  institute: 'Devry Institute of Dog Grooming'
+ *                  institute: 'Institute of Dog Grooming'
  *                  image:
  *                    'https://headtotailpetgrooming.weebly.com/uploads/6/0/2/9/60294035/attendence_1_orig.jpg'
  *                  date_issued: 1610224700
@@ -94,40 +94,81 @@ router.post('/', authRequired, verifyProfileIsGroomer, async (req, res) => {
  * components:
  *  schemas:
  *    Certification:
- *      type: Ojbect
+ *      type: Object
  *      required:
- *        - groomer_id
  *        - title
- *        - insitute
+ *        - institute
  *        - image
  *        - date_issued
  *        - date_expired
  *      properties:
  *        id:
  *          type: integer
- *        groomer_id:
- *          type: string
  *        title:
  *          type: string
- *        insitute:
+ *        institute:
  *          type: string
  *        image:
  *          type: string
  *        date_issued:
  *          type: integer
- *          description: epoch timestampe for date certification is issued
+ *          description: epoch timestamp for date certification is issued
  *        date_expired:
  *          type: integer
- *          description: epoch timestampe for date certification is issued
+ *          description: epoch timestamp for date certification is issued
  *      example:
  *        id: 0
- *        groomer_id: '00ultwew80Onb2vOT4x6'
  *        title: 'Long-Legged Terriers'
- *        institute: 'Devry Institute of Dog Grooming'
+ *        institute: 'Institute of Dog Grooming'
  *        image:
  *          'https://headtotailpetgrooming.weebly.com/uploads/6/0/2/9/60294035/attendence_1_orig.jpg'
  *        date_issued: 1610224700
  *        date_expired: 1925757500
+ *
+ * /certifications/:
+ *  post:
+ *    description: Creates a certification for the profile if the profile is a groomer profiles
+ *    summary: Returns newly created certification
+ *    security:
+ *      - okta: []
+ *    tags:
+ *      - certification
+ *    responses:
+ *      200:
+ *        description: groomer certification data
+ *        content:
+ *          application/json:
+ *            schema:
+ *              type: array
+ *              items:
+ *                $ref: '#/components/schemas/Certification'
+ *              example:
+ *                id: 0
+ *                  groomer_id: '00ultwew80Onb2vOT4x6'
+ *                  title: 'Long-Legged Terriers'
+ *                  institute: 'Institute of Dog Grooming'
+ *                  image:
+ *                  'https://headtotailpetgrooming.weebly.com/uploads/6/0/2/9/60294035/attendence_1_orig.jpg'
+ *                  date_issued: 1610224700
+ *                  date_expired: 1925757500
+ *      401:
+ *        $ref: '#/components/responses/UnauthorizedError'
+ */
+
+router.post('/', authRequired, verifyProfileIsGroomer, async (req, res) => {
+  try {
+    const cert = { ...req.body, groomer_id: req.profile.id };
+    const [newCert] = await Certifications.createCertificate(cert);
+
+    res.status(201).json({ newCert });
+  } catch (e) {
+    console.log(e.stack);
+    res.status(500).json({ error: 'Error creating certificate.' });
+  }
+});
+
+/**
+ * @swagger
  *  parameters:
  *    groomerId:
  *      name: id
@@ -139,10 +180,10 @@ router.post('/', authRequired, verifyProfileIsGroomer, async (req, res) => {
  *        type: string
  * /certifications/Groomer/{groomerId}:
  *  get:
- *    description: Find all certifcations by groomerID
+ *    description: Find all certifications by groomerID
  *    summary: Returns all certifications for a groomer
- *    secuirty:
- *      - okata: []
+ *    security:
+ *      - okta: []
  *    tags:
  *      - certification
  *    parameters:
@@ -194,7 +235,7 @@ router.get('/Groomer/:groomerId', authRequired, async (req, res, next) => {
 /**
  * @swagger
  *  components:
- *    paramters:
+ *    parameters:
  *      certificationId:
  *        name: id
  *        in: path
@@ -212,7 +253,7 @@ router.get('/Groomer/:groomerId', authRequired, async (req, res, next) => {
  *      - okta: []
  *    tags:
  *      - certification
- *    paramters:
+ *    parameters:
  *      - $ref: '#/components/parameters/certificationId'
  *    responses:
  *      200:
@@ -224,7 +265,7 @@ router.get('/Groomer/:groomerId', authRequired, async (req, res, next) => {
  *      401:
  *        $ref: '#/components/responses/UnauthorizedError'
  *      404:
- *        descripption: 'certification not found'
+ *        description: 'certification not found'
  */
 
 module.exports = router;
