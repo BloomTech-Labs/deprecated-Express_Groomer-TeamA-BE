@@ -8,7 +8,7 @@ exports.seed = (knex) => {
         {
           groomer_id: '00ultwew80Onb2vOT4x6',
           title: 'Long-Legged Terriers',
-          institute: 'Devry Institute of Dog Grooming',
+          institute: 'Institute of Dog Grooming',
           image:
             'https://headtotailpetgrooming.weebly.com/uploads/6/0/2/9/60294035/attendence_1_orig.jpg',
           date_issued: 1610224700,
