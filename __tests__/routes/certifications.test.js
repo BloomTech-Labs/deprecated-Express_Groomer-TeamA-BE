@@ -71,7 +71,7 @@ describe('certifications router endpoints', () => {
       Certifications.getById.mockResolvedValue([]);
       const res = await request(server).get('/certification/2');
       expect(res.status).toBe(404);
-      expect(res.body.messasge).toBe('certification not found');
+      expect(res.body.message).toBe('certification not found');
     });
   });
 });
