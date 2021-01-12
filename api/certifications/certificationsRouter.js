@@ -1,3 +1,4 @@
+const e = require('express');
 const authRequired = require('../middleware/authRequired');
 const { verifyProfileIsGroomer } = require('../middleware/certifications');
 const router = require('express').Router();
@@ -186,7 +187,7 @@ router.get('/:certificationId', async (req, res, next) => {
 
 /**
  * @swagger
- * /certifications/{certificationId}
+ * /certifications/{certificationId}:
  *  delete:
  *    summary: Delete Certification matching the Certification ID
  *    security:
@@ -209,5 +210,30 @@ router.get('/:certificationId', async (req, res, next) => {
  *            schema:
  *              $ref: '#/components/schemas/Certification'
  */
+router.delete('/:certificationId', authRequired, async (req, res, next) => {
+  try {
+    const certification = await Certifications.getById(
+      req.params.certificationId
+    );
+    if (certification) {
+      if (certification.groomer_id === req.profile.id) {
+        try {
+          const deleted = await Certifications.remove(
+            req.params.certificationId
+          );
+          res.send({ deleted });
+        } catch (error) {
+          next(error);
+        }
+      }
+      res
+        .status(403)
+        .json({ message: 'You may only delete your own certifications' });
+    }
+    res.status(404).json({ message: 'Certification does not exist' });
+  } catch (error) {
+    next(error);
+  }
+});
 
 module.exports = router;
