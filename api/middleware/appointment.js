@@ -10,7 +10,7 @@ const requiredAppointmentInfo = [
 const validateAppointmentBody = (req, res, next) => {
   requiredAppointmentInfo.forEach((property) => {
     if (!Object.prototype.hasOwnProperty.call(req.body, property)) {
-      res.status(401).json({
+      res.status(400).json({
         error: `Missing required appointment property: ${property}`,
       });
     }
