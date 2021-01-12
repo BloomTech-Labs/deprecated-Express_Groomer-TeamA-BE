@@ -1,5 +1,6 @@
 const express = require('express');
 const authRequired = require('../middleware/authRequired');
+const { validateAppointmentBody } = require('../middleware/appointment');
 const AppointmentsModel = require('./appointmentsModel');
 const router = express.Router();
 
@@ -139,7 +140,7 @@ const router = express.Router();
  *                  type: string
  *                  format: date-time
  */
-router.post('/', authRequired, async (req, res) => {
+router.post('/', authRequired, validateAppointmentBody, async (req, res) => {
   const customer_id = req.profile.id;
   try {
     const appointment = req.body;
