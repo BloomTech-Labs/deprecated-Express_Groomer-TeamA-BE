@@ -11,7 +11,11 @@ const createCertificate = (certificate) => {
   return db('certifications').insert(certificate).returning('*');
 };
 
-const remove = () => {};
+const remove = async (id) => {
+  const deletedApp = await getById(id);
+  const changes = await db('certifications').delete().where({ id });
+  return changes ? deletedApp : null;
+};
 
 const update = () => {};
 
