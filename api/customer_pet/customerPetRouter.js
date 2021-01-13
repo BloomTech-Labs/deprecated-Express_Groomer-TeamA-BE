@@ -413,4 +413,52 @@ router.delete(
   }
 );
 
+/**
+ * @swagger
+ * /customerPets/{id}/appointments:
+ *  get:
+ *    summary: returns a list of all the appointments for a customerPet
+ *    security:
+ *      - okta: []
+ *    tags:
+ *      - customerPet
+ *      - appointment
+ *    parameters:
+ *      - $ref: '#/components/parameters/petId'
+ *    responses:
+ *      401:
+ *        $ref: '#/components/responses/UnauthorizedError'
+ *      404:
+ *        description: 'No appointments found'
+ *      200:
+ *        description: appointment data
+ *        content:
+ *          application/json:
+ *            schema:
+ *              type: Array
+ *              items:
+ *                $ref: '#/components/schemas/Appointment'
+ *              example:
+ *                - id: 1
+ *                  groomer_id: "0x4v96mhmswefsoy4qwm"
+ *                  customer_id: "00ultx74kMUmEW8054x6"
+ *                  pet_id: 1
+ *                  location_service_id: 1
+ *                  service_provider_name: "Rabbid Rabbits Grooming"
+ *                  appointment_date_time: 1610995967
+ *                  status: "Pending"
+ *                  created_at: "2021-01-06T18:45:39.979Z"
+ *                  updated_at: "2021-01-06T18:45:39.979Z"
+ *                - id: 2
+ *                  groomer_id: "0x4v96mhmswefsoy4qwm"
+ *                  customer_id: "00ultx74kMUmEW8054x6"
+ *                  pet_id: 1
+ *                  location_service_id: 1
+ *                  service_provider_name: "Rabbid Rabbits Grooming"
+ *                  appointment_date_time: 1610736767
+ *                  status: "Pending"
+ *                  created_at: "2021-01-06T18:45:39.979Z"
+ *                  updated_at: "2021-01-06T18:45:39.979Z"
+ */
+
 module.exports = router;
