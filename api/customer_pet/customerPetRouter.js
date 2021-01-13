@@ -1,6 +1,7 @@
 const express = require('express');
 const authRequired = require('../middleware/authRequired');
 const CustomerPetModel = require('./customerPetModel');
+const AppointmentModel = require('../appointments/appointmentsModel');
 const router = express.Router();
 const {
   validateCustomerPetID,
@@ -460,5 +461,23 @@ router.delete(
  *                  created_at: "2021-01-06T18:45:39.979Z"
  *                  updated_at: "2021-01-06T18:45:39.979Z"
  */
+router.get(
+  '/:id/appointments',
+  authRequired,
+  validateCustomerPetID(),
+  async (req, res, next) => {
+    try {
+      const appointments = await AppointmentModel.getAllBy({
+        pet_id: req.params.id,
+      });
+      console.info({ appointments });
+      return appointments.length
+        ? res.send(appointments)
+        : res.status(404).json({ message: 'No appointments found for pet' });
+    } catch (error) {
+      next(error);
+    }
+  }
+);
 
 module.exports = router;
