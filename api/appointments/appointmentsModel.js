@@ -24,6 +24,8 @@ const getAll = async (profileID) => {
 };
 const getById = (id) => db('appointments').where({ id }).first().select('*');
 
+const getAllBy = (filter) => db('appointments').where(filter).select('*');
+
 const remove = async (appointmentId) => {
   const deletedApp = await db('appointments')
     .select('*')
@@ -51,6 +53,7 @@ module.exports = {
   create,
   getAll,
   getById,
+  getAllBy,
   remove,
   update,
 };
