@@ -483,12 +483,16 @@ router.get(
 /**
  * @swagger
  * parameters:
- *  status:
+ *  appointmentStatus:
  *    - name: status
  *      in: path
  *      description: Status to filter appointments by
  *      required: true
  *      type: String
+ *      example: Pending
+ *      schema:
+ *        type: string
+ *        enum: ['Pending', 'Cancel', 'Done']
  *
  * /customerPets/{id}/appointments/{status}:
  *  get:
@@ -500,7 +504,7 @@ router.get(
  *      - appointment
  *    parameters:
  *      - $ref: '#/components/parameters/petId'
- *      - $ref: '#/components/parameters/status'
+ *      - $ref: '#/components/parameters/appointmentStatus'
  *    responses:
  *      401:
  *        $ref: '#/components/responses/UnauthorizedError'
