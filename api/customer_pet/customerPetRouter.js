@@ -536,5 +536,26 @@ router.get(
  *                  created_at: "2021-01-06T18:45:39.979Z"
  *                  updated_at: "2021-01-06T18:45:39.979Z"
  */
+router.get(
+  '/:id/appointments/:status',
+  authRequired,
+  validateCustomerPetID(),
+  async (req, res, next) => {
+    console.info({ status: req.params.status });
+    try {
+      const appointments = await AppointmentModel.getAllBy({
+        pet_id: req.params.id,
+        status: req.params.status,
+      });
+      return appointments.length
+        ? res.send(appointments)
+        : res.status(404).json({
+            message: `No appointments found with status: ${req.params.status}`,
+          });
+    } catch (error) {
+      next(error);
+    }
+  }
+);
 
 module.exports = router;
