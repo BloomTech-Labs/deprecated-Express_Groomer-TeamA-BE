@@ -22,10 +22,7 @@ const getAll = async (profileID) => {
       throw new Error({ message: 'type is not Customer or Groomer' });
   }
 };
-
-const get = async (appointmentId) => {
-  return db('appointments').where({ id: appointmentId }).returning('*');
-};
+const getById = (id) => db('appointments').where({ id }).first().select('*');
 
 const remove = async (appointmentId) => {
   const deletedApp = await db('appointments')
@@ -53,7 +50,7 @@ const update = async (appointmentId, appointmentChanges) => {
 module.exports = {
   create,
   getAll,
-  get,
+  getById,
   remove,
   update,
 };
