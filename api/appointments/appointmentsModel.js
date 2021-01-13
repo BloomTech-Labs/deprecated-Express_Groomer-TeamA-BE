@@ -10,8 +10,6 @@ const getAll = async (profileID) => {
     .where({ id: profileID })
     .select('user_type');
 
-  console.log(('type', type));
-
   switch (type.user_type) {
     case 'Groomer':
       return db('appointments').where({ groomer_id: profileID }).returning('*');
