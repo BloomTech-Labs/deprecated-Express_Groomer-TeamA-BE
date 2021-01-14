@@ -30,6 +30,7 @@ exports.up = async (knex) => {
       .onUpdate('CASCADE');
     table.float('service_cost').notNullable();
     table.timestamps(true, true);
+    table.text('service_description').notNullable();
   });
 };
 
