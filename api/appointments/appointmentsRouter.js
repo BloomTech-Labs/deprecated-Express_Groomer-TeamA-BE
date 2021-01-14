@@ -56,7 +56,7 @@ const router = express.Router();
  *
  * /appointments:
  *  post:
- *    summary: Create an appointmnet with a groomer
+ *    summary: Create an appointment with a groomer
  *    security:
  *      - okta: []
  *    tags:
@@ -104,7 +104,7 @@ const router = express.Router();
  *              updated_at: "2020-10-05T19:30:32.123Z"
  *    response:
  *      400:
- *        description: 'Missing required propery: _property_'
+ *        description: 'Missing required property: _property_'
  *      401:
  *        $ref: '#/components/responses/UnauthorizedError'
  *      409:
@@ -246,7 +246,9 @@ router.get('/', authRequired, async (req, res) => {
  */
 router.get('/:appointmentId', authRequired, async (req, res) => {
   try {
-    const appointment = await AppointmentsModel.get(req.params.appointmentId);
+    const appointment = await AppointmentsModel.getById(
+      req.params.appointmentId
+    );
     res.status(200).json(appointment);
   } catch (e) {
     console.error(e.stack);
