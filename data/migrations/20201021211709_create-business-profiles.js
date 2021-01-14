@@ -12,6 +12,9 @@ exports.up = async (knex) => {
       .onUpdate('CASCADE');
     table.string('business_name').notNullable();
     table.timestamps(true, true);
+    table.text('why_choose_description');
+    table.text('service_intro');
+    table.string('groomer_service_heading');
   });
 };
 
