@@ -36,7 +36,7 @@ const getBusinessProfile = async (groomerID) => {
     .where({ location_id: location.id })
     .returning('*');
 
-  promises.append(business_profile, groomer_cover_images, location, services);
+  promises.push(business_profile, groomer_cover_images, location, services);
 
   const groomer_profile_info = await Promise.all(promises);
 
