@@ -222,7 +222,7 @@ router.get('/', authRequired, async (req, res) => {
  *      schema:
  *        type: string
  *
- * /appointment/{id}:
+ * /appointments/{id}:
  *  get:
  *    description: Find appointment by ID
  *    summary: Returns a single appointment
@@ -326,7 +326,7 @@ router.put('/', authRequired, async (req, res) => {
 
 /**
  * @swagger
- * /appointment/{id}:
+ * /appointments/{id}:
  *  delete:
  *    summary: Remove an appointment
  *    security:
@@ -358,5 +358,57 @@ router.delete('/:appointmentId', async (req, res) => {
     res.status(500).json({ error: 'Error deleting appointment' });
   }
 });
+
+/**
+ * @swagger
+ * /appointments/byStatus/:status
+ *  get:
+ *    summary: Get All Appointments filtered by current status
+ * security:
+ *      - okta: []
+ *    tags:
+ *      - appointment
+ *    parameters:
+ *      - name: status
+ *        in: path
+ *        description: Status to filter by
+ *        required: true
+ *        type: string
+ *    responses:
+ *      401:
+ *        $ref: '#/components/responses/UnauthorizedError'
+ *      404:
+ *        description: no appointments found with status ___status___
+ *      200:
+ *        description: appointment data
+ *        content:
+ *          application/json:
+ *            schema:
+ *              type: array
+ *              items:
+ *                $ref: '#/components/schemas/Appointment'
+ *              example:
+ *                appointments:
+ *                  - id: 1
+ *                    groomer_id: "0x4v96mhmswefsoy4qwm"
+ *                    customer_id: "00ultx74kMUmEW8054x6"
+ *                    pet_id: 1
+ *                    location_service_id: 1
+ *                    service_provider_name: "Rabbid Rabbit Grooming"
+ *                    appointment_date_time: 1610995967
+ *                    status: "Pending"
+ *                    created_at: "2021-01-06T18:45:39.979Z"
+ *                    updated_at: "2021-01-06T18:45:39.979Z"
+ *                  - id: 2
+ *                    groomer_id: "0x4v96mhmswefsoy4qwm"
+ *                    customer_id: "00ultx74kMUmEW8054x6"
+ *                    pet_id: 2
+ *                    location_service_id: 1
+ *                    service_provider_name: "Rabbid Rabbit Grooming"
+ *                    appointment_date_time: 1610736767
+ *                    status: "Pending"
+ *                    created_at: "2021-01-06T18:45:39.979Z"
+ *                    updated_at: "2021-01-06T18:45:39.979Z"
+ */
 
 module.exports = router;
