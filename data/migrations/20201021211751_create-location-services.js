@@ -31,6 +31,7 @@ exports.up = async (knex) => {
     table.float('service_cost').notNullable();
     table.timestamps(true, true);
     table.string('service_image');
+    table.text('service_description').notNullable();
   });
 };
 
