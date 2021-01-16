@@ -18,16 +18,23 @@ router.get('/:groomerId', authRequired, async (req, res) => {
 router.post('/:groomerId', authRequired, async (req, res) => {
   try {
     const businessProfile = await BPModel.createBusinessProfile(
-      req.body,
+      {
+        groomer_service_heading: req.body.groomer_service_heading,
+        service_intro: req.body.service_intro,
+        why_choose_description: req.body.why_choose_description,
+        business_name: req.body.business_name,
+      },
       req.params.groomerId
     );
 
     const coverImagesPromises = [];
-    if (req.body.coverImages) {
-      req.body.coverImages.forEach((image) => {
-        coverImagesPromises.push(
-          BPModel.createCoverImage(image, req.params.groomerId)
-        );
+    if (req.body.groomer_cover_images) {
+      req.body.groomer_cover_images.forEach((image) => {
+        const coverImage = {
+          image,
+          groomer_id: req.params.groomerId,
+        };
+        coverImagesPromises.push(BPModel.createCoverImage(coverImage));
       });
     }
     const resolvedCoverImages = await Promise.all(coverImagesPromises);
