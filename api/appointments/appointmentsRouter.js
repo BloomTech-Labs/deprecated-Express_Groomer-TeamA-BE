@@ -157,6 +157,17 @@ router.post('/', authRequired, validateAppointmentBody, async (req, res) => {
 
 /**
  * @swagger
+ * components:
+ *  parameters:
+ *    appointmentStatus:
+ *       name: status
+ *       in: query
+ *       description: status to filter appointments by
+ *       required: false
+ *       example: Pending
+ *       schema:
+ *         type: string
+ *
  * /appointments:
  *  get:
  *    description: Returns a list of all appointments for a customer or groomer
@@ -198,11 +209,68 @@ router.post('/', authRequired, validateAppointmentBody, async (req, res) => {
  *                    status: "Pending"
  *                    created_at: "2021-01-06T18:45:39.979Z"
  *                    updated_at: "2021-01-06T18:45:39.979Z"
+ * /appointments/?status:
+ *  get:
+ *    description: Returns a list of all appointments for a customer or groomer filtered by status
+ *    summary: Get a list of all appointments for a customer or groomer
+ *    security:
+ *      - okta: []
+ *    tags:
+ *      - appointment
+ *    parameters:
+ *      - $ref: '#/components/parameters/appointmentStatus'
+ *    responses:
+ *      401:
+ *        $ref: '#/components/responses/UnauthorizedError'
+ *      200:
+ *        description: appointment data
+ *        content:
+ *          application/json:
+ *            schema:
+ *              type: array
+ *              items:
+ *                $ref: '#/components/schemas/Appointment'
+ *              example:
+ *                appointments:
+ *                  - id: 1
+ *                    groomer_id: "0x4v96mhmswefsoy4qwm"
+ *                    customer_id: "00ultx74kMUmEW8054x6"
+ *                    pet_id: 1
+ *                    location_service_id: 1
+ *                    service_provider_name: "Randy"
+ *                    appointment_date_time: 1610995967
+ *                    status: "Cancel"
+ *                    created_at: "2021-01-06T18:45:39.979Z"
+ *                    updated_at: "2021-01-06T18:45:39.979Z"
+ *                  - id: 2
+ *                    groomer_id: "0x4v96mhmswefsoy4qwm"
+ *                    customer_id: "00ultx74kMUmEW8054x6"
+ *                    pet_id: 2
+ *                    location_service_id: 1
+ *                    service_provider_name: "Randy"
+ *                    appointment_date_time: 1610736767
+ *                    status: "Cancel"
+ *                    created_at: "2021-01-06T18:45:39.979Z"
+ *                    updated_at: "2021-01-06T18:45:39.979Z"
  */
 router.get('/', authRequired, async (req, res) => {
   try {
     const appointments = await AppointmentsModel.getAll(req.profile.id);
-    res.status(200).json(appointments);
+    if (appointments.length) {
+      if (req.query.status) {
+        const statusFilter = appointments.filter((appointment) => {
+          return appointment.status === req.query.status ? appointment : null;
+        });
+        if (statusFilter.length) {
+          res.status(200).json(statusFilter);
+        }
+        res.status(404).json({
+          error: `no appointments found with status: ${req.query.status}`,
+        });
+      }
+      res.status(200).json(appointments);
+    }
+    res.status(404).json({ error: 'no appointments found' });
   } catch (e) {
     console.error(e.stack);
     res.status(500).json({ error: 'Error getting appointments' });
@@ -349,7 +417,7 @@ router.put('/', authRequired, async (req, res) => {
  *            schema:
  *              $ref: '#/components/schemas/Appointment'
  */
-router.delete('/:appointmentId', async (req, res) => {
+router.delete('/:appointmentId', authRequired, async (req, res) => {
   try {
     const deleted = await AppointmentsModel.remove(req.params.appointmentId);
     res.status(200).json(deleted);
@@ -358,57 +426,5 @@ router.delete('/:appointmentId', async (req, res) => {
     res.status(500).json({ error: 'Error deleting appointment' });
   }
 });
-
-/**
- * @swagger
- * /appointments/byStatus/:status
- *  get:
- *    summary: Get All Appointments filtered by current status
- * security:
- *      - okta: []
- *    tags:
- *      - appointment
- *    parameters:
- *      - name: status
- *        in: path
- *        description: Status to filter by
- *        required: true
- *        type: string
- *    responses:
- *      401:
- *        $ref: '#/components/responses/UnauthorizedError'
- *      404:
- *        description: no appointments found with status ___status___
- *      200:
- *        description: appointment data
- *        content:
- *          application/json:
- *            schema:
- *              type: array
- *              items:
- *                $ref: '#/components/schemas/Appointment'
- *              example:
- *                appointments:
- *                  - id: 1
- *                    groomer_id: "0x4v96mhmswefsoy4qwm"
- *                    customer_id: "00ultx74kMUmEW8054x6"
- *                    pet_id: 1
- *                    location_service_id: 1
- *                    service_provider_name: "Rabbid Rabbit Grooming"
- *                    appointment_date_time: 1610995967
- *                    status: "Pending"
- *                    created_at: "2021-01-06T18:45:39.979Z"
- *                    updated_at: "2021-01-06T18:45:39.979Z"
- *                  - id: 2
- *                    groomer_id: "0x4v96mhmswefsoy4qwm"
- *                    customer_id: "00ultx74kMUmEW8054x6"
- *                    pet_id: 2
- *                    location_service_id: 1
- *                    service_provider_name: "Rabbid Rabbit Grooming"
- *                    appointment_date_time: 1610736767
- *                    status: "Pending"
- *                    created_at: "2021-01-06T18:45:39.979Z"
- *                    updated_at: "2021-01-06T18:45:39.979Z"
- */
 
 module.exports = router;
