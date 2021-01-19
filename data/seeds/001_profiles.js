@@ -9,11 +9,19 @@ const profiles = [...new Array(5)].map((i, idx) => ({
       : faker.random.alphaNumeric(20),
   user_type: parseInt(idx) <= 1 ? 'Customer' : 'Groomer',
   avatarUrl: faker.image.avatar(),
-  email: idx === 0 ? 'llama001@maildrop.cc"' : faker.internet.email(),
+  email:
+    idx === 0
+      ? 'llama001@maildrop.cc'
+      : idx === 2
+      ? 'llama002@maildrop.cc'
+      : faker.internet.email(),
   name:
     idx === 0
       ? 'Test001 User'
+      : idx === 2
+      ? 'Test002 User'
       : `${faker.name.firstName()} ${faker.name.lastName()}`,
+  certifications: idx > 1 ? ['Sporting', 'Long-Legged Terriers'] : null,
 }));
 
 exports.seed = async (knex) => {

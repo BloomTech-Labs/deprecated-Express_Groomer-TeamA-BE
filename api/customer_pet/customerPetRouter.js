@@ -1,6 +1,7 @@
 const express = require('express');
 const authRequired = require('../middleware/authRequired');
 const CustomerPetModel = require('./customerPetModel');
+const AppointmentModel = require('../appointments/appointmentsModel');
 const router = express.Router();
 const {
   validateCustomerPetID,
@@ -409,6 +410,154 @@ router.delete(
       });
     } catch (err) {
       next(err);
+    }
+  }
+);
+
+/**
+ * @swagger
+ * /customerPets/{id}/appointments:
+ *  get:
+ *    summary: returns a list of all the appointments for a customerPet
+ *    security:
+ *      - okta: []
+ *    tags:
+ *      - customerPet
+ *      - appointment
+ *    parameters:
+ *      - $ref: '#/components/parameters/petId'
+ *    responses:
+ *      401:
+ *        $ref: '#/components/responses/UnauthorizedError'
+ *      404:
+ *        description: 'No appointments found'
+ *      200:
+ *        description: appointment data
+ *        content:
+ *          application/json:
+ *            schema:
+ *              type: Array
+ *              items:
+ *                $ref: '#/components/schemas/Appointment'
+ *              example:
+ *                - id: 1
+ *                  groomer_id: "0x4v96mhmswefsoy4qwm"
+ *                  customer_id: "00ultx74kMUmEW8054x6"
+ *                  pet_id: 1
+ *                  location_service_id: 1
+ *                  service_provider_name: "Rabbid Rabbits Grooming"
+ *                  appointment_date_time: 1610995967
+ *                  status: "Pending"
+ *                  created_at: "2021-01-06T18:45:39.979Z"
+ *                  updated_at: "2021-01-06T18:45:39.979Z"
+ *                - id: 2
+ *                  groomer_id: "0x4v96mhmswefsoy4qwm"
+ *                  customer_id: "00ultx74kMUmEW8054x6"
+ *                  pet_id: 1
+ *                  location_service_id: 1
+ *                  service_provider_name: "Rabbid Rabbits Grooming"
+ *                  appointment_date_time: 1610736767
+ *                  status: "Pending"
+ *                  created_at: "2021-01-06T18:45:39.979Z"
+ *                  updated_at: "2021-01-06T18:45:39.979Z"
+ */
+router.get(
+  '/:id/appointments',
+  authRequired,
+  validateCustomerPetID(),
+  async (req, res, next) => {
+    try {
+      const appointments = await AppointmentModel.getAllBy({
+        pet_id: req.params.id,
+      });
+      console.info({ appointments });
+      return appointments.length
+        ? res.send(appointments)
+        : res.status(404).json({ message: 'No appointments found for pet' });
+    } catch (error) {
+      next(error);
+    }
+  }
+);
+
+/**
+ * @swagger
+ * parameters:
+ *  appointmentStatus:
+ *    - name: status
+ *      in: path
+ *      description: Status to filter appointments by
+ *      required: true
+ *      type: String
+ *      example: Pending
+ *      schema:
+ *        type: string
+ *        enum: ['Pending', 'Cancel', 'Done']
+ *
+ * /customerPets/{id}/appointments/{status}:
+ *  get:
+ *    summary: Returns all appointments for Customer Pet filtered by Status
+ *    security:
+ *      - okta: []
+ *    tags:
+ *      - customerPet
+ *      - appointment
+ *    parameters:
+ *      - $ref: '#/components/parameters/petId'
+ *      - $ref: '#/components/parameters/appointmentStatus'
+ *    responses:
+ *      401:
+ *        $ref: '#/components/responses/UnauthorizedError'
+ *      404:
+ *        description: 'No appointments found with status: status_requested'
+ *      200:
+ *        description: appointment data
+ *        content:
+ *          application/json:
+ *            schema:
+ *              type: Array
+ *              items:
+ *                $ref: '#/components/schemas/Appointment'
+ *              example:
+ *                - id: 1
+ *                  groomer_id: "0x4v96mhmswefsoy4qwm"
+ *                  customer_id: "00ultx74kMUmEW8054x6"
+ *                  pet_id: 1
+ *                  location_service_id: 1
+ *                  service_provider_name: "Rabbid Rabbits Grooming"
+ *                  appointment_date_time: 1610995967
+ *                  status: "Pending"
+ *                  created_at: "2021-01-06T18:45:39.979Z"
+ *                  updated_at: "2021-01-06T18:45:39.979Z"
+ *                - id: 2
+ *                  groomer_id: "0x4v96mhmswefsoy4qwm"
+ *                  customer_id: "00ultx74kMUmEW8054x6"
+ *                  pet_id: 1
+ *                  location_service_id: 1
+ *                  service_provider_name: "Rabbid Rabbits Grooming"
+ *                  appointment_date_time: 1610736767
+ *                  status: "Pending"
+ *                  created_at: "2021-01-06T18:45:39.979Z"
+ *                  updated_at: "2021-01-06T18:45:39.979Z"
+ */
+router.get(
+  '/:id/appointments/:status',
+  authRequired,
+  validateCustomerPetID(),
+  async (req, res, next) => {
+    console.info({ status: req.params.status });
+    try {
+      const appointments = await AppointmentModel.getAllBy({
+        pet_id: req.params.id,
+        status: req.params.status,
+      });
+      return appointments.length
+        ? res.send(appointments)
+        : res.status(404).json({
+            message: `No appointments found with status: ${req.params.status}`,
+          });
+    } catch (error) {
+      next(error);
     }
   }
 );
