@@ -7,8 +7,12 @@ const server = express();
 server.use(express.json());
 
 jest.mock('../../api/appointments/appointmentsModel');
-
-const token = process.env.TEST_TOKEN;
+jest.mock('../../api/middleware/authRequired', () => {
+  jest.fn((req, res, next) => {
+    req.profile.id = '00ultwew80Onb2vOT4x6';
+    next();
+  });
+});
 
 describe('appointments router endpoints', () => {
   beforeAll(() => {
@@ -29,10 +33,7 @@ describe('appointments router endpoints', () => {
 
       Appointments.create.mockResolvedValue([appointment]);
 
-      const res = await request(server)
-        .post('/appointments')
-        .send(appointment)
-        .set('Authorization', 'Bearer ' + token);
+      const res = await request(server).post('/appointments').send(appointment);
 
       expect(res.status).toBe(201);
       expect(res.body).toContainEqual(appointment);
