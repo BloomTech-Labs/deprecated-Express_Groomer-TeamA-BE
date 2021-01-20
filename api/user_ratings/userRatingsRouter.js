@@ -19,4 +19,17 @@ router.post('/', authRequired, verifyUserRatingBody, async (req, res) => {
   }
 });
 
+router.put('/:id', authRequired, async (req, res) => {
+  try {
+    const updated = await UserRatingsModel.update(req.params.id, req.body);
+    if (updated) {
+      res.status(200).json({ updated });
+    }
+    res.status(500).json({ error: 'error updating review' });
+  } catch (error) {
+    console.error(error.stack);
+    res.status(500).json({ error: 'database error' });
+  }
+});
+
 module.exports = router;
