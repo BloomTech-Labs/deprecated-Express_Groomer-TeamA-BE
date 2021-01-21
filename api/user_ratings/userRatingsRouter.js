@@ -5,6 +5,9 @@ const router = express.Router();
 
 router.delete('/:ratingId', authRequired, async (req, res) => {
   try {
+    //todo: for this endpoint maybe should have middleware to confirm if
+    // the profile requesting the delete is the one that made it
+
     const deleted = await UserRatingsModel.remove(req.params.ratingId);
     res.status(201).json(deleted);
   } catch (e) {
