@@ -6,7 +6,7 @@ const createBusinessProfile = (profile, groomerID) => {
 };
 
 const createCoverImage = (image) => {
-  console.log({ image });
+  console.log(image);
   return db('groomer_cover_images').insert(image).returning('*');
 };
 

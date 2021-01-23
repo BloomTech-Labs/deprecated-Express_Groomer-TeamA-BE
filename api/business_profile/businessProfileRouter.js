@@ -231,10 +231,10 @@ router.post('/:groomerId', authRequired, async (req, res) => {
 
     const coverImagesPromises = [];
     if (req.body.groomer_cover_images) {
-      req.body.groomer_cover_images.forEach((image) => {
+      req.body.groomer_cover_images.forEach((data) => {
         const coverImage = {
-          image,
-          groomer_id: req.params.groomerId,
+          image: data.image,
+          groomer_id: data.groomer_id,
         };
         coverImagesPromises.push(BPModel.createCoverImage(coverImage));
       });
