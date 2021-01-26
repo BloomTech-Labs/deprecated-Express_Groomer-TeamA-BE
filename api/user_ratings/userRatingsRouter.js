@@ -16,6 +16,30 @@ router.delete('/:ratingId', authRequired, async (req, res) => {
   }
 });
 
+/**
+ * @swagger
+ * /userRatings:
+ *  get:
+ *    description: Get a specific user rating by rating id.
+ *    security:
+ *      - okta: []
+ *    tags:
+ *      - userRatings
+ *    parameters:
+ *      ratingId:
+ *        type: integer
+ *        example: 0
+ *    responses:
+ *      401:
+ *        $ref: '#/components/responses/UnauthorizedError'
+ *      200:
+ *        description: a specific user rating
+ *        content:
+ *          application/json:
+ *            schema:
+ *              $ref: '#/components/schemas/Rating'
+ */
+
 router.get('/:ratingId', authRequired, async (req, res) => {
   try {
     const rating = await UserRatingsModel.getBy(req.params.ratingId);
@@ -25,6 +49,30 @@ router.get('/:ratingId', authRequired, async (req, res) => {
     res.status(500).json({ error: 'Error getting user rating.' });
   }
 });
+
+/**
+ * @swagger
+ * /userRatings:
+ *  get:
+ *    description: Get all user ratings for a given groomer id
+ *    security:
+ *      - okta: []
+ *    tags:
+ *      - userRatings
+ *    parameters:
+ *      groomerId:
+ *        type: string
+ *        example: '0x4v96mhmswefsoy4qwm'
+ *    responses:
+ *      401:
+ *        $ref: '#/components/responses/UnauthorizedError'
+ *      200:
+ *        description: an array of all user ratings for a given groomer
+ *        content:
+ *          application/json:
+ *            schema:
+ *              $ref: '#/components/schemas/Rating'
+ */
 
 router.get('/:groomerId', authRequired, async (req, res) => {
   try {
