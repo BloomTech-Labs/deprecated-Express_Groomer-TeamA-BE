@@ -13,8 +13,7 @@ exports.seed = (knex) => {
           location_service_id: 0,
           service_provider_name: 'Buddy',
           status: 'Pending',
-          appointment_date: '2020-10-19T06:00:00.000Z',
-          appointment_time: '07:37:16',
+          appointment_date_time: Date.now(),
         },
       ]);
     });
