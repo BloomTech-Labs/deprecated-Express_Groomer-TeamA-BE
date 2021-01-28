@@ -2,8 +2,7 @@ const requiredAppointmentInfo = [
   'groomer_id',
   'pet_id',
   'location_service_id',
-  'appointment_date',
-  'appointment_time',
+  'appointment_date_time',
   'status',
 ];
 
