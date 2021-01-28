@@ -231,10 +231,10 @@ router.post('/:groomerId', authRequired, async (req, res) => {
 
     const coverImagesPromises = [];
     if (req.body.groomer_cover_images) {
-      req.body.groomer_cover_images.forEach((image) => {
+      req.body.groomer_cover_images.forEach(({ image, groomer_id }) => {
         const coverImage = {
-          image,
-          groomer_id: req.params.groomerId,
+          image: image,
+          groomer_id: groomer_id,
         };
         coverImagesPromises.push(BPModel.createCoverImage(coverImage));
       });
@@ -244,6 +244,16 @@ router.post('/:groomerId', authRequired, async (req, res) => {
   } catch (e) {
     console.log(e.stack);
     res.status(500).json({ error: 'Error creating groomer business profile' });
+  }
+});
+
+router.put('/:id', authRequired, async (req, res) => {
+  try {
+    const [updated] = await BPModel.update(req.params.id, req.body);
+    res.status(200).json(updated);
+  } catch (error) {
+    console.error(error.stack);
+    res.status(500).json({ error: 'Error updating groomer business profile' });
   }
 });
 
