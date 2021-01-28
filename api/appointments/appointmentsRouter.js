@@ -155,7 +155,6 @@ router.post(
       const appointment = req.body;
       appointment.customer_id = customer_id;
 
-
       const newAppointment = await AppointmentsModel.create(appointment);
 
       res.status(201).json(newAppointment);
