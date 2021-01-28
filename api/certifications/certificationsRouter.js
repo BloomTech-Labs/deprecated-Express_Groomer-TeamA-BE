@@ -8,10 +8,10 @@ const Certifications = require('./certificationsModel');
  * components:
  *  schemas:
  *    Certification:
- *      type: Ojbect
+ *      type: Object
  *      required:
  *        - title
- *        - insitute
+ *        - institute
  *        - image
  *        - date_issued
  *        - date_expired
@@ -20,7 +20,7 @@ const Certifications = require('./certificationsModel');
  *          type: integer
  *        title:
  *          type: string
- *        insitute:
+ *        institute:
  *          type: string
  *        image:
  *          type: string
@@ -33,7 +33,7 @@ const Certifications = require('./certificationsModel');
  *      example:
  *        id: 0
  *        title: 'Long-Legged Terriers'
- *        institute: 'Devry Institute of Dog Grooming'
+ *        institute: 'Institute of Dog Grooming'
  *        image:
  *          'https://headtotailpetgrooming.weebly.com/uploads/6/0/2/9/60294035/attendence_1_orig.jpg'
  *        date_issued: 1610224700
@@ -43,8 +43,8 @@ const Certifications = require('./certificationsModel');
  *  post:
  *    description: Creates a certification for the profile if the profile is a groomer profiles
  *    summary: Returns newly created certification
- *    secuirty:
- *      - okata: []
+ *    security:
+ *      - okta: []
  *    tags:
  *      - certification
  *    responses:
@@ -53,30 +53,9 @@ const Certifications = require('./certificationsModel');
  *        content:
  *          application/json:
  *            schema:
- *              type: array
- *              items:
- *                $ref: '#/components/schemas/Certification'
- *              example:
- *                - id: 0
- *                  groomer_id: '00ultwew80Onb2vOT4x6'
- *                  title: 'Long-Legged Terriers'
- *                  institute: 'Devry Institute of Dog Grooming'
- *                  image:
- *                    'https://headtotailpetgrooming.weebly.com/uploads/6/0/2/9/60294035/attendence_1_orig.jpg'
- *                  date_issued: 1610224700
- *                  date_expired: 1925757500
- *                - id: 1
- *                  groomer_id: '00ultwew80Onb2vOT4x6'
- *                  title: 'Short-Legged Terriers'
- *                  institute: 'Devry Institute of Dog Grooming'
- *                  image:
- *                    'https://headtotailpetgrooming.weebly.com/uploads/6/0/2/9/60294035/attendence_1_orig.jpg'
- *                  date_issued: 1610224700
- *                  date_expired: 1925757500
+ *              $ref: '#/components/schemas/Certification'
  *      401:
  *        $ref: '#/components/responses/UnauthorizedError'
- *      404:
- *        description: 'no certifications found'
  */
 
 router.post('/', authRequired, verifyProfileIsGroomer, async (req, res) => {
@@ -88,46 +67,11 @@ router.post('/', authRequired, verifyProfileIsGroomer, async (req, res) => {
   } catch (e) {
     console.log(e.stack);
     res.status(500).json({ error: 'Error creating certificate.' });
+  }
+});
 
-    /**
+/**
  * @swagger
- * components:
- *  schemas:
- *    Certification:
- *      type: Ojbect
- *      required:
- *        - groomer_id
- *        - title
- *        - insitute
- *        - image
- *        - date_issued
- *        - date_expired
- *      properties:
- *        id:
- *          type: integer
- *        groomer_id:
- *          type: string
- *        title:
- *          type: string
- *        insitute:
- *          type: string
- *        image:
- *          type: string
- *        date_issued:
- *          type: integer
- *          description: epoch timestampe for date certification is issued
- *        date_expired:
- *          type: integer
- *          description: epoch timestampe for date certification is issued
- *      example:
- *        id: 0
- *        groomer_id: '00ultwew80Onb2vOT4x6'
- *        title: 'Long-Legged Terriers'
- *        institute: 'Devry Institute of Dog Grooming'
- *        image:
- *          'https://headtotailpetgrooming.weebly.com/uploads/6/0/2/9/60294035/attendence_1_orig.jpg'
- *        date_issued: 1610224700
- *        date_expired: 1925757500
  *  parameters:
  *    groomerId:
  *      name: id
@@ -137,12 +81,13 @@ router.post('/', authRequired, verifyProfileIsGroomer, async (req, res) => {
  *      example: '00ultwew80Onb2vOT4x6'
  *      schema:
  *        type: string
+ *
  * /certifications/Groomer/{groomerId}:
  *  get:
- *    description: Find all certifcations by groomerID
+ *    description: Find all certifications by groomerID
  *    summary: Returns all certifications for a groomer
- *    secuirty:
- *      - okata: []
+ *    security:
+ *      - okta: []
  *    tags:
  *      - certification
  *    parameters:
@@ -160,7 +105,7 @@ router.post('/', authRequired, verifyProfileIsGroomer, async (req, res) => {
  *                - id: 0
  *                  groomer_id: '00ultwew80Onb2vOT4x6'
  *                  title: 'Long-Legged Terriers'
- *                  institute: 'Devry Institute of Dog Grooming'
+ *                  institute: 'Institute of Dog Grooming'
  *                  image:
  *                    'https://headtotailpetgrooming.weebly.com/uploads/6/0/2/9/60294035/attendence_1_orig.jpg'
  *                  date_issued: 1610224700
@@ -168,7 +113,7 @@ router.post('/', authRequired, verifyProfileIsGroomer, async (req, res) => {
  *                - id: 1
  *                  groomer_id: '00ultwew80Onb2vOT4x6'
  *                  title: 'Short-Legged Terriers'
- *                  institute: 'Devry Institute of Dog Grooming'
+ *                  institute: 'Institute of Dog Grooming'
  *                  image:
  *                    'https://headtotailpetgrooming.weebly.com/uploads/6/0/2/9/60294035/attendence_1_orig.jpg'
  *                  date_issued: 1610224700
@@ -186,6 +131,54 @@ router.get('/Groomer/:groomerId', authRequired, async (req, res, next) => {
     return certifications.length
       ? res.send(certifications)
       : res.status(404).json({ message: 'no certifications found' });
+  } catch (error) {
+    next(error);
+  }
+});
+
+/**
+ * @swagger
+ *  components:
+ *    parameters:
+ *      certificationId:
+ *        name: id
+ *        in: path
+ *        description: ID of the certification
+ *        required: true
+ *        example: 1
+ *        schema:
+ *          type: string
+ *
+ * /certifications/{certificationId}:
+ *  get:
+ *    description: Find certification by ID
+ *    summary: Returns a single certification
+ *    security:
+ *      - okta: []
+ *    tags:
+ *      - certification
+ *    parameters:
+ *      - $ref: '#/components/parameters/certificationId'
+ *    responses:
+ *      200:
+ *        description: A certification object
+ *        content:
+ *          application/json:
+ *            schema:
+ *              $ref: '#/components/schemas/Certification'
+ *      401:
+ *        $ref: '#/components/responses/UnauthorizedError'
+ *      404:
+ *        description: 'certification not found'
+ */
+router.get('/:certificationId', authRequired, async (req, res, next) => {
+  try {
+    const certification = await Certifications.getById(
+      req.params.certificationId
+    );
+    return certification
+      ? res.send(certification)
+      : res.status(404).json({ message: 'certification not found' });
   } catch (error) {
     next(error);
   }
