@@ -212,7 +212,13 @@ router.post(
 router.get('/', authRequired, async (req, res) => {
   try {
     const appointments = await AppointmentsModel.getAll(req.profile.id);
-    res.status(200).json(appointments);
+
+    if (appointments.length) {
+      const user_appointments = AppointmentsModel.appointmentsObject(
+        appointments
+      );
+      res.status(200).json({ appointments: user_appointments });
+    }
   } catch (e) {
     console.error(e.stack);
     res.status(500).json({ error: 'Error getting appointments' });
