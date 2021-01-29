@@ -94,7 +94,55 @@ const update = async (appointmentId, appointmentChanges) => {
   return db('appointments').select('*').where({ id: appointmentId });
 };
 
+const appointmentsObject = (appointments) => {
+  let user_appointments = {};
+
+  appointments.forEach((appointment) => {
+    const id = appointment.id;
+
+    const appointment_obj = {
+      id,
+      groomer_id: appointment.groomer_id,
+      customer_id: appointment.customer_id,
+      appointment_date_time: appointment.appointment_date_time,
+      status: appointment.status,
+      duration: appointment.duration,
+      pet: {
+        name: appointment.pet_name,
+        type: appointment.type,
+        color: appointment.color,
+        date_of_birth: appointment.date_of_birth,
+        image_url: appointment.image_url,
+        health_issue: appointment.health_issue,
+      },
+      service: {
+        name: appointment.name,
+        service_description: appointment.service_description,
+        service_image: appointment.service_image,
+        service_cost: appointment.service_cost,
+      },
+      location: {
+        location_name: appointment.service_provider_name,
+        street_address: appointment.address,
+        state: appointment.state,
+        city: appointment.city,
+        zip: appointment.zip,
+        country: appointment.country,
+        phone_number: appointment.phone_number,
+        latitude: appointment.latitude,
+        longitude: appointment.longitude,
+      },
+    };
+
+    if (!user_appointments[id]) {
+      user_appointments[id] = appointment_obj;
+    }
+  });
+  return user_appointments;
+};
+
 module.exports = {
+  appointmentsObject,
   create,
   getAll,
   getById,
