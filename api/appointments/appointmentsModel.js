@@ -91,15 +91,11 @@ const getAll = async (profileID) => {
   }
 };
 const getById = (id) =>
-  db('appointments')
-    .where({ 'appointments.id': id })
-    .join('customer_pets as cp', 'cp.id', 'appointments.pet_id')
+  db('appointments as app')
+    .where({ 'app.id': id })
+    .join('customer_pets as cp', 'cp.id', 'app.pet_id')
     .join('animals as a', 'a.id', 'cp.animal_id')
-    .join(
-      'location_services as ls',
-      'ls.id',
-      'appointments.location_service_id'
-    )
+    .join('location_services as ls', 'ls.id', 'app.location_service_id')
     .join('services as s', 's.id', 'ls.service_id')
     .join('locations as l', 'l.id', 'ls.location_id')
     .first()
@@ -132,15 +128,11 @@ const getById = (id) =>
     );
 
 const getAllBy = (filter) =>
-  db('appointments')
+  db('appointments as app')
     .where(filter)
-    .join('customer_pets as cp', 'cp.id', 'appointments.pet_id')
+    .join('customer_pets as cp', 'cp.id', 'app.pet_id')
     .join('animals as a', 'a.id', 'cp.animal_id')
-    .join(
-      'location_services as ls',
-      'ls.id',
-      'appointments.location_service_id'
-    )
+    .join('location_services as ls', 'ls.id', 'app.location_service_id')
     .join('services as s', 's.id', 'ls.service_id')
     .join('locations as l', 'l.id', 'ls.location_id')
     .select(
