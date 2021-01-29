@@ -23,20 +23,68 @@ const getAll = async (profileID) => {
         )
         .join('services as s', 's.id', 'ls.service_id')
         .join('locations as l', 'l.id', 'ls.location_id')
-        .returning('*');
+        .select(
+          'app.id as appointment_id',
+          'app.groomer_id',
+          'app.customer_id',
+          'app.appointment_date_time',
+          'app.status',
+          'app.duration',
+          'app.service_provider_name',
+          'cp.pet_name',
+          'a.animal_type as type',
+          'cp.color',
+          'cp.date_of_birth',
+          'cp.image_url',
+          'cp.health_issue',
+          's.name as service_name',
+          'ls.service_description',
+          'ls.service_image',
+          'ls.service_cost',
+          'l.address',
+          'l.state',
+          'l.city',
+          'l.country',
+          'l.zip',
+          'l.phone_number',
+          'l.longitude',
+          'l.latitude'
+        );
     case 'Customer':
-      return db('appointments')
-        .where({ 'appointments.customer_id': profileID })
-        .join('customer_pets as cp', 'cp.id', 'appointments.pet_id')
+      return db('appointments as app')
+        .join('customer_pets as cp', 'cp.id', 'app.pet_id')
         .join('animals as a', 'a.id', 'cp.animal_id')
-        .join(
-          'location_services as ls',
-          'ls.id',
-          'appointments.location_service_id'
-        )
+        .join('location_services as ls', 'ls.id', 'app.location_service_id')
         .join('services as s', 's.id', 'ls.service_id')
         .join('locations as l', 'l.id', 'ls.location_id')
-        .returning('*');
+        .where({ 'app.customer_id': profileID })
+        .select(
+          'app.id as appointment_id',
+          'app.groomer_id',
+          'app.customer_id',
+          'app.appointment_date_time',
+          'app.status',
+          'app.duration',
+          'app.service_provider_name',
+          'cp.pet_name',
+          'a.animal_type as type',
+          'cp.color',
+          'cp.date_of_birth',
+          'cp.image_url',
+          'cp.health_issue',
+          's.name as service_name',
+          'ls.service_description',
+          'ls.service_image',
+          'ls.service_cost',
+          'l.address',
+          'l.state',
+          'l.city',
+          'l.country',
+          'l.zip',
+          'l.phone_number',
+          'l.longitude',
+          'l.latitude'
+        );
     default:
       console.error({ message: 'type is not Customer or Groomer' });
       throw new Error({ message: 'type is not Customer or Groomer' });
@@ -55,7 +103,33 @@ const getById = (id) =>
     .join('services as s', 's.id', 'ls.service_id')
     .join('locations as l', 'l.id', 'ls.location_id')
     .first()
-    .select('*');
+    .select(
+      'app.id as appointment_id',
+      'app.groomer_id',
+      'app.customer_id',
+      'app.appointment_date_time',
+      'app.status',
+      'app.duration',
+      'app.service_provider_name',
+      'cp.pet_name',
+      'a.animal_type as type',
+      'cp.color',
+      'cp.date_of_birth',
+      'cp.image_url',
+      'cp.health_issue',
+      's.name as service_name',
+      'ls.service_description',
+      'ls.service_image',
+      'ls.service_cost',
+      'l.address',
+      'l.state',
+      'l.city',
+      'l.country',
+      'l.zip',
+      'l.phone_number',
+      'l.longitude',
+      'l.latitude'
+    );
 
 const getAllBy = (filter) =>
   db('appointments')
@@ -69,7 +143,33 @@ const getAllBy = (filter) =>
     )
     .join('services as s', 's.id', 'ls.service_id')
     .join('locations as l', 'l.id', 'ls.location_id')
-    .select('*');
+    .select(
+      'app.id as appointment_id',
+      'app.groomer_id',
+      'app.customer_id',
+      'app.appointment_date_time',
+      'app.status',
+      'app.duration',
+      'app.service_provider_name',
+      'cp.pet_name',
+      'a.animal_type as type',
+      'cp.color',
+      'cp.date_of_birth',
+      'cp.image_url',
+      'cp.health_issue',
+      's.name as service_name',
+      'ls.service_description',
+      'ls.service_image',
+      'ls.service_cost',
+      'l.address',
+      'l.state',
+      'l.city',
+      'l.country',
+      'l.zip',
+      'l.phone_number',
+      'l.longitude',
+      'l.latitude'
+    );
 
 const remove = async (appointmentId) => {
   const deletedApp = await db('appointments')
@@ -98,7 +198,7 @@ const appointmentsObject = (appointments) => {
   let user_appointments = {};
 
   appointments.forEach((appointment) => {
-    const id = appointment.id;
+    const id = appointment.appointment_id;
 
     const appointment_obj = {
       id,
