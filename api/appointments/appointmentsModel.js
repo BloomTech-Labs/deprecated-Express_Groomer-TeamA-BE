@@ -12,19 +12,64 @@ const getAll = async (profileID) => {
 
   switch (type.user_type) {
     case 'Groomer':
-      return db('appointments').where({ groomer_id: profileID }).returning('*');
+      return db('appointments')
+        .where({ 'appointments.groomer_id': profileID })
+        .join('customer_pets as cp', 'cp.id', 'appointments.pet_id')
+        .join('animals as a', 'a.id', 'cp.animal_id')
+        .join(
+          'location_services as ls',
+          'ls.id',
+          'appointments.location_service_id'
+        )
+        .join('services as s', 's.id', 'ls.service_id')
+        .join('locations as l', 'l.id', 'ls.location_id')
+        .returning('*');
     case 'Customer':
       return db('appointments')
-        .where({ customer_id: profileID })
+        .where({ 'appointments.customer_id': profileID })
+        .join('customer_pets as cp', 'cp.id', 'appointments.pet_id')
+        .join('animals as a', 'a.id', 'cp.animal_id')
+        .join(
+          'location_services as ls',
+          'ls.id',
+          'appointments.location_service_id'
+        )
+        .join('services as s', 's.id', 'ls.service_id')
+        .join('locations as l', 'l.id', 'ls.location_id')
         .returning('*');
     default:
       console.error({ message: 'type is not Customer or Groomer' });
       throw new Error({ message: 'type is not Customer or Groomer' });
   }
 };
-const getById = (id) => db('appointments').where({ id }).first().select('*');
+const getById = (id) =>
+  db('appointments')
+    .where({ 'appointments.id': id })
+    .join('customer_pets as cp', 'cp.id', 'appointments.pet_id')
+    .join('animals as a', 'a.id', 'cp.animal_id')
+    .join(
+      'location_services as ls',
+      'ls.id',
+      'appointments.location_service_id'
+    )
+    .join('services as s', 's.id', 'ls.service_id')
+    .join('locations as l', 'l.id', 'ls.location_id')
+    .first()
+    .select('*');
 
-const getAllBy = (filter) => db('appointments').where(filter).select('*');
+const getAllBy = (filter) =>
+  db('appointments')
+    .where(filter)
+    .join('customer_pets as cp', 'cp.id', 'appointments.pet_id')
+    .join('animals as a', 'a.id', 'cp.animal_id')
+    .join(
+      'location_services as ls',
+      'ls.id',
+      'appointments.location_service_id'
+    )
+    .join('services as s', 's.id', 'ls.service_id')
+    .join('locations as l', 'l.id', 'ls.location_id')
+    .select('*');
 
 const remove = async (appointmentId) => {
   const deletedApp = await db('appointments')
