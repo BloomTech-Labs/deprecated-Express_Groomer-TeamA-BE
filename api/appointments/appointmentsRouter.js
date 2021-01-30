@@ -47,7 +47,7 @@ const router = express.Router();
  *          enum: ['Pending', 'Cancel', 'Done']
  *          example: Pending
  *    UpdateAppointment:
- *      type: Object
+ *      type: object
  *      required:
  *        - appointment_id
  *      properties:
@@ -372,7 +372,7 @@ router.get(
  *      content:
  *        application/json:
  *          schema:
-
+ *            $ref: '#/components/schemas/UpdateAppointment'
  *    responses:
  *      401:
  *        $ref: '#/components/responses/UnauthorizedError'
