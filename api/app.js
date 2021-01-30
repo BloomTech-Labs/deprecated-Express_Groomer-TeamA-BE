@@ -69,7 +69,6 @@ app.use(
     '/appointments',
     '*/appointments',
     '*/appointment',
-    '*/appointments',
   ],
   appointmentsRouter
 );
