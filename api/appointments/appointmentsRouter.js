@@ -1,6 +1,10 @@
 const express = require('express');
 const authRequired = require('../middleware/authRequired');
-const { validateAppointmentBody } = require('../middleware/appointment');
+const {
+  validateAppointmentBody,
+  validateAppointmentTime,
+} = require('../middleware/appointment');
+
 const AppointmentsModel = require('./appointmentsModel');
 const router = express.Router();
 
@@ -140,20 +144,26 @@ const router = express.Router();
  *                  type: string
  *                  format: date-time
  */
-router.post('/', authRequired, validateAppointmentBody, async (req, res) => {
-  const customer_id = req.profile.id;
-  try {
-    const appointment = req.body;
-    appointment.customer_id = customer_id;
+router.post(
+  '/',
+  authRequired,
+  validateAppointmentBody,
+  validateAppointmentTime,
+  async (req, res) => {
+    const customer_id = req.profile.id;
+    try {
+      const appointment = req.body;
+      appointment.customer_id = customer_id;
 
-    const newAppointment = await AppointmentsModel.create(appointment);
+      const newAppointment = await AppointmentsModel.create(appointment);
 
-    res.status(201).json(newAppointment);
-  } catch (e) {
-    console.error(e.stack);
-    res.status(500).json({ error: 'Error creating new appointment' });
+      res.status(201).json(newAppointment);
+    } catch (e) {
+      console.error(e.stack);
+      res.status(500).json({ error: 'Error creating new appointment' });
+    }
   }
-});
+);
 
 /**
  * @swagger

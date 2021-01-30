@@ -2,10 +2,10 @@ exports.up = async (knex) => {
   await knex.schema.createTable('groomer_cover_images', (table) => {
     table.increments('id');
     table
-      .integer('business_profile_id')
+      .string('groomer_id')
       .notNullable()
       .references('id')
-      .inTable('business_profiles')
+      .inTable('profiles')
       .onDelete('CASCADE')
       .onUpdate('CASCADE');
     table.string('image').notNullable();
