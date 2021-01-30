@@ -172,7 +172,7 @@ const router = express.Router();
  *    security:
  *      - okta: []
  *    tags:
- *      - appointment
+ *      - appointments
  *    requestBody:
  *      description: Appointment information to create Appointment
  *      content:
@@ -235,7 +235,7 @@ router.post(
  *    security:
  *      - okta: []
  *    tags:
- *      - appointment
+ *      - appointments
  *    responses:
  *      401:
  *        $ref: '#/components/responses/UnauthorizedError'
@@ -324,7 +324,7 @@ router.get('/', authRequired, async (req, res) => {
  *    security:
  *      - okta: []
  *    tags:
- *      - appointment
+ *      - appointments
  *    parameters:
  *      - $ref: '#/components/parameters/appointmentId'
  *    responses:
@@ -366,7 +366,7 @@ router.get(
  *    security:
  *      - okta: []
  *    tags:
- *      - appointment
+ *      - appointments
  *    requestBody:
  *      description: Appointment object to be updated
  *      content:
@@ -409,7 +409,7 @@ router.put('/', authRequired, validateAppointmentId, async (req, res) => {
  *    security:
  *      - okta: []
  *    tags:
- *      - appointment
+ *      - appointments
  *    parameters:
  *      - name: id
  *        in: path
