@@ -1,6 +1,10 @@
 const express = require('express');
 const authRequired = require('../middleware/authRequired');
-const { validateAppointmentBody } = require('../middleware/appointment');
+const {
+  validateAppointmentBody,
+  validateAppointmentTime,
+} = require('../middleware/appointment');
+
 const AppointmentsModel = require('./appointmentsModel');
 const router = express.Router();
 
@@ -19,8 +23,6 @@ const router = express.Router();
  *        - appointment_date_time
  *        - status
  *      properties:
- *        id:
- *          type: integer
  *        groomer_id:
  *          type: string
  *        customer_id:
@@ -43,7 +45,48 @@ const router = express.Router();
  *          type: string
  *          format: date-time
  *      example:
- *        id: 11,
+ *        groomer_id: "6jknxiznooy5lzesvzlk"
+ *        customer_id: "00ultx74kMUmEW8054x6"
+ *        pet_id: 6
+ *        location_service_id: 7
+ *        service_provider_name: "Rabid Rabbits Grooming"
+ *        appointment_date_time: 1610995967
+ *        status: "Pending"
+ *        created_at: "2020-10-05T19:30:32.123Z"
+ *        updated_at: "2020-10-05T19:30:32.123Z"
+ *    CreatedAppointment:
+ *      type: object
+ *      required:
+ *        - groomer_id
+ *        - customer_id
+ *        - pet_id
+ *        - location_service_id
+ *        - service_provider_name
+ *        - appointment_date_time
+ *        - status
+ *      properties:
+ *        groomer_id:
+ *          type: string
+ *        customer_id:
+ *          type: string
+ *        pet_id:
+ *          type: integer
+ *        location_service_id:
+ *          type: integer
+ *        service_provider_name:
+ *          type: string
+ *        appointment_date_time:
+ *          type: integer
+ *        status:
+ *          type: string
+ *          enum: ['Pending', 'Cancel', 'Done']
+ *        created_at:
+ *          type: string
+ *          format: date-time
+ *        updated_at:
+ *          type: string
+ *          format: date-time
+ *      example:
  *        groomer_id: "6jknxiznooy5lzesvzlk"
  *        customer_id: "00ultx74kMUmEW8054x6"
  *        pet_id: 6
@@ -60,48 +103,13 @@ const router = express.Router();
  *    security:
  *      - okta: []
  *    tags:
- *      - appointment
+ *      - appointments
  *    requestBody:
  *      description: Appointment information to create Appointment
  *      content:
  *        application/json:
  *          schema:
- *            type: Object
- *            required:
- *              - groomer_id
- *              - customer_id
- *              - pet_id
- *              - location_service_id
- *              - service_provider_name
- *              - appointment_date
- *              - status
- *            properties:
- *              groomer_id:
- *                type: integer
- *              customer_id:
- *                type: integer
- *              pet_id:
- *                type: integer
- *              location_service_id:
- *                type: integer
- *              service_provider_name:
- *                type: string
- *              appointment_date_time:
- *                type: integer
- *              status:
- *                type: string
- *                enum: ['Pending', 'Cancel', 'Done']
- *            example:
- *              id: 11,
- *              groomer_id: "6jknxiznooy5lzesvzlk"
- *              customer_id: "00ultx74kMUmEW8054x6"
- *              pet_id: 6
- *              location_service_id: 7
- *              service_provider_name: "Rabid Rabbits Grooming"
- *              appointment_date_time: 1610995967
- *              status: "Pending"
- *              created_at: "2020-10-05T19:30:32.123Z"
- *              updated_at: "2020-10-05T19:30:32.123Z"
+ *            $ref: '#/components/schemas/CreatedAppointment'
  *    response:
  *      400:
  *        description: 'Missing required property: _property_'
@@ -140,23 +148,40 @@ const router = express.Router();
  *                  type: string
  *                  format: date-time
  */
-router.post('/', authRequired, validateAppointmentBody, async (req, res) => {
-  const customer_id = req.profile.id;
-  try {
-    const appointment = req.body;
-    appointment.customer_id = customer_id;
+router.post(
+  '/',
+  authRequired,
+  validateAppointmentBody,
+  validateAppointmentTime,
+  async (req, res) => {
+    const customer_id = req.profile.id;
+    try {
+      const appointment = req.body;
+      appointment.customer_id = customer_id;
 
-    const newAppointment = await AppointmentsModel.create(appointment);
+      const newAppointment = await AppointmentsModel.create(appointment);
 
-    res.status(201).json(newAppointment);
-  } catch (e) {
-    console.error(e.stack);
-    res.status(500).json({ error: 'Error creating new appointment' });
+      res.status(201).json(newAppointment);
+    } catch (e) {
+      console.error(e.stack);
+      res.status(500).json({ error: 'Error creating new appointment' });
+    }
   }
-});
+);
 
 /**
  * @swagger
+ * components:
+ *  parameters:
+ *    appointmentStatus:
+ *       name: status
+ *       in: query
+ *       description: status to filter appointments by
+ *       required: false
+ *       example: Pending
+ *       schema:
+ *         type: string
+ *
  * /appointments:
  *  get:
  *    description: Returns a list of all appointments for a customer or groomer
@@ -164,7 +189,7 @@ router.post('/', authRequired, validateAppointmentBody, async (req, res) => {
  *    security:
  *      - okta: []
  *    tags:
- *      - appointment
+ *      - appointments
  *    responses:
  *      401:
  *        $ref: '#/components/responses/UnauthorizedError'
@@ -175,7 +200,7 @@ router.post('/', authRequired, validateAppointmentBody, async (req, res) => {
  *            schema:
  *              type: array
  *              items:
- *                $ref: '#/components/schemas/Appointment'
+ *                $ref: '#/components/schemas/'
  *              example:
  *                appointments:
  *                  - id: 1
@@ -198,11 +223,68 @@ router.post('/', authRequired, validateAppointmentBody, async (req, res) => {
  *                    status: "Pending"
  *                    created_at: "2021-01-06T18:45:39.979Z"
  *                    updated_at: "2021-01-06T18:45:39.979Z"
+ * /appointments/?status:
+ *  get:
+ *    description: Returns a list of all appointments for a customer or groomer filtered by status
+ *    summary: Get a list of all appointments for a customer or groomer
+ *    security:
+ *      - okta: []
+ *    tags:
+ *      - appointment
+ *    parameters:
+ *      - $ref: '#/components/parameters/appointmentStatus'
+ *    responses:
+ *      401:
+ *        $ref: '#/components/responses/UnauthorizedError'
+ *      200:
+ *        description: appointment data
+ *        content:
+ *          application/json:
+ *            schema:
+ *              type: array
+ *              items:
+ *                $ref: '#/components/schemas/Appointment'
+ *              example:
+ *                appointments:
+ *                  - id: 1
+ *                    groomer_id: "0x4v96mhmswefsoy4qwm"
+ *                    customer_id: "00ultx74kMUmEW8054x6"
+ *                    pet_id: 1
+ *                    location_service_id: 1
+ *                    service_provider_name: "Randy"
+ *                    appointment_date_time: 1610995967
+ *                    status: "Cancel"
+ *                    created_at: "2021-01-06T18:45:39.979Z"
+ *                    updated_at: "2021-01-06T18:45:39.979Z"
+ *                  - id: 2
+ *                    groomer_id: "0x4v96mhmswefsoy4qwm"
+ *                    customer_id: "00ultx74kMUmEW8054x6"
+ *                    pet_id: 2
+ *                    location_service_id: 1
+ *                    service_provider_name: "Randy"
+ *                    appointment_date_time: 1610736767
+ *                    status: "Cancel"
+ *                    created_at: "2021-01-06T18:45:39.979Z"
+ *                    updated_at: "2021-01-06T18:45:39.979Z"
  */
 router.get('/', authRequired, async (req, res) => {
   try {
     const appointments = await AppointmentsModel.getAll(req.profile.id);
-    res.status(200).json(appointments);
+    if (appointments.length) {
+      if (req.query.status) {
+        const statusFilter = appointments.filter((appointment) => {
+          return appointment.status === req.query.status ? appointment : null;
+        });
+        if (statusFilter.length) {
+          res.status(200).json(statusFilter);
+        }
+        res.status(404).json({
+          error: `no appointments found with status: ${req.query.status}`,
+        });
+      }
+      res.status(200).json(appointments);
+    }
+    res.status(404).json({ error: 'no appointments found' });
   } catch (e) {
     console.error(e.stack);
     res.status(500).json({ error: 'Error getting appointments' });
@@ -222,14 +304,14 @@ router.get('/', authRequired, async (req, res) => {
  *      schema:
  *        type: string
  *
- * /appointment/{id}:
+ * /appointments/{id}:
  *  get:
  *    description: Find appointment by ID
  *    summary: Returns a single appointment
  *    security:
  *      - okta: []
  *    tags:
- *      - appointment
+ *      - appointments
  *    parameters:
  *      - $ref: '#/components/parameters/appointmentId'
  *    responses:
@@ -264,7 +346,7 @@ router.get('/:appointmentId', authRequired, async (req, res) => {
  *    security:
  *      - okta: []
  *    tags:
- *      - appointment
+ *      - appointments
  *    requestBody:
  *      description: Appointment object to be updated
  *      content:
@@ -326,13 +408,13 @@ router.put('/', authRequired, async (req, res) => {
 
 /**
  * @swagger
- * /appointment/{id}:
+ * /appointments/{id}:
  *  delete:
  *    summary: Remove an appointment
  *    security:
  *      - okta: []
  *    tags:
- *      - appointment
+ *      - appointments
  *    parameters:
  *      - name: id
  *        in: path
@@ -349,7 +431,7 @@ router.put('/', authRequired, async (req, res) => {
  *            schema:
  *              $ref: '#/components/schemas/Appointment'
  */
-router.delete('/:appointmentId', async (req, res) => {
+router.delete('/:appointmentId', authRequired, async (req, res) => {
   try {
     const deleted = await AppointmentsModel.remove(req.params.appointmentId);
     res.status(200).json(deleted);

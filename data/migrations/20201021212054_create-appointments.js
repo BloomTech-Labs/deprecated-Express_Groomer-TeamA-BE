@@ -44,6 +44,7 @@ exports.up = async (knex) => {
       .enu('status', ['Pending', 'Approved', 'Rejected', 'Completed'])
       .notNullable();
     table.timestamps(true, true);
+    table.integer('duration').notNullable();
   });
 };
 

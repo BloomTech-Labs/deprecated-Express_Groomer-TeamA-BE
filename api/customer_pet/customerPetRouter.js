@@ -26,7 +26,7 @@ const {
  *        pet_name:
  *          type: string
  *        color:
- *          type: sttring
+ *          type: string
  *        date_of_birth:
  *          type: date
  *        image_url:
@@ -191,7 +191,7 @@ router.get(
  *              pet_name:
  *                type: string
  *              color:
- *                type: sttring
+ *                type: string
  *              date_of_birth:
  *                type: date
  *              image_url:
@@ -288,7 +288,7 @@ router.post(
  *              pet_name:
  *                type: string
  *              color:
- *                type: sttring
+ *                type: string
  *              date_of_birth:
  *                type: date
  *              image_url:
@@ -460,43 +460,9 @@ router.delete(
  *                  status: "Pending"
  *                  created_at: "2021-01-06T18:45:39.979Z"
  *                  updated_at: "2021-01-06T18:45:39.979Z"
- */
-router.get(
-  '/:id/appointments',
-  authRequired,
-  validateCustomerPetID(),
-  async (req, res, next) => {
-    try {
-      const appointments = await AppointmentModel.getAllBy({
-        pet_id: req.params.id,
-      });
-      console.info({ appointments });
-      return appointments.length
-        ? res.send(appointments)
-        : res.status(404).json({ message: 'No appointments found for pet' });
-    } catch (error) {
-      next(error);
-    }
-  }
-);
-
-/**
- * @swagger
- * parameters:
- *  appointmentStatus:
- *    - name: status
- *      in: path
- *      description: Status to filter appointments by
- *      required: true
- *      type: String
- *      example: Pending
- *      schema:
- *        type: string
- *        enum: ['Pending', 'Cancel', 'Done']
- *
- * /customerPets/{id}/appointments/{status}:
+ * /customerPets/{id}/appointments/?status:
  *  get:
- *    summary: Returns all appointments for Customer Pet filtered by Status
+ *    summary: returns a list of all the appointments for a customerPet filtered by status
  *    security:
  *      - okta: []
  *    tags:
@@ -504,12 +470,11 @@ router.get(
  *      - appointment
  *    parameters:
  *      - $ref: '#/components/parameters/petId'
- *      - $ref: '#/components/parameters/appointmentStatus'
  *    responses:
  *      401:
  *        $ref: '#/components/responses/UnauthorizedError'
  *      404:
- *        description: 'No appointments found with status: status_requested'
+ *        description: 'No appointments found'
  *      200:
  *        description: appointment data
  *        content:
@@ -541,21 +506,29 @@ router.get(
  *                  updated_at: "2021-01-06T18:45:39.979Z"
  */
 router.get(
-  '/:id/appointments/:status',
+  '/:id/appointments',
   authRequired,
   validateCustomerPetID(),
   async (req, res, next) => {
-    console.info({ status: req.params.status });
     try {
       const appointments = await AppointmentModel.getAllBy({
         pet_id: req.params.id,
-        status: req.params.status,
       });
-      return appointments.length
-        ? res.send(appointments)
-        : res.status(404).json({
-            message: `No appointments found with status: ${req.params.status}`,
+      if (appointments.length) {
+        if (req.query.status) {
+          const statusFilter = appointments.filter((appointment) => {
+            return appointment.status === req.query.status ? appointment : null;
           });
+          if (statusFilter.length) {
+            res.status(200).json(statusFilter);
+          }
+          res.status(404).json({
+            error: `no appointments found with status: ${req.query.status}`,
+          });
+        }
+        res.status(200).json(appointments);
+      }
+      res.status(404).json({ message: 'No appointments found for pet' });
     } catch (error) {
       next(error);
     }

@@ -247,4 +247,14 @@ router.post('/:groomerId', authRequired, async (req, res) => {
   }
 });
 
+router.put('/:id', authRequired, async (req, res) => {
+  try {
+    const [updated] = await BPModel.update(req.params.id, req.body);
+    res.status(200).json(updated);
+  } catch (error) {
+    console.error(error.stack);
+    res.status(500).json({ error: 'Error updating groomer business profile' });
+  }
+});
+
 module.exports = router;

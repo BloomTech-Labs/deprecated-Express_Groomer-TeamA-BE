@@ -10,8 +10,6 @@ const createCoverImage = (image) => {
 };
 
 const getBusinessProfile = async (groomerID) => {
-  // use promise.all
-  // profile = get everything from business_profile table where groomer_id = groomerID
   const location = await db('locations')
     .where({ profile_id: groomerID })
     .first()
@@ -23,14 +21,11 @@ const getBusinessProfile = async (groomerID) => {
     })
     .first()
     .select('*');
-  // images = get all cover_images where groomerID = groomerID
   const groomer_cover_images = db('groomer_cover_images')
     .where({
       groomer_id: groomerID,
     })
     .returning('*');
-  // location = get all groomer locations where profile_id = groomerID
-  // services = get all locationsServices where location_id = locations[id]?
   const services = db('location_services')
     .where({ location_id: location.id })
     .returning('*');
@@ -47,8 +42,16 @@ const getBusinessProfile = async (groomerID) => {
   return business_profile_info;
 };
 
+const update = (id, changes) =>
+  db('business_profiles')
+    .where({ profile_id: id })
+    .first()
+    .update(changes)
+    .returning('*');
+
 module.exports = {
   createBusinessProfile,
   createCoverImage,
   getBusinessProfile,
+  update,
 };
