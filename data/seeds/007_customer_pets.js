@@ -6,7 +6,6 @@ exports.seed = (knex) => {
       // Inserts seed entries
       return knex('customer_pets').insert([
         {
-          id: 0,
           customer_id: '00ulthapbErVUwVJy4x6',
           animal_id: 2,
           pet_name: 'Rabby',
