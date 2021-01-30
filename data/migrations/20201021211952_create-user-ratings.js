@@ -28,8 +28,8 @@ exports.up = async (knex) => {
       .inTable('location_services')
       .onDelete('CASCADE')
       .onUpdate('CASCADE');
-    table.string('review_point').notNullable();
-    table.string('feedback').default(null);
+    table.integer('review_point').notNullable();
+    table.text('feedback').default(null);
     table.timestamps(true, true);
   });
 };
