@@ -44,7 +44,7 @@ const router = express.Router();
  *          example: 161175718
  *        status:
  *          type: string
- *          enum: ['Pending', 'Cancel', 'Done']
+ *          enum: ['Pending', 'Approved', 'Rejected', 'Completed']
  *          example: Pending
  *    UpdateAppointment:
  *      type: object
@@ -74,7 +74,7 @@ const router = express.Router();
  *          example: 161175718
  *        status:
  *          type: string
- *          enum: ['Pending', 'Cancel', 'Done']
+ *          enum: ['Pending', 'Approved', 'Rejected', 'Completed']
  *          example: Pending
  *    Appointment:
  *      type: object
@@ -99,7 +99,7 @@ const router = express.Router();
  *          example: 161175718
  *        status:
  *          type: string
- *          enum: ['Pending', 'Cancel', 'Done']
+ *          enum: ['Pending', 'Approved', 'Rejected', 'Completed']
  *          example: Pending
  *        pet:
  *          type: object
