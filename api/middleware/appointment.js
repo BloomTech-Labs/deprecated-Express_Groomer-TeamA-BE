@@ -41,10 +41,10 @@ const validateAppointmentTime = async (req, res, next) => {
 };
 
 const validateAppointmentId = async (req, res, next) => {
+  const appointmentId = req.params.appointmentId || req.body.appointment_id;
+
   try {
-    const appointment = await appointmentsModel.getById(
-      req.params.appointmentId
-    );
+    const appointment = await appointmentsModel.getById(appointmentId);
     if (appointment == null) {
       res.status(404).json({
         error: `No appointment with id: ${req.params.appointmentId} `,
