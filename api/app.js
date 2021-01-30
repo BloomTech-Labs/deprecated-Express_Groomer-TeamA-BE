@@ -64,12 +64,7 @@ app.use(['/locationservice', '/locationservices'], locationServiceRouter);
 app.use(['/customerPet', '/customerPets'], customerPetRouter);
 app.use('/groomerSearch', groomerSearchRouter);
 app.use(
-  [
-    '/appointment',
-    '/appointments',
-    '*/appointments',
-    '*/appointment',
-  ],
+  ['/appointment', '/appointments', '*/appointments', '*/appointment'],
   appointmentsRouter
 );
 app.use(['/businessProfile', '/businessProfiles'], businessProfileRouter);
