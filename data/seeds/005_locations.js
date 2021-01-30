@@ -6,7 +6,6 @@ exports.seed = (knex) => {
       // Inserts seed entries
       return knex('locations').insert([
         {
-          id: 1,
           profile_id: '00ultwew80Onb2vOT4x6',
           address: '200 E Colfax Ave',
           is_mobile: false,
