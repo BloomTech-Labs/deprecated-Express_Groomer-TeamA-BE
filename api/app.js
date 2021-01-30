@@ -63,7 +63,17 @@ app.use(['/location', '/locations'], locationRouter);
 app.use(['/locationservice', '/locationservices'], locationServiceRouter);
 app.use(['/customerPet', '/customerPets'], customerPetRouter);
 app.use('/groomerSearch', groomerSearchRouter);
-app.use('/appointments', appointmentsRouter);
+app.use(
+  [
+    '/appointment',
+    '/appointments',
+    '*/appointments',
+    '*/appointment',
+    '*/appointments',
+    // '*/appointment',
+  ],
+  appointmentsRouter
+);
 app.use('/businessProfile', businessProfileRouter);
 
 // catch 404 and forward to error handler
