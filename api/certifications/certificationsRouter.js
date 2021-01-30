@@ -1,4 +1,3 @@
-const e = require('express');
 const authRequired = require('../middleware/authRequired');
 const { verifyProfileIsGroomer } = require('../middleware/certifications');
 const router = require('express').Router();
@@ -172,7 +171,7 @@ router.get('/Groomer/:groomerId', authRequired, async (req, res, next) => {
  *      404:
  *        description: 'certification not found'
  */
-router.get('/:certificationId', async (req, res, next) => {
+router.get('/:certificationId', authRequired, async (req, res, next) => {
   try {
     const certification = await Certifications.getById(
       req.params.certificationId

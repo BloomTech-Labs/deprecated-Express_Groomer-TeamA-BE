@@ -11,6 +11,7 @@ exports.seed = (knex) => {
           animal_id: 2,
           service_id: 2,
           service_cost: 100,
+          service_description: 'a service for animals',
         },
       ]);
     });

@@ -11,7 +11,7 @@ jest.mock('../../api/middleware/authRequired', () =>
     req.profile.id = '00ultwew80Onb2vOT4x6';
     next();
   })
-);
+)
 
 describe('certifications router endpoints', () => {
   beforeAll(() => {
@@ -77,7 +77,6 @@ describe('certifications router endpoints', () => {
       expect(res.body.message).toBe('certification not found');
     });
   });
-
   describe('DELETE /certifications/:certificationId', () => {
     it('should return 200 on successful delete', async () => {
       Certifications.remove.mockResolvedValue({
