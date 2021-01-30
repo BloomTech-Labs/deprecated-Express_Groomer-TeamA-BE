@@ -227,7 +227,6 @@ const appointmentsObject = (appointments) => {
 
     return appointment_obj;
   });
-  console.log({ user_appointments });
   return user_appointments;
 };
 
