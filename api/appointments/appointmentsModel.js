@@ -186,9 +186,9 @@ const update = async (appointmentId, appointmentChanges) => {
 };
 
 const appointmentsObject = (appointments) => {
-  let user_appointments = {};
+  let user_appointments = [];
 
-  appointments.forEach((appointment) => {
+  user_appointments = appointments.map((appointment) => {
     const id = appointment.appointment_id;
 
     const appointment_obj = {
@@ -225,10 +225,9 @@ const appointmentsObject = (appointments) => {
       },
     };
 
-    if (!user_appointments[id]) {
-      user_appointments[id] = appointment_obj;
-    }
+    return appointment_obj;
   });
+  console.log({ user_appointments });
   return user_appointments;
 };
 
