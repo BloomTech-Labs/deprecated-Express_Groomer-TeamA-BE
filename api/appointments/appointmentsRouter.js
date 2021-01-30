@@ -404,15 +404,22 @@ router.get(
  *            schema:
  *              $ref: '#/components/schemas/Appointment'
  */
-router.put('/', authRequired, async (req, res) => {
+router.put('/', authRequired, validateAppointmentId, async (req, res) => {
+  console.log({ reqAppointment: req.appointment });
   try {
-    const { appointment_id } = req.body;
+    const { appointment_id } = req.appointment[0];
+    console.log({ appointment_id });
     const appointmentChanges = req.body;
     const updatedAppointment = await AppointmentsModel.update(
       appointment_id,
       appointmentChanges
     );
-    res.status(200).json(updatedAppointment);
+    console.log({ updatedAppointment });
+    const appointment = await AppointmentsModel.appointmentsObject([
+      updatedAppointment,
+    ]);
+    console.log({ formatted: appointment });
+    res.status(200).json({ updated: appointment });
   } catch (e) {
     console.error(e.stack);
     res.status(500).json({ error: 'Error updating appointment' });
