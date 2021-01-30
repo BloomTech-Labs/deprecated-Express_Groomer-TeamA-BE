@@ -155,9 +155,10 @@ router.post(
     try {
       const appointment = req.body;
       appointment.customer_id = customer_id;
-
-      const newAppointment = await AppointmentsModel.create(appointment);
-
+      const created = await AppointmentsModel.create(appointment);
+      const newAppointment = await AppointmentsModel.appointmentsObject([
+        created,
+      ]);
       res.status(201).json(newAppointment);
     } catch (e) {
       console.error(e.stack);
@@ -405,20 +406,16 @@ router.get(
  *              $ref: '#/components/schemas/Appointment'
  */
 router.put('/', authRequired, validateAppointmentId, async (req, res) => {
-  console.log({ reqAppointment: req.appointment });
   try {
     const { appointment_id } = req.appointment[0];
-    console.log({ appointment_id });
     const appointmentChanges = req.body;
     const updatedAppointment = await AppointmentsModel.update(
       appointment_id,
       appointmentChanges
     );
-    console.log({ updatedAppointment });
     const appointment = await AppointmentsModel.appointmentsObject([
       updatedAppointment,
     ]);
-    console.log({ formatted: appointment });
     res.status(200).json({ updated: appointment });
   } catch (e) {
     console.error(e.stack);
