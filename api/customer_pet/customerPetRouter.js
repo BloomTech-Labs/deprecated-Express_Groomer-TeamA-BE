@@ -1,7 +1,6 @@
 const express = require('express');
 const authRequired = require('../middleware/authRequired');
 const CustomerPetModel = require('./customerPetModel');
-const AppointmentModel = require('../appointments/appointmentsModel');
 const router = express.Router();
 const {
   validateCustomerPetID,
