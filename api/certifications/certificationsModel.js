@@ -1,3 +1,4 @@
+
 const db = require('../../data/db-config');
 
 const getBy = (filter) => db('certifications').where(filter);
