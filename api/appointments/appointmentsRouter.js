@@ -269,19 +269,28 @@ router.get('/', authRequired, async (req, res) => {
     const appointments = await AppointmentsModel.getAll(req.profile.id);
     if (appointments.length) {
       if (req.query.status) {
-        const statusFilter = appointments.filter((appointment) => {
+        const statusAppointments = appointments.filter((appointment) => {
           return appointment.status === req.query.status ? appointment : null;
         });
-        if (statusFilter.length) {
-          res.status(200).json(statusFilter);
+        if (statusAppointments.length) {
+          const user_appointments = AppointmentsModel.appointmentsObject(
+            statusAppointments
+          );
+          res.status(200).json({ appointments: user_appointments });
+        } else {
+          res.status(404).json({
+            error: `no appointments found with status: ${req.query.status}`,
+          });
         }
-        res.status(404).json({
-          error: `no appointments found with status: ${req.query.status}`,
-        });
+      } else {
+        const user_appointments = AppointmentsModel.appointmentsObject(
+          appointments
+        );
+        res.status(200).json({ appointments: user_appointments });
       }
-      res.status(200).json(appointments);
+    } else {
+      res.status(404).json({ error: 'no appointments found' });
     }
-    res.status(404).json({ error: 'no appointments found' });
   } catch (e) {
     console.error(e.stack);
     res.status(500).json({ error: 'Error getting appointments' });
@@ -405,7 +414,7 @@ router.put('/', authRequired, async (req, res) => {
     );
     res.status(200).json(updatedAppointment);
   } catch (e) {
-    console.log(e.stack);
+    console.error(e.stack);
     res.status(500).json({ error: 'Error updating appointment' });
   }
 });
