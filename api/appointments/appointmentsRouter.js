@@ -448,14 +448,22 @@ router.put('/', authRequired, validateAppointmentId, async (req, res) => {
  *            schema:
  *              $ref: '#/components/schemas/Appointment'
  */
-router.delete('/:appointmentId', authRequired, async (req, res) => {
-  try {
-    const deleted = await AppointmentsModel.remove(req.params.appointmentId);
-    res.status(200).json(deleted);
-  } catch (e) {
-    console.error(e.stack);
-    res.status(500).json({ error: 'Error deleting appointment' });
+router.delete(
+  '/:appointmentId',
+  authRequired,
+  validateAppointmentId,
+  async (req, res) => {
+    try {
+      const deleted = await AppointmentsModel.remove(
+        req.appointment[0].appointment_id
+      );
+      const appointment = await AppointmentsModel.appointmentsObject([deleted]);
+      res.status(200).json({ deleted: appointment });
+    } catch (e) {
+      console.error(e.stack);
+      res.status(500).json({ error: 'Error deleting appointment' });
+    }
   }
-});
+);
 
 module.exports = router;
