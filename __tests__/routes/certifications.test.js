@@ -7,8 +7,11 @@ server.use(express.json());
 
 jest.mock('../../api/certifications/certificationsModel');
 jest.mock('../../api/middleware/authRequired', () =>
-  jest.fn((req, res, next) => next())
-);
+  jest.fn((req, res, next) => {
+    req.profile.id = '00ultwew80Onb2vOT4x6';
+    next();
+  })
+)
 
 describe('certifications router endpoints', () => {
   beforeAll(() => {
@@ -73,5 +76,28 @@ describe('certifications router endpoints', () => {
       expect(res.status).toBe(404);
       expect(res.body.message).toBe('certification not found');
     });
+  });
+  describe('DELETE /certifications/:certificationId', () => {
+    it('should return 200 on successful delete', async () => {
+      Certifications.remove.mockResolvedValue({
+        id: 1,
+        groomer_id: '00ultwew80Onb2vOT4x6',
+        title: 'Long-Legged Terriers',
+        institute: 'Institute of Dog Grooming',
+        image:
+          'https://headtotailpetgrooming.weebly.com/uploads/6/0/2/9/60294035/attendence_1_orig.jpg',
+        date_issued: 1610224700,
+        date_expired: 1925757500,
+      });
+      const res = await request(server).delete('/certifications/1');
+
+      expect(res.status).toBe(200);
+      expect(res.body.deleted);
+      expect(res.body.deleted.id).toBe(1);
+    });
+    // it(
+    // 'should return 403 when a user tries to delete a certification that is not theirs'
+    // );
+    // it('should return 404 when certification not found');
   });
 });

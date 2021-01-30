@@ -184,4 +184,55 @@ router.get('/:certificationId', authRequired, async (req, res, next) => {
   }
 });
 
+/**
+ * @swagger
+ * /certifications/{certificationId}:
+ *  delete:
+ *    summary: Delete Certification matching the Certification ID
+ *    security:
+ *      - okta: []
+ *    tags:
+ *      - certification
+ *    parameters:
+ *      - $ref: '#/components/parameters/certificationId'
+ *    responses:
+ *      401:
+ *        $ref: '#/components/responses/UnauthorizedError'
+ *      403:
+ *        description: 'You may only delete your own certifications'
+ *      404:
+ *        description: 'certification not found'
+ *      200:
+ *        description: The deleted certification object
+ *        content:
+ *          application/json:
+ *            schema:
+ *              $ref: '#/components/schemas/Certification'
+ */
+router.delete('/:certificationId', authRequired, async (req, res, next) => {
+  try {
+    const certification = await Certifications.getById(
+      req.params.certificationId
+    );
+    if (certification) {
+      if (certification.groomer_id === req.profile.id) {
+        try {
+          const deleted = await Certifications.remove(
+            req.params.certificationId
+          );
+          res.send({ deleted });
+        } catch (error) {
+          next(error);
+        }
+      }
+      res
+        .status(403)
+        .json({ message: 'You may only delete your own certifications' });
+    }
+    res.status(404).json({ message: 'Certification does not exist' });
+  } catch (error) {
+    next(error);
+  }
+});
+
 module.exports = router;
