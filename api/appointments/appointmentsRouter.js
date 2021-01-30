@@ -3,6 +3,7 @@ const authRequired = require('../middleware/authRequired');
 const {
   validateAppointmentBody,
   validateAppointmentTime,
+  validateAppointmentId,
 } = require('../middleware/appointment');
 
 const AppointmentsModel = require('./appointmentsModel');
@@ -260,17 +261,24 @@ router.get('/', authRequired, async (req, res) => {
  *      404:
  *        description: 'appointment not found'
  */
-router.get('/:appointmentId', authRequired, async (req, res) => {
-  try {
-    const appointment = await AppointmentsModel.getById(
-      req.params.appointmentId
-    );
-    res.status(200).json(appointment);
-  } catch (e) {
-    console.error(e.stack);
-    res.status(500).json({ error: 'Error getting appointment' });
+router.get(
+  '/:appointmentId',
+  authRequired,
+  validateAppointmentId,
+  async (req, res) => {
+    try {
+      const appointment = await AppointmentsModel.appointmentsObject(
+        req.appointment
+      );
+      res.status(200).json({ appointment });
+    } catch (e) {
+      console.error(e.stack);
+      res
+        .status(500)
+        .json({ error: `Error getting appointment with id: ${req.params.id}` });
+    }
   }
-});
+);
 
 /**
  * @swagger
