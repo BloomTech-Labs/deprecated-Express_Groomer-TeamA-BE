@@ -38,8 +38,11 @@ exports.up = async (knex) => {
       .onDelete('CASCADE')
       .onUpdate('CASCADE');
     table.string('service_provider_name').notNullable();
-    table.integer('appointment_date_time').notNullable(); //epoch timestamp
-    table.enu('status', ['Pending', 'Cancel', 'Done']).notNullable();
+    table.date('appointment_date').notNullable();
+    table.string('appointment_time').notNullable();
+    table
+      .enu('status', ['Pending', 'Approved', 'Rejected', 'Completed'])
+      .notNullable();
     table.timestamps(true, true);
     table.integer('duration').notNullable();
   });
