@@ -204,10 +204,10 @@ router.post(
       const appointment = req.body;
       appointment.customer_id = customer_id;
       const created = await AppointmentsModel.create(appointment);
-      const newAppointment = await AppointmentsModel.appointmentsObject([
+      const [newAppointment] = await AppointmentsModel.appointmentsObject([
         created,
       ]);
-      res.status(201).json({ newAppointment });
+      res.status(201).json(newAppointment);
     } catch (e) {
       console.error(e.stack);
       res.status(500).json({ error: 'Error creating new appointment' });
@@ -283,7 +283,7 @@ router.get('/', authRequired, async (req, res) => {
           const user_appointments = AppointmentsModel.appointmentsObject(
             statusAppointments
           );
-          res.status(200).json({ appointments: user_appointments });
+          res.status(200).json(user_appointments);
         } else {
           res.status(404).json({
             error: `no appointments found with status: ${req.query.status}`,
@@ -293,7 +293,7 @@ router.get('/', authRequired, async (req, res) => {
         const user_appointments = AppointmentsModel.appointmentsObject(
           appointments
         );
-        res.status(200).json({ appointments: user_appointments });
+        res.status(200).json(user_appointments);
       }
     } else {
       res.status(404).json({ error: 'no appointments found' });
@@ -345,7 +345,7 @@ router.get(
   validateAppointmentId,
   async (req, res) => {
     try {
-      const appointment = await AppointmentsModel.appointmentsObject(
+      const [appointment] = await AppointmentsModel.appointmentsObject(
         req.appointment
       );
       res.status(200).json(appointment);
@@ -391,10 +391,10 @@ router.put('/', authRequired, validateAppointmentId, async (req, res) => {
       appointment_id,
       appointmentChanges
     );
-    const appointment = await AppointmentsModel.appointmentsObject([
+    const [appointment] = await AppointmentsModel.appointmentsObject([
       updatedAppointment,
     ]);
-    res.status(200).json({ appointment });
+    res.status(200).json(appointment);
   } catch (e) {
     console.error(e.stack);
     res.status(500).json({ error: 'Error updating appointment' });
@@ -435,8 +435,10 @@ router.delete(
       const deleted = await AppointmentsModel.remove(
         req.appointment[0].appointment_id
       );
-      const appointment = await AppointmentsModel.appointmentsObject([deleted]);
-      res.status(200).json({ appointment });
+      const [appointment] = await AppointmentsModel.appointmentsObject([
+        deleted,
+      ]);
+      res.status(200).json(appointment);
     } catch (e) {
       console.error(e.stack);
       res.status(500).json({ error: 'Error deleting appointment' });
