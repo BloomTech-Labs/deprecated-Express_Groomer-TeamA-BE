@@ -183,7 +183,7 @@ const update = async (appointmentId, appointmentChanges) => {
     .update(appointmentChanges)
     .where({ id: appointmentId });
 
-  return db('appointments').select('*').where({ id: appointmentId });
+  return getById(appointmentId);
 };
 
 const appointmentsObject = (appointments) => {
