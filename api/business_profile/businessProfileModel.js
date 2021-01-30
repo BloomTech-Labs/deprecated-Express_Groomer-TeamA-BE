@@ -31,11 +31,10 @@ const getBusinessProfile = async (groomerID) => {
     .where({ profile_id: groomerID })
     .first()
     .select('*');
-  // services = get all locationsServices where location_id = locations[id]?
   const services = db('location_services')
     .where({ location_id: location.id })
     .returning('*');
-
+  
   promises.append(business_profile, groomer_cover_images, location, services);
 
   const groomer_profile_info = await Promise.all(promises);
