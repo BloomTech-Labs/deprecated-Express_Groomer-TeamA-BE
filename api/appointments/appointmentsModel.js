@@ -1,7 +1,9 @@
 const db = require('../../data/db-config');
 
-const create = (appointment) => {
-  return db('appointments').insert(appointment).returning('*');
+const create = async (appointment) => {
+  const [created] = await db('appointments').insert(appointment).returning('*');
+
+  return getById(created.id);
 };
 
 const getAll = async (profileID) => {
@@ -12,15 +14,11 @@ const getAll = async (profileID) => {
 
   switch (type.user_type) {
     case 'Groomer':
-      return db('appointments')
-        .where({ 'appointments.groomer_id': profileID })
-        .join('customer_pets as cp', 'cp.id', 'appointments.pet_id')
+      return db('appointments as app')
+        .where({ 'app.groomer_id': profileID })
+        .join('customer_pets as cp', 'cp.id', 'app.pet_id')
         .join('animals as a', 'a.id', 'cp.animal_id')
-        .join(
-          'location_services as ls',
-          'ls.id',
-          'appointments.location_service_id'
-        )
+        .join('location_services as ls', 'ls.id', 'app.location_service_id')
         .join('services as s', 's.id', 'ls.service_id')
         .join('locations as l', 'l.id', 'ls.location_id')
         .select(
