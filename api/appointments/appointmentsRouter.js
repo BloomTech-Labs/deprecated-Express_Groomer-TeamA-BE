@@ -13,7 +13,7 @@ const router = express.Router();
  * @swagger
  * components:
  *  schemas:
- *    Appointment:
+ *    NewAppointment:
  *      type: object
  *      required:
  *        - groomer_id
@@ -24,40 +24,147 @@ const router = express.Router();
  *        - appointment_date_time
  *        - status
  *      properties:
- *        id:
- *          type: integer
  *        groomer_id:
  *          type: string
+ *          example: "00ultwew80Onb2vOT4x6"
  *        customer_id:
  *          type: string
+ *          example: "00ulthapbErVUwVJy4x6"
  *        pet_id:
  *          type: integer
+ *          example: 0
  *        location_service_id:
  *          type: integer
+ *          example: 0
  *        service_provider_name:
  *          type: string
+ *          example: "Pro Petwashers inc."
  *        appointment_date_time:
  *          type: integer
+ *          example: 161175718
  *        status:
  *          type: string
  *          enum: ['Pending', 'Cancel', 'Done']
- *        created_at:
+ *          example: Pending
+ *    UpdateAppointment:
+ *      type: Object
+ *      required:
+ *        - appointment_id
+ *      properties:
+ *        appointment_id:
+ *           type: integer
+ *           example: 1
+ *        groomer_id:
  *          type: string
- *          format: date-time
- *        updated_at:
+ *          example: "00ultwew80Onb2vOT4x6"
+ *        customer_id:
  *          type: string
- *          format: date-time
- *      example:
- *        id: 11,
- *        groomer_id: "6jknxiznooy5lzesvzlk"
- *        customer_id: "00ultx74kMUmEW8054x6"
- *        pet_id: 6
- *        location_service_id: 7
- *        service_provider_name: "Rabid Rabbits Grooming"
- *        appointment_date_time: 1610995967
- *        status: "Pending"
- *        created_at: "2020-10-05T19:30:32.123Z"
- *        updated_at: "2020-10-05T19:30:32.123Z"
+ *          example: "00ulthapbErVUwVJy4x6"
+ *        pet_id:
+ *          type: integer
+ *          example: 0
+ *        location_service_id:
+ *          type: integer
+ *          example: 0
+ *        service_provider_name:
+ *          type: string
+ *          example: "Pro Petwashers inc."
+ *        appointment_date_time:
+ *          type: integer
+ *          example: 161175718
+ *        status:
+ *          type: string
+ *          enum: ['Pending', 'Cancel', 'Done']
+ *          example: Pending
+ *    Appointment:
+ *      type: object
+ *      properties:
+ *        id:
+ *          type: integer
+ *          example: 1
+ *        groomer_id:
+ *          type: string
+ *          example: "00ultwew80Onb2vOT4x6"
+ *        customer_id:
+ *          type: string
+ *          example: "00ulthapbErVUwVJy4x6"
+ *        pet_id:
+ *          type: integer
+ *          example: 0
+ *        location_service_id:
+ *          type: integer
+ *          example: 0
+ *        appointment_date_time:
+ *          type: integer
+ *          example: 161175718
+ *        status:
+ *          type: string
+ *          enum: ['Pending', 'Cancel', 'Done']
+ *          example: Pending
+ *        pet:
+ *          type: object
+ *          properties:
+ *            name:
+ *              type: string
+ *              example: "Spot"
+ *            type:
+ *              type: string
+ *              example: "Dog"
+ *            color:
+ *              type: string
+ *              example: "Red"
+ *            date_of_birth:
+ *              type: string
+ *              format: date-time
+ *              example: "2020-11-02T07:00:00.000Z"
+ *            image_url:
+ *              type: string
+ *              format: url
+ *              example: "https://s3.amazonaws.com/1.jpg"
+ *        service:
+ *          type: object
+ *          properties:
+ *            service_description:
+ *              type: string
+ *              example: "Nail Cutting"
+ *            service_image:
+ *              type: string
+ *              format: url
+ *              example: "https://s3.amazonaws.com/1.jpg"
+ *            service_cost:
+ *              type: integer
+ *              example: 100
+ *        location:
+ *          type: object
+ *          properties:
+ *            location_name:
+ *              type: string
+ *              example: "Pro Pet Washers"
+ *            street_address:
+ *              type: string
+ *              example: "200 E Colfax Ave"
+ *            state:
+ *              type: string
+ *              example: "Colorado"
+ *            city:
+ *              type: string
+ *              example: "Denver"
+ *            zip:
+ *              type: integer
+ *              example: 80203
+ *            country:
+ *              type: string
+ *              example: "United States of America"
+ *            phone_number:
+ *              type: string
+ *              format: phone-number
+ *              example: "3038675309"
+ *            latitude:
+ *              type: integer
+ *              example: 39.739445
+ *            longitude:
+ *              type: integer
+ *              example: -104.985
  *
  * /appointments:
  *  post:
@@ -71,43 +178,8 @@ const router = express.Router();
  *      content:
  *        application/json:
  *          schema:
- *            type: Object
- *            required:
- *              - groomer_id
- *              - customer_id
- *              - pet_id
- *              - location_service_id
- *              - service_provider_name
- *              - appointment_date
- *              - status
- *            properties:
- *              groomer_id:
- *                type: integer
- *              customer_id:
- *                type: integer
- *              pet_id:
- *                type: integer
- *              location_service_id:
- *                type: integer
- *              service_provider_name:
- *                type: string
- *              appointment_date_time:
- *                type: integer
- *              status:
- *                type: string
- *                enum: ['Pending', 'Cancel', 'Done']
- *            example:
- *              id: 11,
- *              groomer_id: "6jknxiznooy5lzesvzlk"
- *              customer_id: "00ultx74kMUmEW8054x6"
- *              pet_id: 6
- *              location_service_id: 7
- *              service_provider_name: "Rabid Rabbits Grooming"
- *              appointment_date_time: 1610995967
- *              status: "Pending"
- *              created_at: "2020-10-05T19:30:32.123Z"
- *              updated_at: "2020-10-05T19:30:32.123Z"
- *    response:
+ *            $ref: '#/components/schemas/NewAppointment'
+ *    responses:
  *      400:
  *        description: 'Missing required property: _property_'
  *      401:
@@ -119,31 +191,7 @@ const router = express.Router();
  *        content:
  *          application/json:
  *            schema:
- *              type: object
- *              properties:
- *                id:
- *                  type: integer
- *                groomer_id:
- *                  type: string
- *                customer_id:
- *                  type: string
- *                pet_id:
- *                  type: integer
- *                location_service_id:
- *                  type: integer
- *                service_provider_name:
- *                  type: string
- *                appointment_date_time:
- *                  type: integer
- *                status:
- *                  type: string
- *                  enum: ['Pending', 'Cancel', 'Done']
- *                created_at:
- *                  type: string
- *                  format: date-time
- *                updated_at:
- *                  type: string
- *                  format: date-time
+ *              $ref: '#/components/schemas/Appointment'
  */
 router.post(
   '/',
@@ -159,7 +207,7 @@ router.post(
       const newAppointment = await AppointmentsModel.appointmentsObject([
         created,
       ]);
-      res.status(201).json(newAppointment);
+      res.status(201).json({ newAppointment });
     } catch (e) {
       console.error(e.stack);
       res.status(500).json({ error: 'Error creating new appointment' });
@@ -199,28 +247,7 @@ router.post(
  *              type: array
  *              items:
  *                $ref: '#/components/schemas/Appointment'
- *              example:
- *                appointments:
- *                  - id: 1
- *                    groomer_id: "0x4v96mhmswefsoy4qwm"
- *                    customer_id: "00ultx74kMUmEW8054x6"
- *                    pet_id: 1
- *                    location_service_id: 1
- *                    service_provider_name: "Randy"
- *                    appointment_date_time: 1610995967
- *                    status: "Pending"
- *                    created_at: "2021-01-06T18:45:39.979Z"
- *                    updated_at: "2021-01-06T18:45:39.979Z"
- *                  - id: 2
- *                    groomer_id: "0x4v96mhmswefsoy4qwm"
- *                    customer_id: "00ultx74kMUmEW8054x6"
- *                    pet_id: 2
- *                    location_service_id: 1
- *                    service_provider_name: "Randy"
- *                    appointment_date_time: 1610736767
- *                    status: "Pending"
- *                    created_at: "2021-01-06T18:45:39.979Z"
- *                    updated_at: "2021-01-06T18:45:39.979Z"
+ *
  * /appointments/?status:
  *  get:
  *    description: Returns a list of all appointments for a customer or groomer filtered by status
@@ -242,29 +269,8 @@ router.post(
  *              type: array
  *              items:
  *                $ref: '#/components/schemas/Appointment'
- *              example:
- *                appointments:
- *                  - id: 1
- *                    groomer_id: "0x4v96mhmswefsoy4qwm"
- *                    customer_id: "00ultx74kMUmEW8054x6"
- *                    pet_id: 1
- *                    location_service_id: 1
- *                    service_provider_name: "Randy"
- *                    appointment_date_time: 1610995967
- *                    status: "Cancel"
- *                    created_at: "2021-01-06T18:45:39.979Z"
- *                    updated_at: "2021-01-06T18:45:39.979Z"
- *                  - id: 2
- *                    groomer_id: "0x4v96mhmswefsoy4qwm"
- *                    customer_id: "00ultx74kMUmEW8054x6"
- *                    pet_id: 2
- *                    location_service_id: 1
- *                    service_provider_name: "Randy"
- *                    appointment_date_time: 1610736767
- *                    status: "Cancel"
- *                    created_at: "2021-01-06T18:45:39.979Z"
- *                    updated_at: "2021-01-06T18:45:39.979Z"
  */
+
 router.get('/', authRequired, async (req, res) => {
   try {
     const appointments = await AppointmentsModel.getAll(req.profile.id);
@@ -342,7 +348,7 @@ router.get(
       const appointment = await AppointmentsModel.appointmentsObject(
         req.appointment
       );
-      res.status(200).json({ appointment });
+      res.status(200).json(appointment);
     } catch (e) {
       console.error(e.stack);
       res
@@ -366,35 +372,7 @@ router.get(
  *      content:
  *        application/json:
  *          schema:
- *            type: Object
- *            required:
- *              - appointment_id
- *            properties:
- *              appointment_id:
- *                 type: integer
- *              groomer_id:
- *                type: string
- *              customer_id:
- *                type: string
- *              pet_id:
- *                type: integer
- *              location_service_id:
- *                type: integer
- *              service_provider_name:
- *                type: string
- *              appointment_date_time:
- *                type: integer
- *              status:
- *                type: string
- *                enum: ['Pending', 'Cancel', 'Done']
- *            example:
- *              appointment_id: 1
- *              groomer_id: "6jknxiznooy5lzesvzlk"
- *              pet_id: 6
- *              location_service_id: 7
- *              service_provider_name: "Randy"
- *              appointment_date_time: 1610736767
- *              status: "Cancel"
+
  *    responses:
  *      401:
  *        $ref: '#/components/responses/UnauthorizedError'
@@ -416,7 +394,7 @@ router.put('/', authRequired, validateAppointmentId, async (req, res) => {
     const appointment = await AppointmentsModel.appointmentsObject([
       updatedAppointment,
     ]);
-    res.status(200).json({ updated: appointment });
+    res.status(200).json({ appointment });
   } catch (e) {
     console.error(e.stack);
     res.status(500).json({ error: 'Error updating appointment' });
@@ -458,7 +436,7 @@ router.delete(
         req.appointment[0].appointment_id
       );
       const appointment = await AppointmentsModel.appointmentsObject([deleted]);
-      res.status(200).json({ deleted: appointment });
+      res.status(200).json({ appointment });
     } catch (e) {
       console.error(e.stack);
       res.status(500).json({ error: 'Error deleting appointment' });
