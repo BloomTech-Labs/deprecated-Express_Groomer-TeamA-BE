@@ -162,9 +162,10 @@ const getAllBy = (filter) =>
     );
 
 const remove = async (appointmentId) => {
-  const deletedApp = await db('appointments')
-    .select('*')
-    .where({ id: appointmentId });
+  // const deletedApp = await db('appointments')
+  //   .select('*')
+  //   .where({ id: appointmentId });
+  const deletedApp = await getById(appointmentId);
   const changes = await db('appointments')
     .delete()
     .where({ id: appointmentId });
