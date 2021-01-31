@@ -38,8 +38,7 @@ exports.up = async (knex) => {
       .onDelete('CASCADE')
       .onUpdate('CASCADE');
     table.string('service_provider_name').notNullable();
-    table.date('appointment_date').notNullable();
-    table.string('appointment_time').notNullable();
+    table.integer('appointment_date_time').notNullable();
     table
       .enu('status', ['Pending', 'Approved', 'Rejected', 'Completed'])
       .notNullable();

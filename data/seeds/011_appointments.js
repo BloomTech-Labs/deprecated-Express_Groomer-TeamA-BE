@@ -23,7 +23,7 @@ exports.seed = (knex) => {
           pet_id: 0,
           location_service_id: 0,
           service_provider_name: 'Buddy',
-          status: 'Done',
+          status: 'Completed',
           appointment_date_time: 1611878560,
           duration: 60,
         },
