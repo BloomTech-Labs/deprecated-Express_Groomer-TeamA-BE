@@ -1,11 +1,5 @@
 const faker = require('faker');
 
-// all customer pets should have had a least one previous appointment
-// half customer pets have one pending
-// half customer pets have one Approved
-
-const unixTime = Math.floor(Date.now() / 1000);
-
 exports.seed = (knex) => {
   // Deletes ALL existing entries
   return knex('appointments')
