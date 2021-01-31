@@ -1,4 +1,4 @@
-const faker = require('faker')
+const faker = require('faker');
 
 exports.seed = (knex) => {
   // Deletes ALL existing entries
