@@ -16,6 +16,8 @@ router.post('/', authRequired, verifyUserRatingBody, async (req, res) => {
   } catch (error) {
     console.error(error.stack);
     res.status(500).json({ error: 'database error' });
+  }
+});
 
 router.get('/:ratingId', authRequired, async (req, res) => {
   try {
@@ -38,7 +40,7 @@ router.get('/:groomerId', authRequired, async (req, res) => {
     res.status(500).json({ error: 'Error getting all ratings' });
   }
 });
-        
+
 router.delete('/:ratingId', authRequired, async (req, res) => {
   try {
     //todo: for this endpoint maybe should have middleware to confirm if
