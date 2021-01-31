@@ -1,18 +1,21 @@
-const express = require('express');
+const router = require('express').Router();
 const authRequired = require('../middleware/authRequired');
-const UserRatingsModel = require('./userRatingsModel');
-const router = express.Router();
+const { verifyUserRatingBody } = require('../middleware/userRating');
+const UserRatingsModel = require('../user_ratings/userRatingsModel');
 
-router.delete('/:ratingId', authRequired, async (req, res) => {
+router.post('/', authRequired, verifyUserRatingBody, async (req, res) => {
   try {
-    //todo: for this endpoint maybe should have middleware to confirm if
-    // the profile requesting the delete is the one that made it
-
-    const deleted = await UserRatingsModel.remove(req.params.ratingId);
-    res.status(201).json(deleted);
-  } catch (e) {
-    console.log(e.stack);
-    res.status(500).json({ error: 'Error deleting user rating.' });
+    const created = await UserRatingsModel.create({
+      ...req.body,
+      customer_id: req.profile.id,
+    });
+    if (created) {
+      res.status(201).json({ created });
+    }
+    res.status(500).json({ error: 'error in creating error' });
+  } catch (error) {
+    console.error(error.stack);
+    res.status(500).json({ error: 'database error' });
   }
 });
 
@@ -35,6 +38,19 @@ router.get('/:groomerId', authRequired, async (req, res) => {
   } catch (e) {
     console.log(e.stack);
     res.status(500).json({ error: 'Error getting all ratings' });
+  }
+});
+
+router.delete('/:ratingId', authRequired, async (req, res) => {
+  try {
+    //todo: for this endpoint maybe should have middleware to confirm if
+    // the profile requesting the delete is the one that made it
+
+    const deleted = await UserRatingsModel.remove(req.params.ratingId);
+    res.status(201).json(deleted);
+  } catch (e) {
+    console.log(e.stack);
+    res.status(500).json({ error: 'Error deleting user rating.' });
   }
 });
 
