@@ -229,8 +229,8 @@ const randomGroomersLocations = [
 
 const locations = [
   ...oktaGroomerLocations,
-  ...oktaUserLocations,
   ...randomGroomersLocations,
+  ...oktaUserLocations,
 ];
 
 exports.seed = (knex) => {
