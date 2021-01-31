@@ -22,7 +22,7 @@ const {
  *        address:
  *          type: string
  *        zip:
- *          type: integer
+ *          type: string
  *        phone_number:
  *          type: string
  *        latitude:
@@ -45,7 +45,7 @@ const {
  *          - id: 1
  *            address: "917 Armstrong Blvd"
  *            is_mobile: false
- *            zip: 07712
+ *            zip: "07712"
  *            phone_number: 884235223
  *            latitude: 18887.56
  *            longitude: 188767.56
@@ -80,7 +80,7 @@ const {
  *                    - id: 1
  *                      address: "917 Armstrong Blvd"
  *                      is_mobile: false
- *                      zip: 07712
+ *                      zip: "07712"
  *                      phone_number: 884235223
  *                      latitude: 18887.56
  *                      longitude: 188767.56
@@ -90,7 +90,7 @@ const {
  *                    - id: 2
  *                      address: "Branchburg Ave"
  *                      is_mobile: false
- *                      zip: 08879
+ *                      zip: "08879"
  *                      phone_number: 884235223
  *                      latitude: 18887.56
  *                      longitude: 1647.78
@@ -193,7 +193,7 @@ router.get(
  *              address:
  *                type: string
  *              zip:
- *                type: integer
+ *                type: string
  *              phone_number:
  *                type: string
  *              latitude:
@@ -209,7 +209,7 @@ router.get(
  *            example:
  *                address: "917 Armstrong Blvd"
  *                is_mobile: false
- *                zip: 07712
+ *                zip: "07712"
  *                phone_number: 884235223
  *                latitude: 18887.56
  *                longitude: 188767.56
@@ -302,7 +302,7 @@ router.post(
  *              addres:
  *                type: string
  *              zip:
- *                type: integer
+ *                type: string
  *              phone_number:
  *                type: string
  *              latitude:
@@ -319,7 +319,7 @@ router.post(
  *                id: 0
  *                address: "917 Armstrong Blvd"
  *                is_mobile: false
- *                zip: 07712
+ *                zip: "07712"
  *                phone_number: 884235223
  *                latitude: 18887.56
  *                longitude: 188767.56
