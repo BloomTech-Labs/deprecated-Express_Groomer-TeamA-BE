@@ -150,7 +150,7 @@ const groomers = [
   },
 ];
 
-const profiles = [...oktaProfiles, ...groomers]
+const profiles = [...oktaProfiles, ...groomers];
 
 exports.seed = async (knex) => {
   // Insert profiles
