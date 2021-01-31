@@ -1,11 +1,21 @@
 const db = require('../../data/db-config');
 
-const getUserAllLocations = async (profile_id) => {
-  return await db('locations as l')
+/*
+        {
+  "address": "917 Armstrong Blvd",
+  "is_mobile": false,
+  "zip": 80122,
+  "phone_number": 884235223,
+  "latitude": 18887.56,
+  "longitude": 188767.56,
+  "country": "USA",
+  "state": "CO",
+  "city": "Denver"
+}*/
+
+const getUserAllLocations = (profile_id) => {
+  return db('locations as l')
     .join('profiles as p', 'p.id', 'l.profile_id')
-    .join('countries', 'countries.id', 'l.country_id')
-    .join('states as s', 's.id', 'l.state_id')
-    .join('cities as c', 'c.id', 'l.city_id')
     .where('p.id', profile_id)
     .select(
       'p.id as profile_id',
@@ -18,23 +28,17 @@ const getUserAllLocations = async (profile_id) => {
       'l.latitude',
       'l.longitude',
       'l.zip',
-      'l.is_mobo',
+      'l.is_mobile',
       'l.phone_number',
-      'countries.id as country_id',
-      'countries.name as country_name',
-      's.id as state_id',
-      's.name as state_name',
-      'c.id as city_id',
-      'c.name as city_name'
+      'l.country',
+      'l.state',
+      'l.city'
     );
 };
 
-const findUserLocation = async (id, profile_id) => {
-  return await db('locations as l')
+const findUserLocation = (id, profile_id) => {
+  return db('locations as l')
     .join('profiles as p', 'p.id', 'l.profile_id')
-    .join('countries', 'countries.id', 'l.country_id')
-    .join('states as s', 's.id', 'l.state_id')
-    .join('cities as c', 'c.id', 'l.city_id')
     .where('l.id', id)
     .where('l.profile_id', profile_id)
     .select(
@@ -47,15 +51,12 @@ const findUserLocation = async (id, profile_id) => {
       'l.address',
       'l.latitude',
       'l.longitude',
-      'l.is_mobo',
+      'l.is_mobile',
       'l.zip',
       'l.phone_number',
-      'countries.id as country_id',
-      'countries.name as country_name',
-      's.id as state_id',
-      's.name as state_name',
-      'c.id as city_id',
-      'c.name as city_name'
+      'l.country',
+      'l.state',
+      'l.city'
     );
 };
 
@@ -72,7 +73,7 @@ const update = (id, location) => {
 };
 
 const remove = async (id) => {
-  return await db('locations').where({ id }).del();
+  return db('locations').where({ id }).del();
 };
 
 function getUserLocationsObject(user_locations) {
@@ -98,26 +99,14 @@ function getUserLocationsObject(user_locations) {
     let location_obj = {
       id: user_location.location_id,
       address: user_location.address,
-      is_mobo: user_location.is_mobo,
+      is_mobile: user_location.is_mobile,
       zip: user_location.zip,
       phone_number: user_location.phone_number,
       latitude: user_location.latitude,
       longitude: user_location.longitude,
-    };
-    // add country object
-    location_obj['country'] = {
-      id: user_location.country_id,
-      name: user_location.country_name,
-    };
-    // add state object
-    location_obj['state'] = {
-      id: user_location.state_id,
-      name: user_location.state_name,
-    };
-    // add city object
-    location_obj['city'] = {
-      id: user_location.city_id,
-      name: user_location.city_name,
+      country: user_location.country,
+      state: user_location.state,
+      city: user_location.city,
     };
     location_by_user[id]['locations'].push(location_obj);
   });
