@@ -20,56 +20,39 @@ You can find the deployed projects at:
 |                                [<img src="https://github.com/favicon.ico" width="15"> ](https://github.com/tanveersaleem786/)                                |                            [<img src="https://github.com/favicon.ico" width="15"> ](https://github.com/MLucky518)                             |                          [<img src="https://github.com/favicon.ico" width="15"> ](http://github.com/wilcoxva)                           |                          [<img src="https://github.com/favicon.ico" width="15"> ](https://github.com/tlewandowski18)                           |                           [<img src="https://github.com/favicon.ico" width="15"> ](https://github.com/TylerAlsop)                            |
 |                [ <img src="https://static.licdn.com/sc/h/al2o9zrvru7aqj8e1x2rzsrca" width="15"> ](https://www.linkedin.com/in/tanveer-saleem/)                |                 [ <img src="https://static.licdn.com/sc/h/al2o9zrvru7aqj8e1x2rzsrca" width="15"> ](https://www.linkedin.com/in/mlucky518/)                 |                [ <img src="https://static.licdn.com/sc/h/al2o9zrvru7aqj8e1x2rzsrca" width="15"> ](https://www.linkedin.com/in/virginia-wilcox)                |                 [ <img src="https://static.licdn.com/sc/h/al2o9zrvru7aqj8e1x2rzsrca" width="15"> ](https://www.linkedin.com/in/tomlewandowski1/)                 |                [ <img src="https://static.licdn.com/sc/h/al2o9zrvru7aqj8e1x2rzsrca" width="15"> ](https://www.linkedin.com/in/tyler-alsop/)                |
 
+|                                                      [Cody Brewer](https://github.com/CodyBrewer)                                                       |                                                       [Cris LaFortune](https://github.com/cdlafortune)                                                        |                                                      [Trevor Thompson](https://github.com/tthompson2)                                                       |                                                       [Luis Pineda](https://github.com/LuisPinedaJR)                                                        |                                                      [Eloy Gutierrez](https://github.com/Eloy2)                                                       |
+| :-----------------------------------------------------------------------------------------------------------------------------------------: | :-------------------------------------------------------------------------------------------------------------------------------------------: | :-----------------------------------------------------------------------------------------------------------------------------------------: | :-------------------------------------------------------------------------------------------------------------------------------------------: | :-----------------------------------------------------------------------------------------------------------------------------------------: |
+| [<img src="https://avatars.githubusercontent.com/u/8118059?s=460&u=6da8b776ce0e9b326e0948620842b00cbc41f180&v=4" width = "200" />](https://github.com/CodyBrewer) | [<img src="https://avatars.githubusercontent.com/u/45853079?s=460&v=4" width = "200" />](https://github.com/cdlafortune) | [<img src="https://avatars.githubusercontent.com/u/895665?s=460&u=055f365adef34715fc254a393f0165eefbf0cce3&v=4" width = "200" />](https://github.com/tthompson2) | [<img src="https://avatars.githubusercontent.com/u/13291961?s=460&u=6459a6cd7be8368232a5a712b31e59ef137b99a7&v=4" width = "200" />](https://github.com/LuisPinedaJR) | [<img src="https://avatars.githubusercontent.com/u/31071164?s=460&u=cec841319bbb729bc3290f5178a7034a764876af&v=4" width = "200" />](https://github.com/Eloy2) |
+|                                [<img src="https://github.com/favicon.ico" width="15"> ](https://github.com/CodyBrewer)                                |                            [<img src="https://github.com/favicon.ico" width="15"> ](https://github.com/cdlafortune)                             |                          [<img src="https://github.com/favicon.ico" width="15"> ](https://github.com/tthompson2)                           |                          [<img src="https://github.com/favicon.ico" width="15"> ](https://github.com/LuisPinedaJR)                           |                           [<img src="https://github.com/favicon.ico" width="15"> ](https://github.com/Eloy2)                            |
+|                [ <img src="https://static.licdn.com/sc/h/al2o9zrvru7aqj8e1x2rzsrca" width="15"> ](https://www.linkedin.com/in/cody-brewer/)                |                 [ <img src="https://static.licdn.com/sc/h/al2o9zrvru7aqj8e1x2rzsrca" width="15"> ](https://www.linkedin.com/in/cris-lafortune/)                 |                [ <img src="https://static.licdn.com/sc/h/al2o9zrvru7aqj8e1x2rzsrca" width="15"> ](https://www.linkedin.com/in/trevor-thompson-dev/)                |                 [ <img src="https://static.licdn.com/sc/h/al2o9zrvru7aqj8e1x2rzsrca" width="15"> ]()                 |                [ <img src="https://static.licdn.com/sc/h/al2o9zrvru7aqj8e1x2rzsrca" width="15"> ](https://www.linkedin.com/in/eloygutierrez/)                |
+
+|                                                      [Milo Samec](https://github.com/milosamec)                                                       |                                                       [Russell Smith](https://github.com/rjsmith25)                                                        |                                                      [Randy Egan](https://github.com/ClydeFrog04)                                                       |
+| :-----------------------------------------------------------------------------------------------------------------------------------------: | :-------------------------------------------------------------------------------------------------------------------------------------------: | :-----------------------------------------------------------------------------------------------------------------------------------------: |
+| [<img src="https://avatars.githubusercontent.com/u/43768673?s=460&u=21401cff21fc257a349936e6d2648c49ac1226c5&v=4" width = "200" />](https://github.com/milosamec) | [<img src="https://avatars.githubusercontent.com/u/10043841?s=460&u=7c8a984d8343603874ffb8c8e058b55897f4b7cb&v=4" width = "200" />](https://github.com/rjsmith25) | [<img src="https://avatars.githubusercontent.com/u/31398520?s=460&u=f49f737c2fa710de0bb74154b1d2a977d4a12122&v=4" width = "200" />](https://github.com/ClydeFrog04) |
+|                                [<img src="https://github.com/favicon.ico" width="15"> ](https://github.com/milosamec)                                |                            [<img src="https://github.com/favicon.ico" width="15"> ](https://github.com/rjsmith25)                             |                          [<img src="https://github.com/favicon.ico" width="15"> ](https://github.com/ClydeFrog04)                           |
+|                [ <img src="https://static.licdn.com/sc/h/al2o9zrvru7aqj8e1x2rzsrca" width="15"> ](https://www.linkedin.com/in/milosz-samec/)                |                 [ <img src="https://static.licdn.com/sc/h/al2o9zrvru7aqj8e1x2rzsrca" width="15"> ](https://www.linkedin.com/in/russell-smith-68542b125/)                 |                [ <img src="https://static.licdn.com/sc/h/al2o9zrvru7aqj8e1x2rzsrca" width="15"> ](https://www.linkedin.com/in/randal-egan/)                |
+
 <br>
 <br>
 
-🚫 Optional examples of using images with links for your tech stack, make sure to change these to fit your project
 
 ![MIT](https://img.shields.io/packagist/l/doctrine/orm.svg)
 ![node express](https://img.shields.io/node/v-lts/express)
 ![code style: prettier](https://img.shields.io/badge/code_style-prettier-ff69b4.svg?style=flat-square)
 
-🚫 more info on using badges [here](https://github.com/badges/shields)
 
 ### Key Features
 
-- feature one
-- feature two
-- feature three
-- feature four
-- feature five
+- Create Appointments
+- Create Business Profiles
+- Edit Profiles
+- Add User Pets
 
-#### Back end deployed to `🚫insert service here`
-
-#### [Front end](🚫link to back end repo here) built using:
-
-#### 🚫 back end framework and key libraries go here
-
+#### [Backend end](https://github.com/Lambda-School-Labs/Express_Groomer-TeamA-BE) built using:
 - Node 
 - Express API 
 - Swagger
-
-🚫 List the rest of the back end end features and libraries in the same format as the framework above
-
-# External APIs
-
-## Authentication API here
-
-🚫Replace text below with a description and link to your API swagger docs
-
-Water's like me. It's laaazy ... Boy, it always looks for the easiest way to do things A little happy sunlight shining through there. Let all these little things happen. Don't fight them. Learn to use them. Even the worst thing we can do here is good.
-
-## Payment API here
-
-🚫Replace text below with a description of the API or delete
-
-This is the way you take out your flustrations. Get away from those little Christmas tree things we used to make in school. Isn't it fantastic that you can change your mind and create all these happy things? Everything's not great in life, but we can still find beauty in it.
-
-## Misc API here
-
-🚫Replace text below with a description of the API
-
-You can do anything your heart can imagine. In life you need colors. This is where you take out all your hostilities and frustrations. It's better than kicking the puppy dog around and all that so. I'm sort of a softy, I couldn't shoot Bambi except with a camera. Trees get lonely too, so we'll give him a little friend. We'll lay all these little funky little things in there.
+- Knex
 
 ## Getting Started
 
@@ -154,6 +137,6 @@ Remember that this project is licensed under the MIT license, and by submitting 
 
 See [Backend Documentation](https://labspt12-express-groomer-g-api.herokuapp.com/api-docs/) for details on the backend of our project.
 
-Backend Schema:
+[Backend Schema](https://imgur.com/WXOHwzW):
 
 <img src="https://i.imgur.com/WXOHwzW.png"/>
