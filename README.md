@@ -153,3 +153,7 @@ Remember that this project is licensed under the MIT license, and by submitting 
 ## Documentation
 
 See [Backend Documentation](https://labspt12-express-groomer-g-api.herokuapp.com/api-docs/) for details on the backend of our project.
+
+Backend Schema:
+
+<img src="https://i.imgur.com/WXOHwzW.png"/>
