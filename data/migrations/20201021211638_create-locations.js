@@ -15,7 +15,7 @@ exports.up = async (knex) => {
     table.string('country').notNullable();
     table.string('state').notNullable();
     table.string('city').notNullable();
-    table.integer('zip').notNullable();
+    table.string('zip').notNullable();
     table.string('phone_number').notNullable();
     table.timestamps(true, true);
   });
