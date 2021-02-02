@@ -6,6 +6,7 @@ const requiredAppointmentInfo = [
   'appointment_date_time',
   'status',
   'duration',
+  'service_provider_name',
 ];
 
 const validateAppointmentBody = (req, res, next) => {
