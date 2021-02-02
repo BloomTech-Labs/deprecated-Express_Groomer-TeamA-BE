@@ -119,10 +119,11 @@ const router = express.Router();
 
 router.get('/:groomerId', authRequired, async (req, res) => {
   try {
-    const businessProfile = await BPModel.getBusinessProfile(
+    let businessProfile = await BPModel.getBusinessProfile(
       req.params.groomerId
     );
-    return businessProfile.business_profile
+    businessProfile = await BPModel.getBusinessProfileObject(businessProfile);
+    return businessProfile
       ? res.status(200).json(businessProfile)
       : res.status(404).json({ error: 'profile information not found' });
   } catch (e) {
@@ -231,10 +232,10 @@ router.post('/:groomerId', authRequired, async (req, res) => {
 
     const coverImagesPromises = [];
     if (req.body.groomer_cover_images) {
-      req.body.groomer_cover_images.forEach(({ image, groomer_id }) => {
+      req.body.groomer_cover_images.forEach((image) => {
         const coverImage = {
           image: image,
-          groomer_id: groomer_id,
+          groomer_id: req.params.groomerId,
         };
         coverImagesPromises.push(BPModel.createCoverImage(coverImage));
       });
@@ -242,7 +243,7 @@ router.post('/:groomerId', authRequired, async (req, res) => {
     const resolvedCoverImages = await Promise.all(coverImagesPromises);
     res.status(201).json({ businessProfile, resolvedCoverImages });
   } catch (e) {
-    console.log(e.stack);
+    console.error(e.stack);
     res.status(500).json({ error: 'Error creating groomer business profile' });
   }
 });
