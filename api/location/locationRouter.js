@@ -17,24 +17,24 @@ const {
  *      properties:
  *        id:
  *          type: integer
- *        is_mobo:
+ *        is_mobile:
  *          type: boolean
- *        addres:
+ *        address:
  *          type: string
  *        zip:
- *          type: integer
+ *          type: string
  *        phone_number:
  *          type: string
  *        latitude:
- *            type: number
+ *          type: number
  *        longitude:
- *            type: number
- *        country_id:
- *          type: integer
- *        state_id:
- *          type: integer
- *        city_id:
- *          type: integer
+ *          type: number
+ *        country:
+ *          type: string
+ *        state:
+ *          type: string
+ *        city:
+ *          type: string
  *      example:
  *        id: '00uhjfrwdWAQvD8JV4x6'
  *        email: 'frank@example.com'
@@ -44,20 +44,14 @@ const {
  *        locations:
  *          - id: 1
  *            address: "917 Armstrong Blvd"
- *            is_mobo: false
- *            zip: 07712
+ *            is_mobile: false
+ *            zip: "07712"
  *            phone_number: 884235223
  *            latitude: 18887.56
  *            longitude: 188767.56
- *            country:
- *              id: 1
- *              name: "Uinted States"
- *            state:
- *              id: 1
- *              name: "New Jersey"
- *            city:
- *              id: 1
- *              name: "Ocean Township"
+ *            country: "United States"
+ *            state: "New Jersey"
+ *            city: "Ocean Township"
  *
  * /locations:
  *  get:
@@ -85,36 +79,24 @@ const {
  *                  locations:
  *                    - id: 1
  *                      address: "917 Armstrong Blvd"
- *                      is_mobo: false
- *                      zip: 07712
+ *                      is_mobile: false
+ *                      zip: "07712"
  *                      phone_number: 884235223
  *                      latitude: 18887.56
  *                      longitude: 188767.56
- *                      country:
- *                        id: 1
- *                        name: "Uinted States"
- *                      state:
- *                        id: 1
- *                        name: "New Jersey"
- *                      city:
- *                        id: 1
- *                        name: "Ocean Township"
+ *                      country: "Uinted States"
+ *                      state: "New Jersey"
+ *                      city: "Ocean Township"
  *                    - id: 2
  *                      address: "Branchburg Ave"
- *                      is_mobo: false
- *                      zip: 08879
+ *                      is_mobile: false
+ *                      zip: "08879"
  *                      phone_number: 884235223
  *                      latitude: 18887.56
  *                      longitude: 1647.78
- *                      country:
- *                        id: 1
- *                        name: "United States"
- *                      state:
- *                        id: 2
- *                        name: "New Jersey"
- *                      city:
- *                        id: 2
- *                        name: "Hunterdown"
+ *                      country: "United States"
+ *                      state: "New Jersey"
+ *                      city: "Hunterdown"
  *      401:
  *        $ref: '#/components/responses/UnauthorizedError'
  *      403:
@@ -206,34 +188,34 @@ router.get(
  *            properties:
  *              id:
  *                type: integer
- *              is_mobo:
+ *              is_mobile:
  *                type: boolean
- *              addres:
+ *              address:
  *                type: string
  *              zip:
- *                type: integer
+ *                type: string
  *              phone_number:
  *                type: string
  *              latitude:
  *                type: number
  *              longitude:
  *                type: number
- *              country_id:
- *                type: integer
- *              state_id:
- *                type: integer
- *              city_id:
- *                type: integer
+ *              country:
+ *                type: string
+ *              state:
+ *                type: string
+ *              city:
+ *                type: string
  *            example:
  *                address: "917 Armstrong Blvd"
- *                is_mobo: false
- *                zip: 07712
+ *                is_mobile: false
+ *                zip: "07712"
  *                phone_number: 884235223
  *                latitude: 18887.56
  *                longitude: 188767.56
- *                country_id: 1
- *                state_id: 1
- *                city_id: 47633
+ *                country: "United States"
+ *                state: "Colorado"
+ *                city: "Denver"
  *
  *
  *    responses:
@@ -269,7 +251,7 @@ router.post(
 
       const payload = {
         profile_id: profile_id,
-        is_mobo: req.body.is_mobo,
+        is_mobile: req.body.is_mobile,
         address: req.body.address,
         latitude: req.body.latitude,
         longitude: req.body.longitude,
@@ -315,35 +297,35 @@ router.post(
  *            properties:
  *              id:
  *                type: integer
- *              is_mobo:
+ *              is_mobile:
  *                type: boolean
  *              addres:
  *                type: string
  *              zip:
- *                type: integer
+ *                type: string
  *              phone_number:
  *                type: string
  *              latitude:
  *                type: number
  *              longitude:
  *                type: number
- *              country_id:
- *                type: integer
- *              state_id:
- *                type: integer
- *              city_id:
- *                type: integer
+ *              country:
+ *                type: string
+ *              state:
+ *                type: string
+ *              city:
+ *                type: string
  *            example:
  *                id: 0
  *                address: "917 Armstrong Blvd"
- *                is_mobo: false
- *                zip: 07712
+ *                is_mobile: false
+ *                zip: "07712"
  *                phone_number: 884235223
  *                latitude: 18887.56
  *                longitude: 188767.56
- *                country_id: 1
- *                state_id: 1
- *                city_id: 47633
+ *                country: "United States"
+ *                state: "Colorado"
+ *                city: "Denver"
  *    responses:
  *      400:
  *        description: 'Location already exists'
@@ -378,7 +360,7 @@ router.put(
 
       const payload = {
         profile_id: profile_id,
-        is_mobo: req.body.is_mobo,
+        is_mobile: req.body.is_mobile,
         address: req.body.address,
         latitude: req.body.latitude,
         longitude: req.body.longitude,
