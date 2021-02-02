@@ -140,3 +140,5 @@ See [Backend Documentation](https://labspt12-express-groomer-g-api.herokuapp.com
 [Backend Schema](https://imgur.com/WXOHwzW):
 
 <img src="https://i.imgur.com/WXOHwzW.png"/>
+Image generated with DataGrip
+
