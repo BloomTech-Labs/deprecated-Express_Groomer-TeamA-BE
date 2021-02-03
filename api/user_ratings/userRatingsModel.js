@@ -9,10 +9,10 @@ const getBy = (filter) => db('user_ratings').where(filter).select('*');
 const create = (review) => db('user_ratings').insert(review).returning('*');
 
 const remove = async (id) => {
-  const deleted = await getBy({ id });
-  if (deleted) {
-    return db('user_ratings').where({ id }).first().delete();
-  }
+  const [deleted] = await getBy({ id });
+  await db('user_ratings').where({ id }).first().delete();
+  console.log({ origin: 'remove', deleted });
+
   return deleted;
 };
 const update = (id, changes) => {
